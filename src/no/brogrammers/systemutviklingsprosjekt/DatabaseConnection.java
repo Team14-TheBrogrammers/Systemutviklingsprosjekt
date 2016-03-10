@@ -4,7 +4,14 @@ package no.brogrammers.systemutviklingsprosjekt;
  * Created by The Brogrammers on 09.03.2016.
  */
 public class DatabaseConnection {
-    public DatabaseConnection() {
+
+
+
+    public DatabaseConnection(String databaseDriver, String databaseName) {
+
+    }
+
+    private void startConnection() {
 
     }
 }

@@ -5,6 +5,12 @@ package no.brogrammers.systemutviklingsprosjekt;
  */
 public class MainClient {
     public static void main(String[] args) {
-        
+        DatabaseInformationReader infoReader = new DatabaseInformationReader("fileLocationHere");
+        String databaseDriver = "com.mysql.jdbc.Driver";
+        String databaseName = infoReader.readInformation();
+                //"jdbc:mysql://mysql.stud.iie.ntnu.no:3306/";
+
+        DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName);
+
     }
 }
