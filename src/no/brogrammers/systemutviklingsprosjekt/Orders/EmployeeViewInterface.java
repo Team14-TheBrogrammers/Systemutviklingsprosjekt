@@ -4,6 +4,11 @@
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 
-public interface EmployeeViewInterface {
+import java.util.ArrayList;
 
+public interface EmployeeViewInterface {
+    ArrayList<Order> viewAllActiveOrders();
+    ArrayList<Ingredient> listMissingIngredents();
+    ArrayList<Order> deliveriesToday();
+    ArrayList<Order> deliveriesOnDay(int deliveryTime);
 }

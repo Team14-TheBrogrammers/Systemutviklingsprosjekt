@@ -4,6 +4,12 @@
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 
-public interface EmployeeChangeInterface {
+import java.util.ArrayList;
 
+public interface EmployeeChangeInterface extends EmployeeViewInterface{
+    boolean addOrder(Order order);
+    ArrayList<Order> viewOrder(int customerID);
+    Order viewOrderByOrderID(int orderID);
+    boolean deleteOrder(int orderID);
+    boolean changeOrder(int orderID);
 }

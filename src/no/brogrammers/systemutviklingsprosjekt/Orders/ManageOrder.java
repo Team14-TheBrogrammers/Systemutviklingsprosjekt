@@ -1,11 +1,10 @@
-package no.brogrammers.systemutviklingsprosjekt.Orders;
-
 /**
  * Created by Ingunn on 10.03.2016.
  */
 
-import no.brogrammers.systemutviklingsprosjekt.UserPackage;
+package no.brogrammers.systemutviklingsprosjekt.Orders;
 
+import no.brogrammers.systemutviklingsprosjekt.UserPackage.*;
 import java.util.ArrayList;
 
 public class ManageOrder {
@@ -14,15 +13,18 @@ public class ManageOrder {
 
     }
 
-    public boolean addOrder(int customerID) {
+    //Add order for a spesific customer. Not later than three days in advance.
+    public boolean addOrder(Order order) {
 
     }
 
+    //View all orders that has not been delivered yet.
     public ArrayList<Order> viewAllActiveOrders() {
 
     }
 
-    public ArrayList<Order> viewOrder(int customerID) { //View orders for a spesific cu
+    //View orders for a spesific customer with customer ID.
+    public ArrayList<Order> viewOrder(int customerID) {
 
         //sort by date
     }
@@ -35,7 +37,24 @@ public class ManageOrder {
 
     }
 
+    //Change order up to 24 hours before delivery.
     public boolean changeOrder(int orderID) {
 
     }
+
+    //List all ingredients missing for the three next days.
+    public ArrayList<Ingredient> listMissingIngredents() {
+
+    }
+
+    //All deliveries for today
+    public ArrayList<Order> deliveriesToday() {
+
+    }
+
+    //Spesific time: 0 = "8to12", 1 = "12to15", 2 = "15to18", 3 = "18to21"
+    public ArrayList<Order> deliveriesOnDay(int deliveryTime) {
+
+    }
+
 }
