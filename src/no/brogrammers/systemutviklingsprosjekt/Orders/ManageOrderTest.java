@@ -4,6 +4,5 @@
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 
-public interface EmployeeChangeInterface {
-
+public class ManageOrderTest {
 }
