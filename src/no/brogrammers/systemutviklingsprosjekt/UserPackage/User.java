@@ -1,5 +1,6 @@
 /**
  * Created by The Brogrammers on 10.03.2016.
+ * Klasse User exists for better overview.
  */
 
 package no.brogrammers.systemutviklingsprosjekt.UserPackage;

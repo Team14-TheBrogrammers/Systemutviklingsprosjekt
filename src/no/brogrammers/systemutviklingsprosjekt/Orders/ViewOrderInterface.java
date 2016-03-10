@@ -6,7 +6,7 @@ package no.brogrammers.systemutviklingsprosjekt.Orders;
 
 import java.util.ArrayList;
 
-public interface EmployeeViewInterface {
+public interface ViewOrderInterface {
     ArrayList<Order> viewAllActiveOrders();
     ArrayList<Ingredient> listMissingIngredents();
     ArrayList<Order> deliveriesToday();

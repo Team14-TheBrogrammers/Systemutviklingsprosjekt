@@ -6,7 +6,7 @@ package no.brogrammers.systemutviklingsprosjekt.Orders;
 
 import java.util.ArrayList;
 
-public interface EmployeeChangeInterface extends EmployeeViewInterface{
+public interface ChangeOrderInterface extends ViewOrderInterface {
     boolean addOrder(Order order);
     ArrayList<Order> viewOrder(int customerID);
     Order viewOrderByOrderID(int orderID);
