@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt;
+package no.brogrammers.systemutviklingsprosjekt.Database;
 
 /**
  * Created by The Brogrammers on 09.03.2016.

@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt;
+package no.brogrammers.systemutviklingsprosjekt.Database;
 
 import java.io.*;
 
@@ -13,6 +13,9 @@ public class DatabaseInformationReader {
         this.file = new File(fileLocation);
     }
 
+    /* Read the information about the login details for the database.
+     Information includes website, database name, username and password for the connection.
+    */
     public String readInformation() {
         String information = "";
         try {
