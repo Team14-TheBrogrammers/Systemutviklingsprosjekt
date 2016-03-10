@@ -2,8 +2,6 @@
   <library name="src">
     <CLASSES />
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://C:/mysqllibs/mysql-connector-java-5.1.38.zip!/mysql-connector-java-5.1.38/src" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

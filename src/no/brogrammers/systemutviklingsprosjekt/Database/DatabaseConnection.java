@@ -18,7 +18,7 @@ public class DatabaseConnection {
         this.databaseName = databaseName;
         errorLogger = new ErrorLog(errorFileLocation);
         startConnection();
-        //testShit();
+        test();
     }
 
     /*
@@ -39,20 +39,19 @@ public class DatabaseConnection {
         }
     }
 
-    /*private void testShit() {
+    private void test() {
         try {
             ResultSet res = statement.executeQuery("SELECT * FROM test;");
-
             while(res.next()) {
-                String navn = res.getString("navn");
-                System.out.println(navn);
+                String name = res.getString("name");
+                System.out.println(name);
             }
         } catch (SQLException sqle) {
 
         } catch (Exception e) {
 
         }
-    }*/
+    }
 
     //UPDATE - INSERT
 
