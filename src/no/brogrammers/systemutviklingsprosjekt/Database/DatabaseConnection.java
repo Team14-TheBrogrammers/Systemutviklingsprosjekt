@@ -42,7 +42,18 @@ public class DatabaseConnection {
 
     }
 
+    /*
+    Method for closing/ending the connection properly.
+     */
     private void endConnection() {
-
+        try {
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            errorLogger.writeError(e.getMessage());
+        } catch (Exception e) {
+            errorLogger.writeError(e.getMessage());
+        }
     }
 }
