@@ -8,13 +8,17 @@ import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseInformationReade
  */
 public class MainClient {
     public static void main(String[] args) {
+        //Reading database inforamtion
         String fileLocation = "C:\\SystemutviklingsProsjekt\\databaseInformation.txt";
         DatabaseInformationReader infoReader = new DatabaseInformationReader(fileLocation);
+
         String databaseDriver = "com.mysql.jdbc.Driver";
         String databaseName = infoReader.readInformation();
                 //"jdbc:mysql://mysql.stud.iie.ntnu.no:3306/";
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName);
+        String errorFileLocation = "C:\\SystemutviklingsProsjekt\\errorLog.txt";
+
+        DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName, errorFileLocation);
 
     }
 }

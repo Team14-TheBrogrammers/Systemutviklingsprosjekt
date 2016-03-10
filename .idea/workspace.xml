@@ -27,8 +27,23 @@
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
+              <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ErrorLog.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.40753424">
+              <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+              <folding>
+                <element signature="e#201#202#0" expanded="true" />
+                <element signature="e#249#250#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -37,7 +52,7 @@
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseInformationReader.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DatabaseInformationReader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27226028">
-              <caret line="16" column="91" selection-start-line="16" selection-start-column="91" selection-end-line="16" selection-end-column="91" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
               <folding>
                 <element signature="e#244#245#0" expanded="true" />
                 <element signature="e#294#295#0" expanded="true" />
@@ -80,8 +95,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/DatabaseConnection.java" />
-        <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java" />
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/DatabaseInformationReader.java" />
+        <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java" />
+        <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java" />
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java" />
       </list>
     </option>
@@ -663,12 +679,12 @@
       <workItem from="1457524076724" duration="1071000" />
       <workItem from="1457526609406" duration="980000" />
       <workItem from="1457531150224" duration="164000" />
-      <workItem from="1457600349787" duration="8412000" />
+      <workItem from="1457600349787" duration="10596000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10627000" />
+    <option name="totallyTimeSpent" value="12811000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -735,7 +751,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -753,6 +771,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+          <folding>
+            <element signature="e#244#245#0" expanded="true" />
+            <element signature="e#294#295#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -762,28 +801,20 @@
     <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+          <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java">
+    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27226028">
-          <caret line="16" column="91" selection-start-line="16" selection-start-column="91" selection-end-line="16" selection-end-column="91" />
+        <state vertical-scroll-proportion="0.40753424">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
           <folding>
-            <element signature="e#244#245#0" expanded="true" />
-            <element signature="e#294#295#0" expanded="true" />
+            <element signature="e#201#202#0" expanded="true" />
+            <element signature="e#249#250#0" expanded="true" />
           </folding>
         </state>
       </provider>
