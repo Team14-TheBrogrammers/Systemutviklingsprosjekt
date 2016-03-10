@@ -1,9 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.Database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by The Brogrammers on 09.03.2016.
@@ -21,6 +18,7 @@ public class DatabaseConnection {
         this.databaseName = databaseName;
         errorLogger = new ErrorLog(errorFileLocation);
         startConnection();
+        //testShit();
     }
 
     /*
@@ -40,6 +38,21 @@ public class DatabaseConnection {
             errorLogger.writeError(e.getMessage());
         }
     }
+
+    /*private void testShit() {
+        try {
+            ResultSet res = statement.executeQuery("SELECT * FROM test;");
+
+            while(res.next()) {
+                String navn = res.getString("navn");
+                System.out.println(navn);
+            }
+        } catch (SQLException sqle) {
+
+        } catch (Exception e) {
+
+        }
+    }*/
 
     //UPDATE - INSERT
 
