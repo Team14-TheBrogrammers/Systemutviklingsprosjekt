@@ -13,12 +13,12 @@ public class MainClient {
         DatabaseInformationReader infoReader = new DatabaseInformationReader(fileLocation);
 
         String databaseDriver = "com.mysql.jdbc.Driver";
-        String databaseName = infoReader.readInformation();
+        String databaseName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/ingunsu?user=ingunsu&password=knrdoB4w";//infoReader.readInformation();
                 //"jdbc:mysql://mysql.stud.iie.ntnu.no:3306/";
 
         String errorFileLocation = "C:\\SystemutviklingsProsjekt\\errorLog.txt";
 
         DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName, errorFileLocation);
-
+        databaseConnection.endConnection();
     }
 }

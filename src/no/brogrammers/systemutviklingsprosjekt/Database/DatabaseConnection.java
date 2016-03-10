@@ -39,13 +39,18 @@ public class DatabaseConnection {
         } catch (Exception e) {
             errorLogger.writeError(e.getMessage());
         }
-
     }
+
+    //UPDATE - INSERT
+
+    //DELETE
+
+    //SELECT
 
     /*
     Method for closing/ending the connection properly.
      */
-    private void endConnection() {
+    public void endConnection() {
         try {
             statement.close();
             connection.close();
