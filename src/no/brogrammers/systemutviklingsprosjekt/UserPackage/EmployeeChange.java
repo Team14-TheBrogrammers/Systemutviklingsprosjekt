@@ -10,5 +10,7 @@ public abstract class EmployeeChange extends EmployeeView {
         super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment);
     }
 
-    //Lag ny employee change interface
+    public ChangeOrderInterface newManageOrder2() {
+        return new ManageOrder();
+    }
 }
