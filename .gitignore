@@ -16,6 +16,9 @@ local.properties
 .settings/
 .loadpath
 
+# For not adding .class files
+.class
+
 # External tool builders
 .externalToolBuilders/
 
