@@ -10,15 +10,15 @@ public abstract class User {
     private String lastName;
     private String firstName;
     private int phoneNumber;
-    private String eMail;
+    private String email;
     private int dateOfEmployment; //yyyymmdd
 
-    public User(int ID, String lastName, String firstName, int phoneNumber, String eMail, int dateOfEmployment) {
+    public User(int ID, String lastName, String firstName, int phoneNumber, String email, int dateOfEmployment) {
         this.ID = ID;
         this.lastName = lastName;
         this.firstName = firstName;
         this.phoneNumber = phoneNumber;
-        this.eMail = eMail;
+        this.email = email;
         this.dateOfEmployment = dateOfEmployment;
     }
 
@@ -38,8 +38,8 @@ public abstract class User {
         return phoneNumber;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
     public int getDateOfEmployment() {
@@ -59,6 +59,10 @@ public abstract class User {
     }
 
     public void seteMail(String eMail) {
-        this.eMail = eMail;
+        this.email = eMail;
+    }
+
+    public String toString() {
+        return "User ID: " + ID + "\nName: " + lastName + ", " + firstName + "\nPhone Number: " + phoneNumber + "\nEmail: " + email + "\nDate of Employment: " + dateOfEmployment;
     }
 }

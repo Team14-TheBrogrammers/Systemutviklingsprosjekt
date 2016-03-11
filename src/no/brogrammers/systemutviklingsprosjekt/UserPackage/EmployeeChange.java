@@ -10,7 +10,7 @@ public abstract class EmployeeChange extends EmployeeView {
         super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment);
     }
 
-    public ChangeOrderInterface newManageOrder2() {
+    public ChangeOrderInterface newManageOrderChange() {
         return new ManageOrder();
     }
 }

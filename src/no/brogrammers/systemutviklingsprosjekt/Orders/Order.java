@@ -13,6 +13,7 @@ public class Order {
     private int deliveryTime; //From 8 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
     private String address;
     private int zipCode;
+    //Recipes tabell??
 
     public Order(int orderID, int customerID, boolean paymentStatus, int orderDate, int deliveryDate, String address, int zipCode) {
         this.orderID = orderID;

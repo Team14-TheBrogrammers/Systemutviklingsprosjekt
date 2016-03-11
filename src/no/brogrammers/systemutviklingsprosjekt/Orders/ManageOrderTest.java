@@ -5,14 +5,40 @@
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 import no.brogrammers.systemutviklingsprosjekt.UserPackage.*;
 
+import java.time.LocalDate;
+
 public class ManageOrderTest {
     public static void main(String[] args) {
+        //LocalDate localDate = new ;
 
-        Driver driver = new Driver(1, "hei", "hei", 123, "hehe", 12423543);
-        ViewOrderInterface evi = driver.newManageOrder();
-        System.out.println(evi.deliveriesToday());
-        //evi.deleteCustomer();
+        //Make new Manager
+        //Employee ID, last name, first name, phone number, email, date of employment
+        Manager m = new Manager(2, "hei", "hei", 91919191, "hehe", 20140201); //Date of employment: February 1, 2014
+        ChangeOrderInterface manager = m.newManageOrderChange();
 
+        //Make new Cashier
+        Cashier ca = new Cashier(4, "C", "C", 92929292, "cashier@email.com", 20101010);
+        ChangeOrderInterface cashier = ca.newManageOrderChange();
+
+        //Make new Cook
+        Cook co = new Cook(3, "", "", 93939393, "cook@email.com", 20160311);
+        ViewOrderInterface cook = co.newManageOrderView();
+
+        //Make new Driver
+        Driver d = new Driver(1, "", "hei", 90909090, "hehe", 20041011);
+        ViewOrderInterface driver = d.newManageOrderView();
+
+
+
+        System.out.println(manager.deliveriesToday());
+        System.out.println(manager.deleteOrder(1));
+
+
+
+        System.out.println(driver.deliveriesToday());
+
+
+        //voi.deleteOrder(1);
 
         //deliveriesToday;
 
@@ -20,15 +46,5 @@ public class ManageOrderTest {
         //ManageOrder mo = new ManageOrder();
 
 
-
-       /* public class Rovdyrfabrikk {
-            public SkandinaviskeRovdyr nyBinne(int ankommetDato, String adresse, String navn, int fDato, int kull) {
-                return new Hunnindivid("Brunbjørn", "Ursus arctos", "Ursidae", ankommetDato, adresse, navn, fDato, true, kull);
-            }
-
-            Test:
-        Rovdyrfabrikk rov = new Rovdyrfabrikk();
-        //int ankommetDato, String adresse, String navn, int fDato
-        SkandinaviskeRovdyr r1 = rov.nyBinne(20091010, "bur1", "Ingunn", 20081010, 2);*/
     }
 }

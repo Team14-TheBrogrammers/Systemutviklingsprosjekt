@@ -10,7 +10,7 @@ public abstract class EmployeeView extends User {
         super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment);
     }
 
-    public ViewOrderInterface newManageOrder() {
+    public ViewOrderInterface newManageOrderView() {
         return new ManageOrder();
     }
 }
