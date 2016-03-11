@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="13d1b840-2021-474f-bd89-90baa894a2c2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ConnectionClasses/OrderConnection.java" afterPath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ConnectionClasses/OrderConnection.java" />
-    </list>
+    <list default="true" id="13d1b840-2021-474f-bd89-90baa894a2c2" name="Default" comment="" />
     <ignored path="Systemutviklingsprosjekt.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -778,15 +776,15 @@
       <workItem from="1457531150224" duration="164000" />
       <workItem from="1457600349787" duration="20077000" />
       <workItem from="1457637104160" duration="2161000" />
-      <workItem from="1457639422439" duration="12444000" />
+      <workItem from="1457639422439" duration="12873000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36897000" />
+    <option name="totallyTimeSpent" value="37326000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
