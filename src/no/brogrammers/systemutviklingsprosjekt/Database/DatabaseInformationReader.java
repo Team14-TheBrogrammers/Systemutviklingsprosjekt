@@ -21,8 +21,6 @@ public class DatabaseInformationReader {
     public String readInformation() {
         String information = "";
         try {
-            /*FileInputStream stream = new FileInputStream(file);
-            information = stream.read();*/
             BufferedReader reader = new BufferedReader(new FileReader(file));
             information = reader.readLine();
         } catch (FileNotFoundException e) {
