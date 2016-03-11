@@ -11,6 +11,6 @@ public abstract class EmployeeChange extends EmployeeView {
     }
 
     public ChangeOrderInterface newManageOrderChange() {
-        return new ManageOrder();
+        return new ManageOrder("com.mysql.jdbc.Driver", "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/ingunsu?user=ingunsu&password=knrdoB4w", "C:\\SystemutviklingsProsjekt\\errorLog.txt");
     }
 }

@@ -1,13 +1,18 @@
 /**
  * Created by Ingunn on 10.03.2016.
+ * Class for order management.
  */
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
-
 import java.util.ArrayList;
 
 public class ManageOrder implements ViewOrderInterface, ChangeOrderInterface {
 
+    private OrderConnection orderConnection;
+
+    ManageOrder(String databaseDriver, String databaseName, String errorFileLocation) {
+        orderConnection = new OrderConnection(databaseDriver, databaseName, errorFileLocation);
+    }
 
     //Add order for a spesific customer. Not later than three days in advance.
     public boolean addOrder(Order order) {

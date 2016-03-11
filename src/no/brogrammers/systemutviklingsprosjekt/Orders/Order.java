@@ -90,7 +90,8 @@ public class Order {
     }
 
     public double convertTime() {
-        2
+        String time = Double.toString(deliveryTime).substring(2);
+
     }
 
     public String toString() {

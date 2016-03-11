@@ -7,6 +7,7 @@ package no.brogrammers.systemutviklingsprosjekt.Orders;
 import java.util.ArrayList;
 
 public interface ChangeOrderInterface extends ViewOrderInterface {
+    //ManageOrder(String databaseDriver, String databaseName, String errorFileLocation);
     boolean addOrder(Order order);
     ArrayList<Order> viewOrder(int customerID);
     Order viewOrderByOrderID(int orderID);
