@@ -13,9 +13,11 @@ public class DatabaseInformationReader {
         this.file = new File(fileLocation);
     }
 
-    /* Read the information about the login details for the database.
-     Information includes website, database name, username and password for the connection.
-    */
+    /**
+     * Read the information about the login details for the database.
+     * Information includes database website, name, username and password for the connection.
+     * @return a string contining the information for login details.
+     */
     public String readInformation() {
         String information = "";
         try {

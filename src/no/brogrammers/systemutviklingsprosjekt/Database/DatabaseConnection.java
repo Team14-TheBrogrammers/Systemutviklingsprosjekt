@@ -21,8 +21,8 @@ public class DatabaseConnection {
         test();
     }
 
-    /*
-    Method for starting connection and setting the objects so that they can be used in later methods.
+    /**
+     * Method for starting connection and setting the objects so that they can be used in later methods.
      */
     private void startConnection() {
         try {
@@ -59,10 +59,10 @@ public class DatabaseConnection {
 
     //SELECT
 
-    /*
-    Method for closing/ending the connection properly.
+    /**
+     * Method for closing the connection properly.
      */
-    public void endConnection() {
+    public void stopConnection() {
         try {
             statement.close();
             connection.close();

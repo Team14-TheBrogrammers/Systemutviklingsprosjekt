@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13d1b840-2021-474f-bd89-90baa894a2c2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Systemutviklingsprosjekt/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.class" afterPath="$PROJECT_DIR$/out/production/Systemutviklingsprosjekt/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Systemutviklingsprosjekt/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.class" afterPath="$PROJECT_DIR$/out/production/Systemutviklingsprosjekt/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/src.xml" afterPath="$PROJECT_DIR$/.idea/libraries/src.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Systemutviklingsprosjekt.iml" afterPath="$PROJECT_DIR$/Systemutviklingsprosjekt.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java" afterPath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java" afterPath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java" afterPath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java" afterPath="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java" />
     </list>
     <ignored path="Systemutviklingsprosjekt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,10 +31,10 @@
       <file leaf-file-name="DatabaseConnection.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5535248">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.24315068">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding>
-                <marker date="1457641016436" expanded="true" signature="1384:1402" placeholder="SELECT * FRO... test" />
+                <marker date="1457690412378" expanded="true" signature="1388:1406" placeholder="SELECT * FRO... test" />
               </folding>
             </state>
           </provider>
@@ -46,10 +44,8 @@
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="80" selection-start-line="17" selection-start-column="80" selection-end-line="17" selection-end-column="80" />
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -100,8 +96,9 @@
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/DatabaseConnection.java" />
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/DatabaseInformationReader.java" />
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java" />
-        <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java" />
         <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java" />
+        <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java" />
+        <option value="$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java" />
       </list>
     </option>
   </component>
@@ -233,7 +230,7 @@
       <recent name="C:\Users\Knut\Documents\GitHub\Systemutviklingsprosjekt\src\no\brogrammers\systemutviklingsprosjekt\Database" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainClient">
+  <component name="RunManager" selected="Application.ErrorLog">
     <configuration default="false" name="DatabaseInformationReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -723,8 +720,8 @@
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.MainClient" />
-        <item index="1" class="java.lang.String" itemvalue="Application.ErrorLog" />
+        <item index="0" class="java.lang.String" itemvalue="Application.ErrorLog" />
+        <item index="1" class="java.lang.String" itemvalue="Application.MainClient" />
         <item index="2" class="java.lang.String" itemvalue="Application.DatabaseInformationReader" />
       </list>
     </recent_temporary>
@@ -744,12 +741,12 @@
       <workItem from="1457531150224" duration="164000" />
       <workItem from="1457600349787" duration="20077000" />
       <workItem from="1457637104160" duration="2161000" />
-      <workItem from="1457639422439" duration="1584000" />
+      <workItem from="1457639422439" duration="4443000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26037000" />
+    <option name="totallyTimeSpent" value="28896000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -762,7 +759,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5045386" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843137" sideWeight="0.49546143" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.49546143" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -809,7 +806,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <marker date="1457641016436" expanded="true" signature="1384:1402" placeholder="SELECT * FRO... test" />
+            <marker date="1457690412378" expanded="true" signature="1388:1406" placeholder="SELECT * FRO... test" />
           </folding>
         </state>
       </provider>
@@ -818,9 +815,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -847,7 +842,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <marker date="1457641016436" expanded="true" signature="1384:1402" placeholder="SELECT * FRO... test" />
+            <marker date="1457690412378" expanded="true" signature="1388:1406" placeholder="SELECT * FRO... test" />
           </folding>
         </state>
       </provider>
@@ -856,9 +851,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -895,7 +888,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1457641016436" expanded="true" signature="1384:1402" placeholder="SELECT * FRO... test" />
+            <marker date="1457690412378" expanded="true" signature="1388:1406" placeholder="SELECT * FRO... test" />
           </folding>
         </state>
       </provider>
@@ -931,37 +924,35 @@
     <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseInformationReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/MainClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="80" selection-start-line="17" selection-start-column="80" selection-end-line="17" selection-end-column="80" />
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/ErrorLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/no/brogrammers/systemutviklingsprosjekt/Database/DatabaseConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5535248">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.24315068">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
-            <marker date="1457641016436" expanded="true" signature="1384:1402" placeholder="SELECT * FRO... test" />
+            <marker date="1457690412378" expanded="true" signature="1388:1406" placeholder="SELECT * FRO... test" />
           </folding>
         </state>
       </provider>

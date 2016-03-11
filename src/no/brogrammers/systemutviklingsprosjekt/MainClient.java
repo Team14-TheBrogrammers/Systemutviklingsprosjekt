@@ -18,6 +18,6 @@ public class MainClient {
         String errorFileLocation = "C:\\SystemutviklingsProsjekt\\errorLog.txt";
 
         DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName, errorFileLocation);
-        databaseConnection.endConnection();
+        databaseConnection.stopConnection();
     }
 }
