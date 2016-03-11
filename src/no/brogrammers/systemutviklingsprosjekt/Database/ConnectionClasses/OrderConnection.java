@@ -10,5 +10,7 @@ public class OrderConnection extends DatabaseConnection {
         super(databaseDriver, databaseName, errorFileLocation);
     }
 
-    
+    public boolean addOrder(Order order) {
+
+    }
 }
