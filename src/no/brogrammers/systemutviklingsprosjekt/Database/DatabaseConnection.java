@@ -39,6 +39,10 @@ public class DatabaseConnection {
         }
     }
 
+    public Statement getStatement() {
+        return statement;
+    }
+
     private void test() {
         try {
             ResultSet res = statement.executeQuery("SELECT * FROM test;");

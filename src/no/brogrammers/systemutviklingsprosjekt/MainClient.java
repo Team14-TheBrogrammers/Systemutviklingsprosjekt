@@ -3,6 +3,8 @@ package no.brogrammers.systemutviklingsprosjekt;
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseInformationReader;
 
+import java.sql.ResultSet;
+
 /**
  * Created by Ingunn on 09.03.2016.
  */
@@ -18,6 +20,18 @@ public class MainClient {
         String errorFileLocation = "C:\\SystemutviklingsProsjekt\\errorLog.txt";
 
         DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName, errorFileLocation);
+
+        try {
+            ResultSet resultSet = databaseConnection.getStatement().executeQuery("SELECT * FROM test;");
+            while(resultSet.next()) {
+                String name = resultSet.getString("navn");
+                System.out.println(name);
+            }
+        } catch (Exception e) {
+            System.out.println("Error occoured.");
+            System.out.println(e.getMessage());
+        }
+
         databaseConnection.stopConnection();
     }
 }
