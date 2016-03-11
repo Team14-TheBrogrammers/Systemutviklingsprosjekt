@@ -11,9 +11,13 @@ public class ManageOrder implements ViewOrderInterface, ChangeOrderInterface {
 
     //Add order for a spesific customer. Not later than three days in advance.
     public boolean addOrder(Order order) {
-        if(order.getCustomerID() == )//Sjekk om customerID finnes og om leveringstid er innenfor riktig intervall
-
-        //Inkrementer ordreID (antall ordre + 1)
+        int count;
+        "SELECT ID from PrivateCustomer WHERE id = '" + order.getCustomerID() + "'";
+        if(count > 0) {//Sjekk om customerID finnes og om leveringstid er innenfor riktig intervall
+            if(order.get)
+            //Inkrementer ordreID (antall ordre + 1)
+            return true
+        }
         return false;
     }
 

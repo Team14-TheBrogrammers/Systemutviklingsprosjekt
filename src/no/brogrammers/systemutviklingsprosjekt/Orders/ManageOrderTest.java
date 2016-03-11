@@ -28,7 +28,8 @@ public class ManageOrderTest {
         Driver d = new Driver(1, "", "hei", 90909090, "hehe", 20041011);
         ViewOrderInterface driver = d.newManageOrderView();
 
-
+        
+        driver.deleteOrder(1);
 
         System.out.println(manager.deliveriesToday());
         System.out.println(manager.deleteOrder(1));
