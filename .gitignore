@@ -16,6 +16,10 @@ local.properties
 .settings/
 .loadpath
 
+# intellij
+workspace.xml
+misc.xml
+
 # For not adding .class files
 *.class
 .class
