@@ -5,24 +5,25 @@
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 import java.util.ArrayList;
+import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.OrderConnection;
 
 public class ManageOrder implements ViewOrderInterface, ChangeOrderInterface {
 
     private OrderConnection orderConnection;
 
     ManageOrder(String databaseDriver, String databaseName, String errorFileLocation) {
-        orderConnection = new OrderConnection(databaseDriver, databaseName, errorFileLocation);
+        //orderConnection = new OrderConnection(databaseDriver, databaseName, errorFileLocation);
     }
 
     //Add order for a spesific customer. Not later than three days in advance.
     public boolean addOrder(Order order) {
         int count;
-        "SELECT ID from PrivateCustomer WHERE id = '" + order.getCustomerID() + "'";
+        /*"SELECT ID from PrivateCustomer WHERE id = '" + order.getCustomerID() + "'";
         if(count > 0) {//Sjekk om customerID finnes og om leveringstid er innenfor riktig intervall
             if(order.get)
             //Inkrementer ordreID (antall ordre + 1)
             return true
-        }
+        }*/
         return false;
     }
 
