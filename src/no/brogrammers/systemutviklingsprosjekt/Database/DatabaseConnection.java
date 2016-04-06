@@ -69,7 +69,7 @@ public abstract class DatabaseConnection {
      * @param message the error message as a string to write in the file.
      * @return true if the method did write the message in the file. False if something wrong occoured.
      */
-    private boolean writeError(String message) {
+    public boolean writeError(String message) {
         try {
             FileWriter fileWriter = new FileWriter(errorFile, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
