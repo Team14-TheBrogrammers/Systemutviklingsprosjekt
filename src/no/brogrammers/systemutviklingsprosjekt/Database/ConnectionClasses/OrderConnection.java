@@ -11,6 +11,6 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public boolean addOrder(Order order) {
-
+        return false;
     }
 }

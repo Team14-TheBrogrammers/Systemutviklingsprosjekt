@@ -4,24 +4,33 @@
  */
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
+import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.OrderConnection;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class ManageOrder implements ViewOrderInterface, ChangeOrderInterface {
+public class ManageOrder extends OrderConnection implements ViewOrderInterface, ChangeOrderInterface  {
 
-    private OrderConnection orderConnection;
-
-    ManageOrder(String databaseDriver, String databaseName, String errorFileLocation) {
-        orderConnection = new OrderConnection(databaseDriver, databaseName, errorFileLocation);
+    public ManageOrder() {
+        super();
     }
 
     //Add order for a spesific customer. Not later than three days in advance.
-    public boolean addOrder(Order order) {
-        int count;
-        "SELECT ID from PrivateCustomer WHERE id = '" + order.getCustomerID() + "'";
-        if(count > 0) {//Sjekk om customerID finnes og om leveringstid er innenfor riktig intervall
-            if(order.get)
-            //Inkrementer ordreID (antall ordre + 1)
-            return true
+    public int addOrder(Order order) {
+        Order order2 = new Order();
+
+        if(super.addOrder(order) >= 0) {
+            return super.addOrder(order);
+        }
+        return -1;
+    }
+
+    public boolean checkCorrectTimeStamp(java.sql.Date orderDate, java.sql.Date deliveryDate) {
+        long days = (deliveryDate.getTime()-orderDate.getTime())/86400000;
+        (currentTime - (currentTime % 86400000));
+        if(days >= 3) {
+            return true;
         }
         return false;
     }
@@ -51,9 +60,9 @@ public class ManageOrder implements ViewOrderInterface, ChangeOrderInterface {
     }
 
     //List all ingredients missing for the three next days.
-    public ArrayList<Ingredient> listMissingIngredents() {
+    /*public ArrayList<Ingredient> listMissingIngredients() {
         return null;
-    }
+    }*/
 
     //All deliveries for today
     public ArrayList<Order> deliveriesToday() {

@@ -3,7 +3,7 @@
  * Klasse User exists for better overview.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.UserPackage;
+package no.brogrammers.systemutviklingsprosjekt.User;
 
 public abstract class User {
     private final int ID;
@@ -11,9 +11,9 @@ public abstract class User {
     private String firstName;
     private int phoneNumber;
     private String email;
-    private int dateOfEmployment; //yyyymmdd
+    private String dateOfEmployment; //yyyy-mm-dd
 
-    public User(int ID, String lastName, String firstName, int phoneNumber, String email, int dateOfEmployment) {
+    public User(int ID, String lastName, String firstName, int phoneNumber, String email, String dateOfEmployment) {
         this.ID = ID;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -42,7 +42,7 @@ public abstract class User {
         return email;
     }
 
-    public int getDateOfEmployment() {
+    public String getDateOfEmployment() {
         return dateOfEmployment;
     }
 

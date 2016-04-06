@@ -3,9 +3,7 @@
  */
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
-import no.brogrammers.systemutviklingsprosjekt.UserPackage.*;
-
-import java.time.LocalDate;
+import no.brogrammers.systemutviklingsprosjekt.User.*;
 
 public class ManageOrderTest {
     public static void main(String[] args) {
@@ -28,7 +26,7 @@ public class ManageOrderTest {
         Driver d = new Driver(1, "", "hei", 90909090, "hehe", 20041011);
         ViewOrderInterface driver = d.newManageOrderView();
 
-        
+
         driver.deleteOrder(1);
 
         System.out.println(manager.deliveriesToday());
