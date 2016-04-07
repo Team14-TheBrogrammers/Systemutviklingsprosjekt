@@ -5,11 +5,9 @@ import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.Orders.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.Orders.Order;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Knut on 11.03.2016.
@@ -59,18 +57,7 @@ public class OrderConnection extends DatabaseConnection {
 
     private boolean checkCustomerId(int id) {
         String sqlCommand = "SELECT * FROM Customer WHERE customer_id = " + id + ";";
-        try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
-            while(resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException sqle) {
-            writeError(sqle.getMessage());
-        } catch (Exception e) {
-            writeError(e.getMessage());
-        }
-        return false;
+        return checkExists(sqlCommand);
     }
 
     public boolean changeOrderDeliveryTime(int orderID, java.sql.Date deliveryDate, double deliveryTime) {
@@ -97,36 +84,59 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public boolean deleteOrder(int id) {
-        String sqlCommand = "DELETE FROM `Orders` WHERE order_id = 2;";
+        String sqlCommand = "DELETE FROM Orders WHERE order_id = " + id + ";";
         return checkUpdated(sqlCommand);
     }
 
-    private boolean checkUpdated(String sqlCommand) {
+    public ArrayList<Order> getOrders() {
+        ArrayList<Order> orders  = new ArrayList<>();
+        String sqlCommand = "SELECT * FROM Orders;";
         try {
             Statement statement = getConnection().createStatement();
-            if(statement.executeUpdate(sqlCommand) != 0) {
-                return true;
+            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                int id = resultSet.getInt("order_id");
+                int customerId = resultSet.getInt("customer_id");
+
+                orders.add(new Order(id, customerId, ));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
         }
-        return false;
-    }
-
-    public ArrayList<Order> getOrders() {
-        ArrayList<Order> orders  = new ArrayList<>();
-        String sqlCommand = "";
-        try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery()
-        }
         return orders;
     }
 
     public ArrayList<Order> viewActiveOrders() {
+        ArrayList<Order> orders  = new ArrayList<>();
+        String sqlCommand = "SELECT * FROM Orders;";
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                if(resultSet.getDate("delivery_date").getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) {
+                    int id = resultSet.getInt("order_id");
+                    int customerId = resultSet.getInt("customer_id");
+                    boolean paymentStatus = resultSet.getBoolean("payment_status");
+                    int orderDate = resultSet.getInt("order_date");
+                    int deliveryDate = resultSet.getInt("delivery_date");
+                    int deliveryTime = resultSet.getInt("");
 
+                    orders.add(new Order(id, customerId, paymentStatus, orderDate, deliveryDate, deliveryTime, adress, ));
+                }
+
+                if(resultSet.getInt("delivery_date") - new Date(Calendar.getInstance().getTimeInMillis())) {
+
+                }
+
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return orders;
     }
 
     public ArrayList<Order> viewOrdersToCustomer(int customerID) {

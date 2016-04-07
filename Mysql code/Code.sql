@@ -43,7 +43,6 @@ CREATE TABLE Company(
   name VARCHAR(30) NOT NULL,
   phone CHAR(8) NOT NULL,
   email_adress VARCHAR(20),
-
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -51,6 +50,7 @@ CREATE TABLE Company(
 CREATE TABLE Orders(
   order_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   payment_status BOOLEAN,
+  order_date DATE,
   delivery_date DATE,
   delivery_time DOUBLE,
   adress VARCHAR(30) NOT NULL,
@@ -60,35 +60,38 @@ CREATE TABLE Orders(
 );
 
 CREATE TABLE Recipe(
-  recipe_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  recipe_name VARCHAR(30) UNIQUE NOT NULL
+  recipe_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE Ingredients (
-  ingredient_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  ingredient_name VARCHAR(30) UNIQUE NOT NULL
+  ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE Recipe_ingredients (
-  recipe_id INTEGER NOT NULL,
-  ingredient_id INTEGER NOT NULL,
-  quantity CHAR(10),
-  PRIMARY KEY (recipe_id, ingredient_id),
-  CONSTRAINT recipeIng_fk FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
+  recipe_name VARCHAR(30) NOT NULL,
+  ingredient_name VARCHAR(30) NOT NULL,
+  quantity CHAR(30),
+  PRIMARY KEY (recipe_name,ingredient_name),
+  CONSTRAINT recipeIng_fk FOREIGN KEY (recipe_name)
+  REFERENCES recipe(recipe_name),
+  CONSTRAINT recipeIng_fk2 FOREIGN KEY (ingredient_name)
+  REFERENCES ingredients(ingredient_name)
 );
 
 CREATE TABLE Recipe_instructions(
-  recipe_id INTEGER NOT NULL,
+  recipe_name VARCHAR(30) NOT NULL,
   step_number INTEGER NOT NULL,
   description VARCHAR(100),
-  PRIMARY KEY (recipe_id,step_number),
-  CONSTRAINT recipeIns_fk FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
+  PRIMARY KEY (recipe_name, step_number),
+  CONSTRAINT recipeIns_fk FOREIGN KEY (recipe_name)
+  REFERENCES recipe(recipe_name)
 );
 
 CREATE TABLE Menu(
   price INTEGER NOT NULL,
-  recipe_id INTEGER NOT NULL,
-  CONSTRAINT menu_fk FOREIGN KEY (recipe_id) REFERENCES Recipe(recipe_id)
+  recipe_name VARCHAR(30) NOT NULL,
+  CONSTRAINT menu_fk FOREIGN KEY (recipe_name)
+  REFERENCES recipe(recipe_name)
 );
 
 CREATE TABLE Employee(
@@ -100,19 +103,24 @@ CREATE TABLE Employee(
   position_id INTEGER NOT NULL,
   username VARCHAR(10) NOT NULL,
   password VARCHAR(15) NOT NULL,
-  email_address VARCHAR(30)
+  email_adress VARCHAR(30)
 );
 
 CREATE TABLE Positions(
   position_id INTEGER AUTO_INCREMENT NOT NULL,
   position_name VARCHAR(10) NOT NULL,
-  PRIMARY KEY(position_id)
+  PRIMARY KEY(position_id),
+  CONSTRAINT positions_fk FOREIGN KEY (emp_id)
+  REFERENCES employee(emp_id)
 );
 
 /*Insert setninger: */
+INSERT INTO Positions(position_name) VALUES('Manager');
 INSERT INTO Positions(position_name) VALUES('Cachier');
+INSERT INTO Positions(position_name) VALUES('Cook');
+INSERT INTO Positions(position_name) VALUES('Driver');
 
-INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address)
+INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_adress)
 VALUES('Sund', 'Ingunn', 98765432, '2015-03-04', 1, 'ingunnsu', 'ingunnIzc00l', 'ingunnsu@yahoo.no');
 
 INSERT INTO Ingredients(ingredient_name) VALUES('Egg');
@@ -127,11 +135,11 @@ INSERT INTO Recipe(recipe_name) VALUES('Pancakes');
 INSERT INTO Recipe(recipe_name) VALUES('Spaghetti');
 INSERT INTO Recipe(recipe_name) VALUES('Tomato Soup');
 
-INSERT INTO Recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES(1, 1, '8 pcs');
-INSERT INTO Recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES(1, 2, '2 cups');
-INSERT INTO Recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES(2, 4, '2 tbsp');
-INSERT INTO Recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES(3, 4, '2 tsp');
-INSERT INTO Recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES(3, 5, '2 cups');
+INSERT INTO Recipe_ingredients(recipe_id, ingredient_name, quantity) VALUES(1, 'Egg', '8 pcs');
+INSERT INTO Recipe_ingredients(recipe_id, ingredient_name, quantity) VALUES(1, 'Milk', '2 cups');
+--INSERT INTO Recipe_ingredients(recipe_id, ingredient_name, quantity) VALUES(2, 'Tomatoes, '2 tbsp');
+--INSERT INTO Recipe_ingredients(recipe_id, ingredient_name, quantity) VALUES(3, 4, '2 tsp');
+--INSERT INTO Recipe_ingredients(recipe_id, ingredient_name, quantity) VALUES(3, 5, '2 cups');
 
 INSERT INTO Recipe_instructions(recipe_id, step_number, description) VALUES(1, 1, 'Whisk together milk, butter, and egg.');
 INSERT INTO Recipe_instructions(recipe_id, step_number, description) VALUES(1, 2, 'Heat a large skillet.');
@@ -161,3 +169,10 @@ UPDATE Orders SET delivery_date = '2015-01-02', delivery_time = 3 WHERE order_id
 
 --Hent ut om customer eksiterer:
 SELECT * FROM Customer WHERE customer_id = 1;
+
+--Hente ut orders
+SELECT * FROM Orders;
+
+--Registrere en ny manager:
+INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_adress)
+  VALUES();

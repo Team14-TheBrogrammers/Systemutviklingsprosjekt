@@ -99,6 +99,35 @@ public abstract class DatabaseConnection {
         }
     }
 
+    public boolean checkUpdated(String sqlCommand) {
+        try {
+            Statement statement = getConnection().createStatement();
+            if(statement.executeUpdate(sqlCommand) != 0) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean checkExists(String sqlCommand) {
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return false;
+    }
+
     public Connection getConnection() {
         return connection;
     }
