@@ -1,5 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt.Recipe;
 
+import java.util.List;
+
 /**
  * Created by Nicole on 07.04.2016.
  */
