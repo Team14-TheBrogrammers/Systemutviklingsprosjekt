@@ -94,3 +94,4 @@ CREATE TABLE positions(
   CONSTRAINT positions_fk FOREIGN KEY (emp_id)
   REFERENCES employee(emp_id)
 );
+
