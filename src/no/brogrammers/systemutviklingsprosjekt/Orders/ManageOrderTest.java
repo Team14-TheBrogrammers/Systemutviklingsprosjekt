@@ -7,6 +7,17 @@ import no.brogrammers.systemutviklingsprosjekt.User.*;
 
 public class ManageOrderTest {
     public static void main(String[] args) {
+
+        Manager man = new Manager(2, "hei", "hei", 91919191, "hehe", "2014-02-01");
+        OrderFactory of = new OrderFactory();
+
+        (of.managerOrder(man)).deleteOrder(12);
+
+        Driver dr = new Driver(2, "hei", "hei", 91919191, "hehe", "2014-02-01");
+        of.driverOrder(dr).deliveriesToday();
+        of.driverOrder(dr).
+
+        /*
         //LocalDate localDate = new ;
 
         //Make new Manager
@@ -43,7 +54,7 @@ public class ManageOrderTest {
 
         //ChangeOrderInterface eci1 = new Manager(1, "hei", "hei", 123, "hehe", 12423543);
         //ManageOrder mo = new ManageOrder();
-
+*/
 
     }
 }

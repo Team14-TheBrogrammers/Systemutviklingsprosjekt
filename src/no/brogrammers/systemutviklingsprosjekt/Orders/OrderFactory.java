@@ -13,12 +13,19 @@ public class OrderFactory {
     }
 
     public ChangeOrderInterface cashierOrder(Cashier cashier) {
-        ChangeOrderInterface cashier = ca.newManageOrderChange();
+        return cashier.newManageOrderChange();
     }
     //Make new Manager
     //Employee ID, last name, first name, phone number, email, date of employment
 
+    public ViewOrderInterface cookOrder(Cook cook) {
+        return cook.newManageOrderView();
+    }
 
+    public ViewOrderInterface driverOrder(Driver driver) {
+        return driver.newManageOrderView();
+    }
+/*
     //Make new Cashier
     Cashier ca = new Cashier(4, "C", "C", 92929292, "cashier@email.com", 20101010);
     ChangeOrderInterface cashier = ca.newManageOrderChange();
@@ -40,7 +47,7 @@ public class OrderFactory {
 
 
     System.out.println(driver.deliveriesToday());
-
+*/
 
     //voi.deleteOrder(1);
 
