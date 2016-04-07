@@ -34,6 +34,7 @@ CREATE TABLE company(
 CREATE TABLE orders(
   order_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   payment_status BIT,
+  order_date DATE,
   delivery_date DATE,
   delivery_time DOUBLE,
   address VARCHAR(30) NOT NULL,
