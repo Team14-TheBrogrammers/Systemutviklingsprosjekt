@@ -5,7 +5,7 @@ package no.brogrammers.systemutviklingsprosjekt.User;
  */
 
 public class Driver extends EmployeeView {
-    public Driver(int ID, String lastName, String firstName, int phoneNumber, String eMail, String dateOfEmployment) {
-        super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment);
+    public Driver(int ID, String lastName, String firstName, int phoneNumber, String eMail, java.sql.Date dateOfEmployment, String username, String password) {
+        super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment, username, password);
     }
 }

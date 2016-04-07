@@ -4,18 +4,28 @@
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 import no.brogrammers.systemutviklingsprosjekt.User.*;
+import no.brogrammers.systemutviklingsprosjekt.Converter.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class ManageOrderTest {
     public static void main(String[] args) {
 
-        Manager man = new Manager(2, "hei", "hei", 91919191, "hehe", "2014-02-01");
+        String date = "2014-02-01";
+        DateConverter dc = new DateConverter();
+        java.sql.Date date1 = dc.stringToSqlDate(date);
+
+        Manager man = new Manager(2, "hei", "hei", 91919191, "hehe", date1, "hei", "hei");
         OrderFactory of = new OrderFactory();
 
         (of.managerOrder(man)).deleteOrder(12);
 
-        Driver dr = new Driver(2, "hei", "hei", 91919191, "hehe", "2014-02-01");
+        Driver dr = new Driver(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "heeeee", "hesfdfsd");
         of.driverOrder(dr).deliveriesToday();
-        of.driverOrder(dr).
+        of.driverOrder(dr)
 
         /*
         //LocalDate localDate = new ;

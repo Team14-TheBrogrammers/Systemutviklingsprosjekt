@@ -6,7 +6,20 @@ package no.brogrammers.systemutviklingsprosjekt.User;
 
 public class UserFactory {
 
-    public UserInterface managerUser(Manager manager) {
-        return manager.newManageUser();
+    public ChangeUserInterface managerUser(Manager manager) {
+        return manager.newManageUserChange();
     }
+
+    public ViewUserInterface cashierUser(Cashier cashier) {
+        return cashier.newManageUserView();
+    }
+
+    public ViewUserInterface cookUser(Cook cook) {
+        return cook.newManageUserView();
+    }
+
+    public ViewUserInterface driverUser(Driver driver) {
+        return driver.newManageUserView();
+    }
+
 }

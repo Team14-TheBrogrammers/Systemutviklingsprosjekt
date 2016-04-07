@@ -6,8 +6,8 @@ package no.brogrammers.systemutviklingsprosjekt.User;
 import no.brogrammers.systemutviklingsprosjekt.Orders.*;
 
 public abstract class EmployeeChange extends EmployeeView {
-    public EmployeeChange(int ID, String lastName, String firstName, int phoneNumber, String eMail, String dateOfEmployment) {
-        super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment);
+    public EmployeeChange(int ID, String lastName, String firstName, int phoneNumber, String eMail, java.sql.Date dateOfEmployment, String username, String password) {
+        super(ID, lastName, firstName, phoneNumber, eMail, dateOfEmployment, username, password);
     }
 
     public ChangeOrderInterface newManageOrderChange() {

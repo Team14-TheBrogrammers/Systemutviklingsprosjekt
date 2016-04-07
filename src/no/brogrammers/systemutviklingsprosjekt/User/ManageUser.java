@@ -1,60 +1,46 @@
 package no.brogrammers.systemutviklingsprosjekt.User;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ingunn on 01.04.2016.
  */
-public class ManageUser implements UserInterface {
+public class ManageUser extends UserConnection implements ChangeUserInterface, ViewUserInterface {
 
-    public boolean regManager() {
-        //legg til i database
-        return true;
+    public ManageUser() {
+        super();
     }
 
-    public boolean regCashier() {
-        return true;
+    public boolean regManager(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        if(super.regManager(lastName, firstName, phone, mail, doe, username, password)) {
+            return true;
+        }
+        return false;
     }
 
-    public boolean regCook() {
-        return true;
+    public boolean regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        if(super.regCashier(lastName, firstName, phone, mail, doe, username, password)) {
+            return true;
+        }
+        return false;
     }
 
-    public boolean regDriver() {
-        return true;
+    public boolean regCook(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        if(super.regCook(lastName, firstName, phone, mail, doe, username, password)) {
+            return true;
+        }
+        return false;
     }
 
-    public boolean deleteUser() {
-        return true;
-    }
-
-    public boolean changeUser() {
-        return true;
-    }
-
-    public User viewUser() {
-        return null;
-    }
-    public boolean regManager(int id, String lastName, String firstName, int phone, String mail, String doe) {
-        Manager manager = new Manager(id, lastName, firstName, phone, mail, doe);
-        // if (add til database)
-        return true;
-    }
-
-    public boolean regCashier(int id, String lastName, String firstName, int phone, String mail, String doe) {
-        Cashier cashier = new Cashier(id, lastName, firstName, phone, mail, doe);
-        return true;
-    }
-
-    public boolean regCook(int id, String lastName, String firstName, int phone, String mail, String doe) {
-        Cook cook = new Cook(id, lastName, firstName, phone, mail, doe);
-        return true;
-    }
-
-    public boolean regDriver(int id, String lastName, String firstName, int phone, String mail, String doe) {
-        Driver driver = new Driver(id, lastName, firstName, phone, mail, doe);
-        return true;
+    public boolean regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        if(super.regDriver(lastName, firstName, phone, mail, doe, username, password)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean deleteUser(int id) {
+
         //sjekk om bruker eksisterer
         return false;
     }
@@ -81,6 +67,10 @@ public class ManageUser implements UserInterface {
     }
 
     public User viewUser(String lastName) { //last name
+        return null;
+    }
+
+    public ArrayList<User> viewAllUsers() {
         return null;
     }
 }
