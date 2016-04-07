@@ -1,6 +1,5 @@
 /* Database */
 
-DROP TABLE IF EXISTS Adress_zip;
 DROP TABLE IF EXISTS Positions;
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Menu;
@@ -12,19 +11,27 @@ DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Company;
 DROP TABLE IF EXISTS Private_customer;
 DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS Adress_zip;
+
+CREATE TABLE Adress_zip(
+  adress_id INTEGER NOT NULL AUTO_INCREMENT,
+  address VARCHAR(30) NOT NULL,
+  zip INTEGER(4) NOT NULL,
+  PRIMARY KEY(adress_id)
+);
 
 CREATE TABLE Customer(
   customer_id INTEGER AUTO_INCREMENT NOT NULL,
-  PRIMARY KEY(customer_id)
+  adress_id INTEGER NOT NULL,
+  PRIMARY KEY(customer_id),
+  FOREIGN KEY(adress_id) REFERENCES Adress_zip(adress_id)
 );
 
 CREATE TABLE Private_customer(
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  private_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   last_name VARCHAR(30) NOT NULL,
   first_name VARCHAR(30) NOT NULL,
   phone CHAR(8)NOT NULL,
-  adress VARCHAR(30) NOT NULL,
-  zip CHAR(4) NOT NULL,
   email_adress VARCHAR(20),
 
   customer_id INTEGER NOT NULL,
@@ -35,8 +42,6 @@ CREATE TABLE Company(
   company_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
   phone CHAR(8) NOT NULL,
-  adress VARCHAR(30) NOT NULL,
-  zip CHAR(4) NOT NULL,
   email_adress VARCHAR(20),
 
   customer_id INTEGER NOT NULL,
@@ -104,14 +109,6 @@ CREATE TABLE Positions(
   PRIMARY KEY(position_id)
 );
 
-
-CREATE TABLE Adress_zip(
-  adress_id INTEGER NOT NULL AUTO_INCREMENT,
-  address VARCHAR(30) NOT NULL,
-  zip INTEGER(4) NOT NULL,
-  PRIMARY KEY(adress_id)
-);
-
 /*Insert setninger: */
 INSERT INTO Positions(position_name) VALUES('Cachier');
 
@@ -140,8 +137,11 @@ INSERT INTO Recipe_instructions(recipe_id, step_number, description) VALUES(1, 1
 INSERT INTO Recipe_instructions(recipe_id, step_number, description) VALUES(1, 2, 'Heat a large skillet.');
 
 INSERT INTO Customer(customer_id) VALUES(DEFAULT);
+INSERT INTO Adress_zip(address, zip) VALUES('asdasDASDASD', 1234);
+INSERT INTO Customer(adress_id) VALUES(1)
 INSERT INTO Private_customer(last_name, first_name, phone, adress, zip, email_adress, customer_id)
   VALUES('Sund', 'Ingunn', 12345678, 'Asdasds', 123, 'ingunn@sund.no', 1);
+INSERT INTO Private_customer(private_id, last_name, first_name, phone, email_adress, customer_id)
 
 
 ---SQL-setninger under her:

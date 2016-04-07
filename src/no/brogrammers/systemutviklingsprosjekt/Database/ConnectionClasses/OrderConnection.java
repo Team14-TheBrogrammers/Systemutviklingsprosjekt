@@ -75,17 +75,7 @@ public class OrderConnection extends DatabaseConnection {
 
     public boolean changeOrderDeliveryTime(int orderID, java.sql.Date deliveryDate, double deliveryTime) {
         String sqlCommand = "UPDATE Orders SET delivery_date = " + deliveryDate + ", delivery_time = " + deliveryTime + " WHERE order_id = " + orderID + ";";
-        try {
-            Statement statement = getConnection().createStatement();
-            if(statement.executeUpdate(sqlCommand) != 0) {
-                return true;
-            }
-        } catch (SQLException sqle) {
-            writeError(sqle.getMessage());
-        } catch (Exception e) {
-            writeError(e.getMessage());
-        }
-        return false;
+        return checkUpdated(sqlCommand);
     }
 
     public Order viewOrderByID(int orderID) {
@@ -108,6 +98,10 @@ public class OrderConnection extends DatabaseConnection {
 
     public boolean deleteOrder(int id) {
         String sqlCommand = "DELETE FROM `Orders` WHERE order_id = 2;";
+        return checkUpdated(sqlCommand);
+    }
+
+    private boolean checkUpdated(String sqlCommand) {
         try {
             Statement statement = getConnection().createStatement();
             if(statement.executeUpdate(sqlCommand) != 0) {
@@ -123,6 +117,11 @@ public class OrderConnection extends DatabaseConnection {
 
     public ArrayList<Order> getOrders() {
         ArrayList<Order> orders  = new ArrayList<>();
+        String sqlCommand = "";
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery()
+        }
         return orders;
     }
 
