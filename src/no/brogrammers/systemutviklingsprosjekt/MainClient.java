@@ -1,28 +1,32 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
+import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.UserConnection;
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseInformationReader;
+import no.brogrammers.systemutviklingsprosjekt.Database.Encryption;
 
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * Created by Ingunn on 09.03.2016.
  */
 public class MainClient {
     public static void main(String[] args) {
-        //Reading database inforamtion
-        String fileLocation = "C:\\SystemutviklingsProsjekt\\databaseInformation.txt";
-        DatabaseInformationReader infoReader = new DatabaseInformationReader(fileLocation);
 
-        String databaseDriver = "com.mysql.jdbc.Driver";
-        String databaseName = infoReader.readInformation();
-                //"jdbc:mysql://mysql.stud.iie.ntnu.no:3306/";
-        String errorFileLocation = "C:\\SystemutviklingsProsjekt\\errorLog.txt";
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(databaseDriver, databaseName, errorFileLocation);
+        //This code is just temporary, there will be code for starting up a GUI form with login etc. here.
+
+        //System.out.println(Encryption.encryptPassword("asdsad"));
+
+        //test();
+    }
+
+    private static void test() {
+        DatabaseConnection databaseConnection = new UserConnection(); //databaseDriver, databaseName, errorFileLocation);
 
         try {
-            ResultSet resultSet = databaseConnection.getStatement().executeQuery("SELECT * FROM test;");
+            Statement statement = databaseConnection.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM test;");
             while(resultSet.next()) {
                 String name = resultSet.getString("navn");
                 System.out.println(name);

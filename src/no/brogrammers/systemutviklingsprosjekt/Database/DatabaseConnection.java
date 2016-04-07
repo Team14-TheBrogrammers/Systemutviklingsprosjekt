@@ -1,24 +1,31 @@
 package no.brogrammers.systemutviklingsprosjekt.Database;
 
+import java.io.*;
 import java.sql.*;
 
 /**
  * Created by The Brogrammers on 09.03.2016.
  */
-public class DatabaseConnection {
+public abstract class DatabaseConnection {
 
     private Connection connection;
-    private Statement statement;
-    private String databaseDriver;
-    private String databaseName;
-    private ErrorLog errorLogger;
+    //private Statement statement; //skal vi bruke PreparedStatement her isteden og heller legge det inn i hver enkelt metode.
 
-    public DatabaseConnection(String databaseDriver, String databaseName, String errorFileLocation) {
-        this.databaseDriver = databaseDriver;
-        this.databaseName = databaseName;
-        errorLogger = new ErrorLog(errorFileLocation);
-        startConnection();
-        test();
+    private final String databaseDriver = "com.mysql.jdbc.Driver";
+    private String databaseName; // = readInformation();
+    private final String errorLocation = "C:\\SystemutviklingsProsjekt\\errorLog.txt";
+    private final String informationLocation = "C:\\SystemutviklingsProsjekt\\databaseInformation.txt";
+
+    private File errorFile;
+    private File informationFile;
+
+    public DatabaseConnection() {
+        //Set location for local files
+        errorFile = new File(errorLocation);
+        informationFile = new File(informationLocation);
+
+        databaseName = readInformation(); //Read information that is locally stored on the computer
+        startConnection(); //Start connection to the database
     }
 
     /**
@@ -28,53 +35,112 @@ public class DatabaseConnection {
         try {
             Class.forName(databaseDriver);
             connection = DriverManager.getConnection(databaseName);
-            statement = connection.createStatement();
+            //statement = connection.createStatement();
         } catch (ClassNotFoundException e) {
             //e.printStackTrace();
-            errorLogger.writeError(e.getMessage());
+            writeError(e.getMessage());
         } catch (SQLException sqle) {
-            errorLogger.writeError(sqle.getMessage());
+            writeError(sqle.getMessage());
         } catch (Exception e) {
-            errorLogger.writeError(e.getMessage());
+            writeError(e.getMessage());
         }
     }
 
-    public Statement getStatement() {
-        return statement;
-    }
-
-    private void test() {
+    /**
+     * Read the information about the login details for the database.
+     * Information includes database website, name, username and password for the connection.
+     * @return a string contining the information for login details.
+     */
+    private String readInformation() {
+        String information = "";
         try {
-            ResultSet res = statement.executeQuery("SELECT * FROM test;");
-            while(res.next()) {
-                String name = res.getString("name");
-                System.out.println(name);
-            }
-        } catch (SQLException sqle) {
-
+            BufferedReader reader = new BufferedReader(new FileReader(informationFile));
+            information = reader.readLine();
+        } catch (FileNotFoundException e) {
+            writeError(e.getMessage());
         } catch (Exception e) {
-
+            writeError(e.getMessage());
         }
+        return information;
     }
 
-    //UPDATE - INSERT
-
-    //DELETE
-
-    //SELECT
+    /**
+     * Do write a message in a log file, so the user can later view errors.
+     * @param message the error message as a string to write in the file.
+     * @return true if the method did write the message in the file. False if something wrong occoured.
+     */
+    public boolean writeError(String message) {
+        try {
+            FileWriter fileWriter = new FileWriter(errorFile, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(message);
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     /**
      * Method for closing the connection properly.
      */
-    public void stopConnection() {
+    public /*abstract*/ void stopConnection() {
         try {
-            statement.close();
+            //statement.close();
             connection.close();
         } catch (SQLException e) {
-            //e.printStackTrace();
-            errorLogger.writeError(e.getMessage());
+            writeError(e.getMessage());
         } catch (Exception e) {
-            errorLogger.writeError(e.getMessage());
+            writeError(e.getMessage());
         }
     }
+
+    public boolean checkUpdated(String sqlCommand) {
+        try {
+            Statement statement = getConnection().createStatement();
+            if(statement.executeUpdate(sqlCommand) != 0) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean checkExists(String sqlCommand) {
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return false;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    //Unødvendig under her???
+
+    /*public Statement getStatement() {
+        return statement;
+    }*/
+
+    //UPDATE - INSERT
+
+    //DELETE (DROP?)
+
+    //SELECT
 }

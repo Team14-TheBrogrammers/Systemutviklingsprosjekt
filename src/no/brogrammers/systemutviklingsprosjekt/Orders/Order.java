@@ -35,6 +35,24 @@ public class Order {
         this.deliveryTime = deliveryTime;
     }
 
+    public Order(int customerID, boolean paymentStatus, int orderDate, int deliveryDate, double deliveryTime, String address, int zipCode) {
+        this.customerID = customerID;
+        this.paymentStatus = paymentStatus;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.deliveryTime = deliveryTime;
+        this.address = address;
+        this.zipCode = zipCode;
+    }
+
+    public Order(int customerID, boolean paymentStatus, int orderDate, int deliveryDate, double deliveryTime) {
+        this.customerID = customerID;
+        this.paymentStatus = paymentStatus;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.deliveryTime = deliveryTime;
+    }
+
     public int getOrderID() {
         return orderID;
     }
@@ -91,7 +109,7 @@ public class Order {
 
     public double convertTime() {
         String time = Double.toString(deliveryTime).substring(2);
-
+        return 0.0;
     }
 
     public String toString() {
