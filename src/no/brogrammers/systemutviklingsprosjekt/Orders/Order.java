@@ -4,53 +4,63 @@
 
 package no.brogrammers.systemutviklingsprosjekt.Orders;
 
+import java.util.ArrayList;
+
 public class Order {
     private int orderID;
     private int customerID;
     private boolean paymentStatus;
-    private int orderDate; //Date when the order was placed:
-    private int deliveryDate;
+    private java.sql.Date orderDate; //Date when the order was placed:
+    private java.sql.Date deliveryDate;
     private double deliveryTime; //From 8 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
-    private String address;
+    private String adress;
     private int zipCode;
-    //Recipes tabell??
+    private ArrayList<Recipe> recipes = new ArrayList<>();
 
-    public Order(int orderID, int customerID, boolean paymentStatus, int orderDate, int deliveryDate, double deliveryTime, String address, int zipCode) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String adress, int zipCode, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.deliveryTime = deliveryTime;
-        this.address = address;
+        this.adress = adress;
         this.zipCode = zipCode;
+        this.recipes = recipes;
     }
 
-    public Order(int orderID, int customerID, boolean paymentStatus, int orderDate, int deliveryDate, double deliveryTime) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.deliveryTime = deliveryTime;
+        this.recipes = recipes;
     }
 
-    public Order(int customerID, boolean paymentStatus, int orderDate, int deliveryDate, double deliveryTime, String address, int zipCode) {
+    public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String adress, int zipCode, ArrayList<Recipe> recipes) {
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.deliveryTime = deliveryTime;
-        this.address = address;
+        this.adress = adress;
         this.zipCode = zipCode;
+        this.recipes = recipes;
     }
 
-    public Order(int customerID, boolean paymentStatus, int orderDate, int deliveryDate, double deliveryTime) {
+    public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.deliveryTime = deliveryTime;
+        this.recipes = recipes;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);
     }
 
     public int getOrderID() {
@@ -65,11 +75,11 @@ public class Order {
         return paymentStatus;
     }
 
-    public int getOrderDate() {
+    public java.sql.Date getOrderDate() {
         return orderDate;
     }
 
-    public int getDeliveryDate() {
+    public java.sql.Date getDeliveryDate() {
         return deliveryDate;
     }
 
@@ -77,8 +87,8 @@ public class Order {
         return deliveryTime;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
     public int getZipCode() {
@@ -91,16 +101,16 @@ public class Order {
         this.paymentStatus = paymentStatus;
     }
 
-    public void setDeliveryDate(int deliveryDate) {
+    public void setDeliveryDate(java.sql.Date deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
-    public void setDeliveryTime(int deliveryTime) {
+    public void setDeliveryTime(double deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAdress(String address) {
+        this.adress = address;
     }
 
     public void setZipCode(int zipCode) {
@@ -109,11 +119,15 @@ public class Order {
 
     public double convertTime() {
         String time = Double.toString(deliveryTime).substring(2);
-        return 0.0;
+        return 2.0;
     }
 
     public String toString() {
+        String orderList = "";
+        for(Recipe rec : recipes) {
+            orderList += rec.toString() + "\n";
+        }
         String pay = paymentStatus ? "Paid" : "Not paid";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode;
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAdress, zip: " + adress + ", " + zipCode + "\nOrders: \n" + orderList;
     }
 }

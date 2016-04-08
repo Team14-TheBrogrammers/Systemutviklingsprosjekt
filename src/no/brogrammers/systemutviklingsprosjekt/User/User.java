@@ -3,7 +3,7 @@
  * Klasse User exists for better overview.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.UserPackage;
+package no.brogrammers.systemutviklingsprosjekt.User;
 
 public abstract class User {
     private final int ID;
@@ -11,9 +11,11 @@ public abstract class User {
     private String firstName;
     private int phoneNumber;
     private String email;
-    private int dateOfEmployment; //yyyymmdd
+    private java.sql.Date dateOfEmployment; //yyyy-mm-dd
+    private String username;
+    private String password;
 
-    public User(int ID, String lastName, String firstName, int phoneNumber, String email, int dateOfEmployment) {
+    public User(int ID, String lastName, String firstName, int phoneNumber, String email, java.sql.Date dateOfEmployment, String username, String password) {
         this.ID = ID;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -42,8 +44,16 @@ public abstract class User {
         return email;
     }
 
-    public int getDateOfEmployment() {
+    public java.sql.Date getDateOfEmployment() {
         return dateOfEmployment;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setLastName(String lastName) {
@@ -60,6 +70,14 @@ public abstract class User {
 
     public void seteMail(String eMail) {
         this.email = eMail;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String toString() {
