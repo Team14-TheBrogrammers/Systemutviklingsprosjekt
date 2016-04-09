@@ -2,7 +2,7 @@ package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ResultTreeType;
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.UserPackage.*;
+import no.brogrammers.systemutviklingsprosjekt.User.*;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ public class UserConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }
 
-    public boolean regCachier(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+    public boolean regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
         return checkUpdated(sqlCommand);

@@ -53,7 +53,7 @@ CREATE TABLE Orders(
   order_date DATE,
   delivery_date DATE,
   delivery_time DOUBLE,
-  adress VARCHAR(30) NOT NULL,
+  address VARCHAR(30) NOT NULL,
   total_price INTEGER NOT NULL,
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
@@ -147,7 +147,7 @@ INSERT INTO Recipe_instructions(recipe_id, step_number, description) VALUES(1, 2
 INSERT INTO Customer(customer_id) VALUES(DEFAULT);
 INSERT INTO Adress_zip(address, zip) VALUES('asdasDASDASD', 1234);
 INSERT INTO Customer(adress_id) VALUES(1)
-INSERT INTO Private_customer(last_name, first_name, phone, adress, zip, email_adress, customer_id)
+INSERT INTO Private_customer(last_name, first_name, phone, address, zip, email_adress, customer_id)
   VALUES('Sund', 'Ingunn', 12345678, 'Asdasds', 123, 'ingunn@sund.no', 1);
 INSERT INTO Private_customer(private_id, last_name, first_name, phone, email_adress, customer_id)
 
@@ -155,12 +155,12 @@ INSERT INTO Private_customer(private_id, last_name, first_name, phone, email_adr
 ---SQL-setninger under her:
 SELECT MAX(order_id) AS count FROM Orders;
 --INSERT:
-INSERT INTO Orders(payment_status, delivery_date, delivery_time, adress, total_price, customer_id) VALUES();
+INSERT INTO Orders(payment_status, delivery_date, delivery_time, address, total_price, customer_id) VALUES();
 
-INSERT INTO Orders(delivery_date, delivery_time, adress, total_price, customer_id)
+INSERT INTO Orders(delivery_date, delivery_time, address, total_price, customer_id)
 VALUES('2015-1-1', '2.0', 'kikijij', 1, 1);
 
-INSERT INTO Orders(delivery_date, delivery_time, adress, total_price, customer_id)
+INSERT INTO Orders(delivery_date, delivery_time, address, total_price, customer_id)
 VALUES(?, ?, ?, ?, ?);
 
 --Oppdatere deliverytime til en order:

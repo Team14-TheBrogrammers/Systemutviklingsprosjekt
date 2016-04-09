@@ -1,10 +1,11 @@
 package no.brogrammers.systemutviklingsprosjekt.User;
-
+import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.UserConnection;
 import java.util.ArrayList;
 
 /**
  * Created by Ingunn on 01.04.2016.
  */
+
 public class ManageUser extends UserConnection implements ChangeUserInterface, ViewUserInterface {
 
     public ManageUser() {
@@ -71,6 +72,11 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
     }
 
     public ArrayList<User> viewAllUsers() {
-        return null;
+        //ArrayList<User> tmp = new ArrayList<>();
+        //if(super.viewAllUsers()) {
+
+        //}
+        //return tmp;
+        return super.viewAllUsers();
     }
 }

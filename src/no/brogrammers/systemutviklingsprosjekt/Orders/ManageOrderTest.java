@@ -25,8 +25,7 @@ public class ManageOrderTest {
 
         Driver dr = new Driver(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "heeeee", "hesfdfsd");
         of.driverOrder(dr).deliveriesToday();
-        of.driverOrder(dr)
-
+        of.managerOrder(man).deliveriesToday();
         /*
         //LocalDate localDate = new ;
 
