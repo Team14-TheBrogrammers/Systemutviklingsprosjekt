@@ -19,22 +19,22 @@ public class OrderConnection extends DatabaseConnection {
     public int addOrder(Order order) {
         if(checkCustomerId(order.getCustomerID())) {
             int newNumber = 1; //If there is no other numbers before this number will be set as the id
-            boolean ok = false;
+            boolean finished = false;
             ResultSet resultSet;
             PreparedStatement selectStatement;
             PreparedStatement insertStatement;
 
-            String selectCommand = "SELECT MAX(order_id) AS count FROM Orders;";
+            String selectCommand = "SELECT MAX(order_id) AS c FROM Orders;";
             String insertCommand = "INSERT INTO Orders(delivery_date, delivery_time, adress, total_price, customer_id)\n" +
                     "VALUES(?, ?, ?, ?, ?);";
 
-            while(!ok) {
+            while(!finished) {
                 try {
                     selectStatement = getConnection().prepareStatement(selectCommand);
                     resultSet = selectStatement.executeQuery();
 
                     resultSet.next();
-                    newNumber = resultSet.getInt("count") + 1;
+                    newNumber = resultSet.getInt("c") + 1;
                     insertStatement = getConnection().prepareStatement(insertCommand);
                     insertStatement.setInt(1, order.getDeliveryDate());
                     insertStatement.setDouble(2, order.getDeliveryTime());
@@ -42,7 +42,7 @@ public class OrderConnection extends DatabaseConnection {
                     insertStatement.setDouble(4, order.getPrice());
                     insertStatement.setInt(5, order.getCustomerID());
                     insertStatement.executeUpdate();
-                    ok = true;
+                    finished = true;
                 } catch (SQLException sqle) {
                     writeError(sqle.getMessage());
                 } catch (Exception e) {

@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt.Converter;
+package no.brogrammers.systemutviklingsprosjekt.converter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

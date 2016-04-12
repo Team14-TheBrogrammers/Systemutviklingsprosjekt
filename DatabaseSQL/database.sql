@@ -24,6 +24,8 @@ CREATE TABLE Customer(
   customer_id INTEGER AUTO_INCREMENT NOT NULL,
   address VARCHAR(30) NOT NULL,
   zip INTEGER(4) NOT NULL,
+  phone CHAR(8)NOT NULL,
+  email_address VARCHAR(20),
   PRIMARY KEY(customer_id),
   FOREIGN KEY(zip) REFERENCES Postal(zip)
 );
@@ -32,8 +34,6 @@ CREATE TABLE Private_customer(
   private_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   last_name VARCHAR(30) NOT NULL,
   first_name VARCHAR(30) NOT NULL,
-  phone CHAR(8)NOT NULL,
-  email_address VARCHAR(20),
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -41,8 +41,6 @@ CREATE TABLE Private_customer(
 CREATE TABLE Company(
   company_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
-  phone CHAR(8) NOT NULL,
-  email_address VARCHAR(20),
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -165,6 +163,7 @@ INSERT INTO Customer(address, zip) VALUES('Trondheims gate 2', 1234);
 INSERT INTO Private_customer(last_name, first_name, phone, email_address, customer_id)
   VALUES('Sund', 'Ingunn', 12345678, 'ingunn@sund.no', 1);
 
+/**
 
 ---SQL-setninger under her:
 SELECT MAX(order_id) AS count FROM Orders;
@@ -190,3 +189,14 @@ SELECT * FROM Orders;
 --Registrere en ny manager:
 INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address)
   VALUES();
+**/
+/**--Sette inn i Customer tabell:**/
+INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);
+
+/** Sette inn i Private Customer tabell:*/
+
+INSERT INTO Private_customer(private_id, last_name, first_name, customer_id) VALUES(?, ?, ?, ?);
+
+SELECT * FROM Customer NATURAL JOIN Company;
+SELECT * FROM Company WHERE customer_id = ?;
+SELECT * FROM Private_customer WHERE customer_id = ?;

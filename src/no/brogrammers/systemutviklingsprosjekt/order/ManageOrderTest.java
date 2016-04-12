@@ -4,7 +4,7 @@
 
 package no.brogrammers.systemutviklingsprosjekt.order;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
-import no.brogrammers.systemutviklingsprosjekt.Converter.*;
+import no.brogrammers.systemutviklingsprosjekt.converter.*;
 
 
 public class ManageOrderTest {
