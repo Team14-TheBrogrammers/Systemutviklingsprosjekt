@@ -41,42 +41,63 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
     }
 
     public boolean deleteUser(int id) {
-
-        //sjekk om bruker eksisterer
+        if(super.deleteUser(id)) {
+            return true;
+        }
         return false;
     }
 
     public boolean changeLastName(int id, String lastName) {
+        if(super.changeLastName(id, lastName)) {
+            return true;
+        }
         return false;
     }
 
     public boolean changeFirstName(int id, String firstName) {
+        if(super.changeFirstName(id, firstName)) {
+            return true;
+        }
         return false;
     }
 
     public boolean changePhone(int id, int phone) {
+        if(super.changePhone(id, phone)) {
+            return true;
+        }
         return false;
     }
 
     public boolean changeMail(int id, String mail) {
+        if(super.changeMail(id, mail)) {
+            return true;
+        }
         return false;
     }
 
-
-    public User viewUser(int id) { //id
-        return null;
+    public boolean changeUsername(int id, String username) {
+        if(super.changeUsername(id, username)) {
+            return true;
+        }
+        return false;
     }
 
-    public User viewUser(String lastName) { //last name
-        return null;
+    public boolean changePassword(int id, String password) {
+        if(super.changePassword(id, password) {
+            return true;
+        }
+        return false;
+    }
+
+    public User viewUser(int id) { //id
+        return super.viewUser(id);
+    }
+
+    public User viewUser(String username) { //username
+        return super.viewUser(username);
     }
 
     public ArrayList<User> viewAllUsers() {
-        //ArrayList<User> tmp = new ArrayList<>();
-        //if(super.viewAllUsers()) {
-
-        //}
-        //return tmp;
         return super.viewAllUsers();
     }
 }
