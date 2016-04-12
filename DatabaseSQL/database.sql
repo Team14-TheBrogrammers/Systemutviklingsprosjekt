@@ -104,7 +104,7 @@ CREATE TABLE Employee(
   emp_id INTEGER AUTO_INCREMENT PRIMARY KEY,
   last_name VARCHAR(30) NOT NULL,
   first_name VARCHAR(30) NOT NULL,
-  phone CHAR(8) NOT NULL,
+  phone INTEGER(8) NOT NULL,
   date_of_employment DATE,
   position_id INTEGER NOT NULL,
   username VARCHAR(10) NOT NULL,
@@ -114,9 +114,18 @@ CREATE TABLE Employee(
   REFERENCES Postition(position_id)
 );
 
+CREATE TABLE Order_recipe(
+  order_id INTEGER NOT NULL,
+  recipe_name VARCHAR(30) NOT NULL,
+  quantity INTEGER NOT NULL,
+  PRIMARY KEY(order_id, recipe_name),
+  FOREIGN KEY(order_id) REFERENCES Order(order_id),
+  FOREIGN KEY(recipe_name) REFERENCES Recipe(recipe_name)
+);
+
 /*Insert setninger: */
 INSERT INTO Position(position_name) VALUES('Manager');
-INSERT INTO Position(position_name) VALUES('Cachier');
+INSERT INTO Position(position_name) VALUES('Cashier');
 INSERT INTO Position(position_name) VALUES('Cook');
 INSERT INTO Position(position_name) VALUES('Driver');
 

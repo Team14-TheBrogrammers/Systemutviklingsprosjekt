@@ -99,6 +99,12 @@ public abstract class DatabaseConnection {
         }
     }
 
+    /**
+     * Method for checking if a sql statement does any update to the database.
+     * @param sqlCommand The string that contains the sql statement that is used in this method.
+     * @return true if there is any rows updated in the database. Otherwise false.
+     */
+
     public boolean checkUpdated(String sqlCommand) {
         try {
             Statement statement = getConnection().createStatement();
@@ -112,6 +118,12 @@ public abstract class DatabaseConnection {
         }
         return false;
     }
+
+    /**
+     * Method for checking if any rows is returned in a ResultSet with a sql query.
+     * @param sqlCommand is the sql query that is used in this method.
+     * @return true if the ResultSet returns any rows. Else false.
+     */
 
     public boolean checkExists(String sqlCommand) {
         try {
@@ -131,16 +143,4 @@ public abstract class DatabaseConnection {
     public Connection getConnection() {
         return connection;
     }
-
-    //Unødvendig under her???
-
-    /*public Statement getStatement() {
-        return statement;
-    }*/
-
-    //UPDATE - INSERT
-
-    //DELETE (DROP?)
-
-    //SELECT
 }
