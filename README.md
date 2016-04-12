@@ -4,7 +4,7 @@ Kode til prosjektet i faget TDAT1006-A 16V Systemutvikling 1 med databaseprosjek
 
 ##Features
 
-###Screenshots
+##Screenshots
 
 ##About
 © 2016 The Brogrammers
