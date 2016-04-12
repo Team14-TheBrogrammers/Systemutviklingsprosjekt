@@ -1,9 +1,23 @@
 package no.brogrammers.systemutviklingsprosjekt.User;
 
+import no.brogrammers.systemutviklingsprosjekt.Converter.*;
+
 /**
  * Created by Ingunn on 07.04.2016.
  */
 public class ManageUserTest {
+    public static void main(String[] args) {
 
-    Manager
+
+        DateConverter dc = new DateConverter();
+
+        Manager man = new Manager(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "hei", "hei");
+
+        UserFactory uf = new UserFactory();
+        uf.managerUser(man).viewAllUsers();
+
+        Driver dri = new Driver(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "hei", "hei");
+
+        uf.driverUser(dri).viewAllUsers();
+    }
 }
