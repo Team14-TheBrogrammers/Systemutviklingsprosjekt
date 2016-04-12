@@ -2,7 +2,7 @@
  * Created by Ingunn on 01.04.2016.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.User;
+package no.brogrammers.systemutviklingsprosjekt.user;
 
 public class UserFactory {
 

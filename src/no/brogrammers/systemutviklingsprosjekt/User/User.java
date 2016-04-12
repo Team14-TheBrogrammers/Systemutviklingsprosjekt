@@ -1,9 +1,9 @@
 /**
  * Created by The Brogrammers on 10.03.2016.
- * Klasse User exists for better overview.
+ * Klasse user exists for better overview.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.User;
+package no.brogrammers.systemutviklingsprosjekt.user;
 
 public abstract class User {
     private final int ID;
@@ -81,6 +81,6 @@ public abstract class User {
     }
 
     public String toString() {
-        return "User ID: " + ID + "\nName: " + lastName + ", " + firstName + "\nPhone Number: " + phoneNumber + "\nEmail: " + email + "\nDate of Employment: " + dateOfEmployment;
+        return "user ID: " + ID + "\nName: " + lastName + ", " + firstName + "\nPhone Number: " + phoneNumber + "\nEmail: " + email + "\nDate of Employment: " + dateOfEmployment;
     }
 }

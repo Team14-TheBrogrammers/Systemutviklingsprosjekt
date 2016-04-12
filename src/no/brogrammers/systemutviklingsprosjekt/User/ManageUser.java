@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt.User;
+package no.brogrammers.systemutviklingsprosjekt.user;
 import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.UserConnection;
 import java.util.ArrayList;
 
@@ -83,7 +83,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
     }
 
     public boolean changePassword(int id, String password) {
-        if(super.changePassword(id, password) {
+        if(super.changePassword(id, password)) {
             return true;
         }
         return false;

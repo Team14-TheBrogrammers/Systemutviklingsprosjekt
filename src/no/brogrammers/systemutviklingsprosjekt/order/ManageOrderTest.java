@@ -2,13 +2,9 @@
  * Created by Ingunn on 10.03.2016.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.Orders;
-import no.brogrammers.systemutviklingsprosjekt.User.*;
-import no.brogrammers.systemutviklingsprosjekt.Converter.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package no.brogrammers.systemutviklingsprosjekt.order;
+import no.brogrammers.systemutviklingsprosjekt.user.*;
+import no.brogrammers.systemutviklingsprosjekt.converter.*;
 
 
 public class ManageOrderTest {

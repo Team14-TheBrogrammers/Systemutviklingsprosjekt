@@ -1,5 +1,5 @@
-package no.brogrammers.systemutviklingsprosjekt.Orders;
-import no.brogrammers.systemutviklingsprosjekt.User.*;
+package no.brogrammers.systemutviklingsprosjekt.order;
+import no.brogrammers.systemutviklingsprosjekt.user.*;
 
 /**
  * Created by Ingunn on 01.04.2016.

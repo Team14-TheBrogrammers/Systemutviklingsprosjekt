@@ -2,17 +2,11 @@ package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
 
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
 
-import no.brogrammers.systemutviklingsprosjekt.Orders.Order;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-
 /**
  * Created by Knut on 11.03.2016.
  */
 public class OrderConnection extends DatabaseConnection {
-    public OrderConnection() {
+    /*public OrderConnection() {
         super();
     }
 
@@ -24,8 +18,8 @@ public class OrderConnection extends DatabaseConnection {
             PreparedStatement selectStatement;
             PreparedStatement insertStatement;
 
-            String selectCommand = "SELECT MAX(order_id) AS count FROM Orders;";
-            String insertCommand = "INSERT INTO Orders(delivery_date, delivery_time, adress, total_price, customer_id)\n" +
+            String selectCommand = "SELECT MAX(order_id) AS count FROM order;";
+            String insertCommand = "INSERT INTO order(delivery_date, delivery_time, adress, total_price, customer_id)\n" +
                     "VALUES(?, ?, ?, ?, ?);";
 
             while(!ok) {
@@ -60,7 +54,7 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public boolean changeOrderDeliveryTime(int orderID, java.sql.Date deliveryDate, double deliveryTime) {
-        String sqlCommand = "UPDATE Orders SET delivery_date = " + deliveryDate + ", delivery_time = " + deliveryTime + " WHERE order_id = " + orderID + ";";
+        String sqlCommand = "UPDATE order SET delivery_date = " + deliveryDate + ", delivery_time = " + deliveryTime + " WHERE order_id = " + orderID + ";";
         return checkUpdated(sqlCommand);
     }
 
@@ -83,13 +77,13 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public boolean deleteOrder(int id) {
-        String sqlCommand = "DELETE FROM Orders WHERE order_id = " + id + ";";
+        String sqlCommand = "DELETE FROM order WHERE order_id = " + id + ";";
         return checkUpdated(sqlCommand);
     }
 
     public ArrayList<Order> getOrders() {
         ArrayList<Order> orders  = new ArrayList<>();
-        String sqlCommand = "SELECT * FROM Orders;";
+        String sqlCommand = "SELECT * FROM order;";
         try {
             Statement statement = getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(sqlCommand);
@@ -109,7 +103,7 @@ public class OrderConnection extends DatabaseConnection {
 
     public ArrayList<Order> viewActiveOrders() {
         ArrayList<Order> orders  = new ArrayList<>();
-        String sqlCommand = "SELECT * FROM Orders;";
+        String sqlCommand = "SELECT * FROM order;";
         try {
             Statement statement = getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(sqlCommand);
@@ -154,5 +148,5 @@ public class OrderConnection extends DatabaseConnection {
         return null;
     }
 
-    //Legge alle metodene for ManageOrder her ??
+    //Legge alle metodene for ManageOrder her ??*/
 }

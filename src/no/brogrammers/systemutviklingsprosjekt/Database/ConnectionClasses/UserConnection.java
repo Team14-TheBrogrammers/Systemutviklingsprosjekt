@@ -1,7 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
 
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.User.*;
+import no.brogrammers.systemutviklingsprosjekt.user.*;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -104,7 +104,7 @@ public class UserConnection extends DatabaseConnection {
         }
     }
 
-    public boolean changeMail(int userID, int email) {
+    public boolean changeMail(int userID, String email) {
         if(userExists(userID)) {
             String sqlCommand = "UPDATE Employee SET email_address = '" + email + "' WHERE emp_id = " + userID + ";";
             return checkUpdated(sqlCommand);

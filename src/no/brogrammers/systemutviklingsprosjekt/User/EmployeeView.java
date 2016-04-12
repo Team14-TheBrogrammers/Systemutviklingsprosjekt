@@ -1,6 +1,6 @@
-package no.brogrammers.systemutviklingsprosjekt.User;
+package no.brogrammers.systemutviklingsprosjekt.user;
 
-import no.brogrammers.systemutviklingsprosjekt.Orders.*;
+import no.brogrammers.systemutviklingsprosjekt.order.*;
 
 /**
  * Created by Ingunn on 10.03.2016.

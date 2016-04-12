@@ -2,7 +2,7 @@
  * Created by Ingunn on 10.03.2016.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.Orders;
+package no.brogrammers.systemutviklingsprosjekt.order;
 
 import java.util.ArrayList;
 

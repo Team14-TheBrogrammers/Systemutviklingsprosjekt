@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt.User;
+package no.brogrammers.systemutviklingsprosjekt.user;
 
 /**
  * Created by Ingunn on 01.04.2016.
