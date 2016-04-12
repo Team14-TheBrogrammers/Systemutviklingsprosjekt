@@ -30,6 +30,6 @@ public class Company extends Customer {
     }
 
     public String toString() {
-        return super.toString() + "\nCompany ID: " + companyID + "\nCompany name: " + name;
+        return "Company: \n" + super.toString() + "\nCompany ID: " + companyID + "\nCompany name: " + name;
     }
 }
