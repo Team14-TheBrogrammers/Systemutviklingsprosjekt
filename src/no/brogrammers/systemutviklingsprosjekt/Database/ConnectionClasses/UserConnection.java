@@ -104,6 +104,15 @@ public class UserConnection extends DatabaseConnection {
         }
     }
 
+    public boolean changeMail(int userID, int email) {
+        if(userExists(userID)) {
+            String sqlCommand = "UPDATE Employee SET email_address = '" + email + "' WHERE emp_id = " + userID + ";";
+            return checkUpdated(sqlCommand);
+        } else {
+            return false;
+        }
+    }
+
     public boolean changeUsername(int userID, String username) {
         if(userExists(userID) && !(usernameExists(username))) {
             String sqlCommand = "UPDATE Employee SET username = '" + username + "' WHERE emp_id = " + userID + ";";
