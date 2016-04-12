@@ -1,8 +1,8 @@
-package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
+package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
-import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
-import no.brogrammers.systemutviklingsprosjekt.Orders.Order;
+import no.brogrammers.systemutviklingsprosjekt.order.Order;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public boolean changeOrderDeliveryTime(int orderID, java.sql.Date deliveryDate, double deliveryTime) {
-        String sqlCommand = "UPDATE Orders SET delivery_date = " + deliveryDate + ", delivery_time = " + deliveryTime + " WHERE order_id = " + orderID + ";";
+        String sqlCommand = "UPDATE order SET delivery_date = " + deliveryDate + ", delivery_time = " + deliveryTime + " WHERE order_id = " + orderID + ";";
         return checkUpdated(sqlCommand);
     }
 
@@ -83,7 +83,7 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public boolean deleteOrder(int id) {
-        String sqlCommand = "DELETE FROM Orders WHERE order_id = " + id + ";";
+        String sqlCommand = "DELETE FROM order WHERE order_id = " + id + ";";
         return checkUpdated(sqlCommand);
     }
 

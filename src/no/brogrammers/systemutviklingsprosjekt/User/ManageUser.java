@@ -1,5 +1,5 @@
-package no.brogrammers.systemutviklingsprosjekt.User;
-import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.UserConnection;
+package no.brogrammers.systemutviklingsprosjekt.user;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
 import java.util.ArrayList;
 
 /**

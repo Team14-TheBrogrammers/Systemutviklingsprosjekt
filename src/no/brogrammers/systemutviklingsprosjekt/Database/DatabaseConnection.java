@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt.Database;
+package no.brogrammers.systemutviklingsprosjekt.database;
 
 import java.io.*;
 import java.sql.*;

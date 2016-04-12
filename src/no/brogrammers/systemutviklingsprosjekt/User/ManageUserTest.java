@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt.User;
+package no.brogrammers.systemutviklingsprosjekt.user;
 
 import no.brogrammers.systemutviklingsprosjekt.Converter.*;
 

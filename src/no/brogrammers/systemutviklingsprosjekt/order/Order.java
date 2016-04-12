@@ -2,7 +2,7 @@
  * Created by Ingunn on 10.03.2016.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.Orders;
+package no.brogrammers.systemutviklingsprosjekt.order;
 
 import java.util.ArrayList;
 
@@ -128,6 +128,6 @@ public class Order {
             orderList += rec.toString() + "\n";
         }
         String pay = paymentStatus ? "Paid" : "Not paid";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\nOrders: \n" + orderList;
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\norder: \n" + orderList;
     }
 }

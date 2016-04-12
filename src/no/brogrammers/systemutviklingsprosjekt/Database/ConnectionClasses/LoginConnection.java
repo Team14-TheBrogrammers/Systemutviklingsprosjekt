@@ -1,6 +1,6 @@
-package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
+package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
-import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,8 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
-import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.UserConnection;
-import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.Database.Encryption;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import java.sql.ResultSet;
 import java.sql.Statement;

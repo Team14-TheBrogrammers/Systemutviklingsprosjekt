@@ -3,12 +3,10 @@
  * Class for order management.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.Orders;
-import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.OrderConnection;
+package no.brogrammers.systemutviklingsprosjekt.order;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ManageOrder extends OrderConnection implements ViewOrderInterface, ChangeOrderInterface  {
 

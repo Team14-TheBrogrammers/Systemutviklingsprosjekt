@@ -2,8 +2,8 @@
  * Created by Ingunn on 10.03.2016.
  */
 
-package no.brogrammers.systemutviklingsprosjekt.User;
-import no.brogrammers.systemutviklingsprosjekt.Orders.*;
+package no.brogrammers.systemutviklingsprosjekt.user;
+import no.brogrammers.systemutviklingsprosjekt.order.*;
 
 public abstract class EmployeeChange extends EmployeeView {
     public EmployeeChange(int ID, String lastName, String firstName, int phoneNumber, String eMail, java.sql.Date dateOfEmployment, String username, String password) {

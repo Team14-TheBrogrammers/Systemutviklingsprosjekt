@@ -123,7 +123,7 @@ CREATE TABLE Order_recipe(
   recipe_name VARCHAR(30) NOT NULL,
   quantity INTEGER NOT NULL,
   PRIMARY KEY(order_id, recipe_name),
-  FOREIGN KEY(order_id) REFERENCES Order(order_id),
+  FOREIGN KEY(order_id) REFERENCES Orders(order_id),
   FOREIGN KEY(recipe_name) REFERENCES Recipe(recipe_name)
 );
 
