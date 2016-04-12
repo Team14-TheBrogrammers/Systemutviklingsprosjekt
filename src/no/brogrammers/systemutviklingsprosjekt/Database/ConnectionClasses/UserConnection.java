@@ -142,16 +142,12 @@ public class UserConnection extends DatabaseConnection {
                     switch (position) {
                         case 1:
                             return new Manager(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                         case 2:
                             return new Cashier(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                         case 3:
                             return new Cook(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                         case 4:
                             return new Driver(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                     }
                 }
             } catch (SQLException sqle) {
@@ -183,16 +179,12 @@ public class UserConnection extends DatabaseConnection {
                     switch (position) {
                         case 1:
                             return new Manager(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                         case 2:
                             return new Cashier(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                         case 3:
                             return new Cook(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                         case 4:
                             return new Driver(userID, lastName, firstName, phone, email, dateOfEmployment, username, password);
-                        break;
                     }
                 }
             } catch (SQLException sqle) {
@@ -201,6 +193,7 @@ public class UserConnection extends DatabaseConnection {
                 writeError(e.getMessage());
             }
         }
+        return null;
     }
 
     public ArrayList<User> viewAllUsers() {
