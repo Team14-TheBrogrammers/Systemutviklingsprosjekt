@@ -24,7 +24,7 @@ CREATE TABLE Customer(
   customer_id INTEGER AUTO_INCREMENT NOT NULL,
   address VARCHAR(30) NOT NULL,
   zip INTEGER(4) NOT NULL,
-  phone CHAR(8) NOT NULL,
+  phone INTEGER(8) NOT NULL,
   email_address VARCHAR(20),
   PRIMARY KEY(customer_id),
   FOREIGN KEY(zip) REFERENCES Postal(zip)
@@ -206,3 +206,8 @@ SELECT * FROM Customer NATURAL JOIN Orders WHERE customer_id = ?;
 
 /** Select recipes matching order **/
 SELECT * FROM Recipe NATURAL JOIN Order_recipe WHERE Order_recipe.order_id = ?;
+
+/** Hente ut Company og Private_customer: **/
+SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = ?;
+
+SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = ?;

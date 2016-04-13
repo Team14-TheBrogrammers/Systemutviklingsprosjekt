@@ -52,45 +52,49 @@ public abstract class CustomerConnection extends DatabaseConnection {
 
     public Customer viewCustomer(int customerID) {
         if(customerExists(customerID)) {
-            boolean isCompany = false;
-            String sqlCommandCompany = "SELECT * FROM Company WHERE customer_id = " + customerID + ";";
+            if(isCompany(customerID)) {
+                String sqlCommand = "SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = ?;\n";
+                try {
+                    Statement statement = getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery(sqlCommand);
+                    while (resultSet.next()) {
+                        String address = resultSet.getString("address");
+                        int zip = resultSet.getInt("zip");
+                        int phone = resultSet.getInt("phone");
+                        String email = resultSet.getString("email_address");
+                        int companyID = resultSet.getInt("company_id");
+                        String name = resultSet.getString("name");
 
-            try {
-                Statement statement = getConnection().createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlCommandCompany);
-                while (resultSet.next()) {
-                    String address = resultSet.getString("");
-                    int zipAddress = resultSet.getInt("zip");
-                    //PHONE ? INT? STRING?
-                    String email = resultSet.getString("");
-
-
-                    return new Company();
+                        return new Company();
+                    }
+                } catch (SQLException sqle) {
+                    writeError(sqle.getMessage());
+                } catch (Exception e) {
+                    writeError(e.getMessage());
                 }
-
-                if(!isCompany) {
-                    String sqlCommandPrivate = "SELECT * FROM Private_customer WHERE customer_id = " + customerID + ";";
-
-                    Statement statement1 = getConnection().createStatement();
-                    ResultSet resultSet1 = statement1.executeQuery(sqlCommandPrivate);
-
-                    while (resultSet1.next()) {
-                        String address = resultSet.getString("");
-                        int zipAddress = resultSet.getInt("zip");
-                        //PHONE ? INT? STRING?
-                        String email = resultSet.getString("");
+            } else {
+                String sqlCommand = "SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = ?;";
+                try {
+                    Statement statement = getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery(sqlCommand);
+                    while (resultSet.next()) {
+                        String address = resultSet.getString("address");
+                        int zip = resultSet.getInt("zip");
+                        int phone = resultSet.getInt("phone");
+                        String email = resultSet.getString("email_address");
+                        String lastName = resultSet.getString("last_name");
+                        String firstName = resultSet.getString("first_name");
 
                         return new PrivateCustomer();
                     }
+                } catch (SQLException sqle) {
+                    writeError(sqle.getMessage());
+                } catch (Exception e) {
+                    writeError(e.getMessage());
                 }
-            } catch (SQLException sqle) {
-                writeError(sqle.getMessage());
-            } catch (Exception e) {
-                writeError(e.getMessage());
             }
-        } else {
-            return null;
         }
+        return null;
     }
 
     public ArrayList<Customer> viewAllCustomers() {
