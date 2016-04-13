@@ -24,7 +24,7 @@ CREATE TABLE Customer(
   customer_id INTEGER AUTO_INCREMENT NOT NULL,
   address VARCHAR(30) NOT NULL,
   zip INTEGER(4) NOT NULL,
-  phone CHAR(8)NOT NULL,
+  phone CHAR(8) NOT NULL,
   email_address VARCHAR(20),
   PRIMARY KEY(customer_id),
   FOREIGN KEY(zip) REFERENCES Postal(zip)

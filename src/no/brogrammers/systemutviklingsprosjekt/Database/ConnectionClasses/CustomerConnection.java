@@ -59,7 +59,11 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 Statement statement = getConnection().createStatement();
                 ResultSet resultSet = statement.executeQuery(sqlCommandCompany);
                 while (resultSet.next()) {
-                    int customerID = resultSet.getInt("");
+                    String address = resultSet.getString("");
+                    int zipAddress = resultSet.getInt("zip");
+                    //PHONE ? INT? STRING?
+                    String email = resultSet.getString("");
+
 
                     return new Company();
                 }
@@ -71,6 +75,10 @@ public abstract class CustomerConnection extends DatabaseConnection {
                     ResultSet resultSet1 = statement1.executeQuery(sqlCommandPrivate);
 
                     while (resultSet1.next()) {
+                        String address = resultSet.getString("");
+                        int zipAddress = resultSet.getInt("zip");
+                        //PHONE ? INT? STRING?
+                        String email = resultSet.getString("");
 
                         return new PrivateCustomer();
                     }

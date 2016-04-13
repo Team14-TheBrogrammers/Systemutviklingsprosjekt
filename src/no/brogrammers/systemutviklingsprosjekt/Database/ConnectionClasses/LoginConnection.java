@@ -1,6 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.user.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,21 +15,10 @@ public class LoginConnection extends DatabaseConnection{
         super();
     }
 
-    public boolean checkLoginDetails(String username, String password) {
-        Statement statement = null;
-        try {
-            String sqlCommand = "";
-            statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("");
-        } catch (SQLException sqle) {
+    public User checkLoginDetails(String username, String password) {
 
-        } catch (Exception e) {
+        String sqlCommand = "SELECT * FROM Employee WHERE username = '" + username + "' AND password = '" + password + "';";
 
-        } finally {
-            /*if(statement != null) {
-                statement.close();
-            }*/
-        }
 
         return true;
     }

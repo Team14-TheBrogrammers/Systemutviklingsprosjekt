@@ -96,7 +96,7 @@ public class UserConnection extends DatabaseConnection {
     }
 
     public int changeFirstName(int userID, String firstName) {
-        if(userExists(userID)) {
+        if(!(userExists(userID))) {
             return -1;
         }
         String sqlCommand = "UPDATE Employee SET first_name = '" + firstName + "' WHERE emp_id = " + userID + ";";
@@ -112,7 +112,7 @@ public class UserConnection extends DatabaseConnection {
     }
 
     public int changeMail(int userID, String email) {
-        if(userExists(userID)) {
+        if(!(userExists(userID))) {
             return -1;
         }
         String sqlCommand = "UPDATE Employee SET email_address = '" + email + "' WHERE emp_id = " + userID + ";";
@@ -120,12 +120,19 @@ public class UserConnection extends DatabaseConnection {
     }
 
     public int changeUsername(int userID, String username) {
-        if(userExists(userID) && !(usernameExists(username))) {
+        if(!(userExists(userID))) {
+            return -1;
+        } else if(usernameExists(username)) {
+            return -3;
+        } else {
             String sqlCommand = "UPDATE Employee SET username = '" + username + "' WHERE emp_id = " + userID + ";";
             return checkRegistered(sqlCommand); //change method name
-        } else {
-            return -1;
         }
+
+        //1: ok (brukernavn endret)
+        //-1: user id eksiterer ikke
+        //-2: vanlig feil
+        //-3: det nye brukernavnet er allerede i bruk
     }
 
     public int changePassword(int userID, String password) {
