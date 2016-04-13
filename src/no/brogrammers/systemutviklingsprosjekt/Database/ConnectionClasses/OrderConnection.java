@@ -2,7 +2,6 @@ package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
 
 import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
 
-import no.brogrammers.systemutviklingsprosjekt.Orders.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.Orders.Order;
 
 import java.sql.*;
