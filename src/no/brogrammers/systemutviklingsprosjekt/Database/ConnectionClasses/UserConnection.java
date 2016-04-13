@@ -25,48 +25,56 @@ public class UserConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }*/
 
-    public boolean regManager(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+    private int checkRegistered(String command) {
+        if(checkUpdated(command)) {
+            return 1;
+        } else {
+            return -2;
+        }
+    }
+
+    public int regManager(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         if(usernameExists(username)) {
-            return false;
+            return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand);
     }
 
-    public boolean regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+    public int regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         if(usernameExists(username)) {
-            return false;
+            return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand);
     }
 
-    public boolean regCook(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+    public int regCook(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         if(usernameExists(username)) {
-            return false;
+            return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand);
     }
 
-    public boolean regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+    public int regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         if(usernameExists(username)) {
-            return false;
+            return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand);
     }
 
-    public boolean deleteUser(int employeeId) {
-        if(userExists(employeeId)) {
-            return false;
+    public int deleteUser(int employeeId) {
+        if(!(userExists(employeeId))) {
+            return -1;
         }
         String sqlCommand = "DELETE FROM Employee WHERE emp_id = " + employeeId + ";";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand); //Method name may be changed
     }
 
     private boolean usernameExists(String username) {
@@ -79,55 +87,53 @@ public class UserConnection extends DatabaseConnection {
         return checkExists(sqlCommand);
     }
 
-    public boolean changeLastName(int userID, String lastName) {
-        if(userExists(userID)) {
-            return false;
+    public int changeLastName(int userID, String lastName) {
+        if(!(userExists(userID))) {
+            return -1;
         }
         String sqlCommand = "UPDATE Employee SET last_name = '" + lastName + "' WHERE emp_id = " + userID + ";";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand); //Change method name
     }
 
-    public boolean changeFirstName(int userID, String firstName) {
+    public int changeFirstName(int userID, String firstName) {
         if(userExists(userID)) {
-            return false;
+            return -1;
         }
         String sqlCommand = "UPDATE Employee SET first_name = '" + firstName + "' WHERE emp_id = " + userID + ";";
-        return checkUpdated(sqlCommand);
+        return checkRegistered(sqlCommand); //change method name
     }
 
-    public boolean changePhone(int userID, int phone) {
-        if(userExists(userID)) {
-            String sqlCommand = "UPDATE Employee SET phone = " + phone + " WHERE emp_id = " + userID + ";";
-            return checkUpdated(sqlCommand);
-        } else {
-            return false;
+    public int changePhone(int userID, int phone) {
+        if(!(userExists(userID))) {
+          return -1;
         }
+        String sqlCommand = "UPDATE Employee SET phone = " + phone + " WHERE emp_id = " + userID + ";";
+        return checkRegistered(sqlCommand); //change method name
     }
 
-    public boolean changeMail(int userID, String email) {
+    public int changeMail(int userID, String email) {
         if(userExists(userID)) {
-            String sqlCommand = "UPDATE Employee SET email_address = '" + email + "' WHERE emp_id = " + userID + ";";
-            return checkUpdated(sqlCommand);
-        } else {
-            return false;
+            return -1;
         }
+        String sqlCommand = "UPDATE Employee SET email_address = '" + email + "' WHERE emp_id = " + userID + ";";
+        return checkRegistered(sqlCommand); //change method name
     }
 
-    public boolean changeUsername(int userID, String username) {
+    public int changeUsername(int userID, String username) {
         if(userExists(userID) && !(usernameExists(username))) {
             String sqlCommand = "UPDATE Employee SET username = '" + username + "' WHERE emp_id = " + userID + ";";
-            return checkUpdated(sqlCommand);
+            return checkRegistered(sqlCommand); //change method name
         } else {
-            return false;
+            return -1;
         }
     }
 
-    public boolean changePassword(int userID, String password) {
+    public int changePassword(int userID, String password) {
         if(userExists(userID)) {
             String sqlCommand = "UPDATE Employee SET password = '" + password + "' WHERE emp_id = " + userID + ";";
-            return checkUpdated(sqlCommand);
+            return checkRegistered(sqlCommand); //change method name
         } else {
-            return false;
+            return -1;
         }
     }
 

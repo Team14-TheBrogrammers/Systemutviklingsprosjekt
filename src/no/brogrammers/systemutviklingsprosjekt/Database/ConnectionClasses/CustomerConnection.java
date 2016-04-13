@@ -59,6 +59,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 Statement statement = getConnection().createStatement();
                 ResultSet resultSet = statement.executeQuery(sqlCommandCompany);
                 while (resultSet.next()) {
+                    int customerID = resultSet.getInt("");
+
                     return new Company();
                 }
 
