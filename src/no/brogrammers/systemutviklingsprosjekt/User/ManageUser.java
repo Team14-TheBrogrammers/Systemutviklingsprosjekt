@@ -12,81 +12,127 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         super();
     }
 
-    public boolean regManager(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
-        if(super.regManager(lastName, firstName, phone, mail, doe, username, password)) {
-            return true;
+    public String regManager(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        int reg = super.regManager(lastName, firstName, phone, mail, doe, username, password);
+        if(reg == 1) {
+            return "A new manager was registered";
+        } else if(reg == -1) {
+            return "Username already exists";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
-        if(super.regCashier(lastName, firstName, phone, mail, doe, username, password)) {
-            return true;
+    public String regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        int reg = super.regCashier(lastName, firstName, phone, mail, doe, username, password);
+        if(reg == 1) {
+            return "A new cashier was registered";
+        } else if(reg == -1) {
+            return "Username already exists";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean regCook(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
-        if(super.regCook(lastName, firstName, phone, mail, doe, username, password)) {
-            return true;
+    public String regCook(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        int reg = super.regCook(lastName, firstName, phone, mail, doe, username, password);
+        if(reg == 1) {
+            return "A new cook was registered";
+        } else if(reg == -1) {
+            return "Username already exists";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
-        if(super.regDriver(lastName, firstName, phone, mail, doe, username, password)) {
-            return true;
+    public String regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+        int reg = super.regDriver(lastName, firstName, phone, mail, doe, username, password);
+        if(reg == 1) {
+            return "A new driver was registered";
+        } else if(reg == -1) {
+            return "Username already exists";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean deleteUser(int id) {
-        if(super.deleteUser(id)) {
-            return true;
+    public String deleteUser(int id) {
+        int delete = super.deleteUser(id);
+        if(delete == 1) {
+            return "User was deleted";
+        } else if(delete == -1) {
+            return "User does not exist";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean changeLastName(int id, String lastName) {
-        if(super.changeLastName(id, lastName)) {
-            return true;
+    public String changeLastName(int id, String lastName) {
+        int change = super.changeLastName(id, lastName);
+        if(change == 1) {
+            return "Last name was changed to " + lastName;
+        } else if(change == -1) {
+            return "User does not exist";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean changeFirstName(int id, String firstName) {
-        if(super.changeFirstName(id, firstName)) {
-            return true;
+    public String changeFirstName(int id, String firstName) {
+        int change = super.changeFirstName(id, firstName);
+        if(change == 1) {
+            return "First name was changed to " + firstName;
+        } else if(change == -1) {
+            return "User does not exist";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean changePhone(int id, int phone) {
-        if(super.changePhone(id, phone)) {
-            return true;
+    public String changePhone(int id, int phone) {
+        int change = super.changePhone(id, phone);
+        if(change == 1) {
+            return "Phone number was changed to " + phone;
+        } else if(change == -1) {
+            return "User does not exist";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean changeMail(int id, String mail) {
-        if(super.changeMail(id, mail)) {
-            return true;
+    public String changeMail(int id, String mail) {
+        int change = super.changeMail(id, mail);
+        if(change == 1) {
+            return "Email address was changed to " + mail;
+        } else if(change == -1) {
+            return "User does not exist";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean changeUsername(int id, String username) {
-        if(super.changeUsername(id, username)) {
-            return true;
+    public String changeUsername(int id, String username) {
+        int change = (super.changeUsername(id, username);
+        if(change == 1) {
+            return "Username was changed to " + username;
+        } else if(change == -1) {
+            return "User does not exist";
+        } else if(change == -3) {
+            return "New username is already in use"
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
-    public boolean changePassword(int id, String password) {
-        if(super.changePassword(id, password)) {
-            return true;
+    public String changePassword(int id, String password) {
+        int change = super.changePassword(id, password);
+        if(change == 1) {
+            return "Password was changed";
+        } else if(change == -1) {
+            return "User does not exist";
+        } else {
+            return "An error occurred";
         }
-        return false;
     }
 
     public User viewUser(int id) { //id
