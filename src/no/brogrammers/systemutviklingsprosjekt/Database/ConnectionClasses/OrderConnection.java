@@ -139,7 +139,39 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public ArrayList<Order> viewOrdersToCustomer(int customerID) {
+        ArrayList<Order> orders = new ArrayList<>();
+        String sqlOrder = "SELECT * FROM Customer NATURAL JOIN Orders WHERE customer_id = " + customerID + ";";
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlOrder);
+            while (resultSet.next()) {
+                int orderID = resultSet.getInt("order_id");
+                boolean paymentStatus = resultSet.getBoolean("payment_status");
+                java.sql.Date orderDate = resultSet.getDate("order_date");
+                java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
+                double deliveryTime = resultSet.getDouble("delivery_time");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
 
+                ArrayList<Recipe> recipes = new ArrayList<>();
+                String sqlRecipe = "SELECT * FROM Recipe NATURAL JOIN Order_recipe WHERE Order_recipe.order_id = " + orderID + ";";
+                Statement statement1 = getConnection().createStatement();
+                ResultSet resultSet1 = statement1.executeQuery(sqlRecipe);
+                while (resultSet1.next()) {
+                    String recipeName  = resultSet1.getString("recipe_name");
+                    double price = resultSet1.getDouble("price");
+                    orders.add(new Recipe(recipeName, price));
+                }
+
+
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, recipes));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return orders;
     }
 
     public ArrayList<Ingredient> listMissingIngredients() {

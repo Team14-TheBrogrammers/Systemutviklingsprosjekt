@@ -53,7 +53,6 @@ CREATE TABLE Orders(
   delivery_time DOUBLE NOT NULL,
   address VARCHAR(30),
   zip INTEGER(4),
-  total_price INTEGER NOT NULL,
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -200,3 +199,10 @@ INSERT INTO Private_customer(private_id, last_name, first_name, customer_id) VAL
 SELECT * FROM Customer NATURAL JOIN Company;
 SELECT * FROM Company WHERE customer_id = ?;
 SELECT * FROM Private_customer WHERE customer_id = ?;
+
+
+/** Select orders to a customer **/
+SELECT * FROM Customer NATURAL JOIN Orders WHERE customer_id = ?;
+
+/** Select recipes matching order **/
+SELECT * FROM Recipe NATURAL JOIN Order_recipe WHERE Order_recipe.order_id = ?;
