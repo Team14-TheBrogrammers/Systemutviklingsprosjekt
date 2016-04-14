@@ -1,11 +1,15 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
+import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
+import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
+import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by Knut on 06.04.2016.
@@ -43,12 +47,51 @@ public abstract class CustomerConnection extends DatabaseConnection {
 
     }
 
-    public boolean UpdateCompany() {
+    /*public boolean UpdateCompany() {
+
+    }*/
+
+    public int updateCustomerAddressAndZip(int customerID, String newAddress, int newZip) {
+        if(customerExists(customerID)) {
+            if(checkZipExists(newZip)) {
+                String sqlCommand = "UPDATE Customer SET address = " + newAddress + " AND zip = " + newZip + " WHERE customer_id = " + customerID + ";";
+                if(checkUpdated(sqlCommand)) {
+                    return 1; //Information is updated
+                } else {
+                    return -2; //Information is not updated
+                }
+            } else {
+                //Zip address does not exist in the database
+                return -3;
+            }
+        } else {
+            //CustomerID is invalid and does not exist in the database
+            return -1;
+        }
+    }
+
+    public int updateCustomerAddress(int customerID, String newAddress) {
+        if(customerExists(customerID)) {
+            String sqlCommand = "UPDATE Customer SET address = " + newAddress + " WHERE customer_id = " + customerID + ";";
+            if(checkUpdated(sqlCommand)) {
+                return 1;
+            } else {
+                return -2;
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    //LEGGE TIL NY ZIP-METODE
+
+    private boolean checkZipExists(int zip) {
 
     }
-    public boolean UpdatePrivateCustomer() {
 
-    }
+    /*public boolean UpdatePrivateCustomer() {
+
+    }*/
 
     public Customer viewCustomer(int customerID) {
         if(customerExists(customerID)) {
@@ -65,7 +108,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
                         int companyID = resultSet.getInt("company_id");
                         String name = resultSet.getString("name");
 
-                        return new Company();
+                        return new Company(customerID, address, zip, email, phone, companyID, name);
                     }
                 } catch (SQLException sqle) {
                     writeError(sqle.getMessage());
@@ -82,10 +125,11 @@ public abstract class CustomerConnection extends DatabaseConnection {
                         int zip = resultSet.getInt("zip");
                         int phone = resultSet.getInt("phone");
                         String email = resultSet.getString("email_address");
+                        int privateID = resultSet.getInt("private_id");
                         String lastName = resultSet.getString("last_name");
                         String firstName = resultSet.getString("first_name");
 
-                        return new PrivateCustomer();
+                        return new PrivateCustomer(customerID, address, zip, email, phone, privateID, lastName, firstName);
                     }
                 } catch (SQLException sqle) {
                     writeError(sqle.getMessage());

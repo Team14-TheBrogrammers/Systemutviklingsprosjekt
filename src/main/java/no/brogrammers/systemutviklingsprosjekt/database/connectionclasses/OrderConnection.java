@@ -108,7 +108,7 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public ArrayList<Order> viewActiveOrders() {
-        ArrayList<Order> orders  = new ArrayList<>();
+        ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
         try {
             Statement statement = getConnection().createStatement();

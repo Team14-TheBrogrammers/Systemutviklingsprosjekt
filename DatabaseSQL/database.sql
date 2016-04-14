@@ -212,3 +212,7 @@ SELECT * FROM Recipe NATURAL JOIN Order_recipe WHERE Order_recipe.order_id = ?;
 SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = ?;
 
 SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = ?;
+
+
+/** Update Customer addresse */
+UPDATE Customer SET address = ? AND zip = ? WHERE customer_id = ?;
