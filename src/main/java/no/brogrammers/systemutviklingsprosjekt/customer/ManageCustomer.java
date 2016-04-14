@@ -12,24 +12,24 @@ public class ManageCustomer extends CustomerConnection implements CustomerIntefa
     public String registerPrivateCustomer(String address, int zip, String email, int phone, String lastName, String firstName) {
         int reg = super.regPrivateCustomer(address, zip, email, phone, lastName, firstName);
         switch(reg) {
-            case 1:
-                return "Private customer was registered";
             case -1:
                 return "Phone number already registered";
-            default:
+            case -2:
                 return "Private customer was not registered";
+            default:
+                return "Private customer was registered with customer ID = " + reg;
         }
     }
 
     public String registerCompany(String address, int zip, String email, int phone, String name) {
         int reg = super.regCompany(address, zip, email, phone, name);
         switch(reg) {
-            case 1:
-                return "Company was registered";
             case -1:
                 return "Phone number already registered";
-            default:
+            case -2:
                 return "Company was not registered";
+            default:
+                return "Company was registered with customer ID = " + reg;
         }
     }
 

@@ -8,5 +8,13 @@
     <artifactId>Systemutviklingsprosjekt</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    
+    <dependencies>
+        <dependency>
+            <groupId>com.google.maps</groupId>
+            <artifactId>google-maps-services</artifactId>
+            <version>0.1.12</version>
+        </dependency>
+    </dependencies>
+
+
 </project>
