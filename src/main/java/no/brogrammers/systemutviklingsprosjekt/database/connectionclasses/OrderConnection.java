@@ -176,14 +176,16 @@ public class OrderConnection extends DatabaseConnection {
             ResultSet resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
                 if(resultSet.getDate("delivery_date").getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) {
-                    int id = resultSet.getInt("order_id");
-                    int customerId = resultSet.getInt("customer_id");
+                    int orderID = resultSet.getInt("order_id");
+                    int customerID = resultSet.getInt("customer_id");
                     boolean paymentStatus = resultSet.getBoolean("payment_status");
-                    int orderDate = resultSet.getInt("order_date");
-                    int deliveryDate = resultSet.getInt("delivery_date");
-                    int deliveryTime = resultSet.getInt("");
+                    java.sql.Date orderDate = resultSet.getDate("order_date");
+                    java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
+                    double deliveryTime = resultSet.getDouble("delivery_time");
+                    String address = resultSet.getString("address");
+                    int zip = resultSet.getInt("zip");
 
-                    orders.add(new Order(id, customerId, paymentStatus, orderDate, deliveryDate, deliveryTime, adress, ));
+                    orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
                 }
 
                 if(resultSet.getInt("delivery_date") - new Date(Calendar.getInstance().getTimeInMillis())) {
