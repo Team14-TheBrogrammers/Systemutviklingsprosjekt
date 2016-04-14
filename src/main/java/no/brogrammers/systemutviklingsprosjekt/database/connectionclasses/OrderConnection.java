@@ -88,7 +88,7 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     public ArrayList<Order> getOrders() {
-        ArrayList<Order> orders  = new ArrayList<>();
+        ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
         try {
             Statement statement = getConnection().createStatement();

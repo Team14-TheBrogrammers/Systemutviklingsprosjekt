@@ -5,10 +5,7 @@ import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
 import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -21,30 +18,145 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return checkExists(sqlCommand);
     }
 
-    public boolean regPrivateCustomer() {
+    private boolean phoneNumberIsUsed(int phone) {
+        String sqlCommand = "SELECT phone FROM Customer WHERE phone = " + phone + ";";
+        return checkExists(sqlCommand);
+    }
+
+    public int regPrivateCustomer(String address, int zip, int phone, String email, String lastName, String firstName) {
+        if(phoneNumberIsUsed(phone)) {
+            return -1;
+        }
+
         int customerID = 1;
-        boolean finished = false;
+        boolean customerFinished = false;
         ResultSet resultSet = null;
         PreparedStatement selectStatement;
         PreparedStatement insertStatement;
 
-        String selectCommand = "SELECT COUNT(customer_id) AS c FROM Customer;";
-        String insertCommand = "INSERT INTO Customer SET ";
-        String insertCommand2 = "";
 
-        while(!finished) {
+        String customerSelect = "SELECT COUNT(customer_id) AS c FROM Customer;";
+        String privateCSelect = "SELECT COUNT(private_id) AS c FROM Private_customer";
+        String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
+        String privateCInsert = "INSERT INTO Private_customer(last_name, first_name, customer_id)\n" +
+                " VALUES(?, ?, ?, ?, ?);";
+
+        while(!customerFinished) {
             try {
-                selectStatement = getConnection().prepareStatement(selectCommand);
+                selectStatement = getConnection().prepareStatement(customerSelect);
+                resultSet = selectStatement.executeQuery();
+                resultSet.next();
+
+                customerID = resultSet.getInt("c") + 1;
+                insertStatement = getConnection().prepareStatement(customerInsert);
+                insertStatement.setString(1, address);
+                insertStatement.setInt(2, zip);
+                insertStatement.setInt(3, phone);
+                insertStatement.setString(4, email);
+
+                int privateID = 1;
+                boolean privateFinished = false;
+                ResultSet resultSet1 = null;
+                PreparedStatement privateSelect;
+                PreparedStatement privateInsert;
+
+                while(!privateFinished) {
+                    try {
+                        privateSelect = getConnection().prepareStatement(privateCSelect);
+                        resultSet1 = privateSelect.executeQuery();
+                        resultSet1.next();
+
+                        privateID = resultSet1.getInt("c") + 1;
+                        privateInsert = getConnection().prepareStatement(privateCInsert);
+                        privateInsert.setString(1, lastName);
+                        privateInsert.setString(2, firstName);
+                        privateInsert.setInt(3, customerID);
+
+                        privateInsert.executeUpdate();
+                        privateFinished = true;
+                    } catch (SQLException sqle) {
+                        writeError(sqle.getMessage()); //// FIXME: 14.04.2016
+                    } catch (Exception e) {
+                        writeError(e.getMessage()); // TODO : SHIT
+                    }
+                }
+
+                insertStatement.executeUpdate();
+                customerFinished = true;
+
             } catch (SQLException sqle) {
                 writeError(sqle.getMessage());
             } catch (Exception e) {
                 writeError(e.getMessage());
             }
         }
+        return customerID;
     }
 
-    public boolean regCompany() {
+    public int regCompany(String address, int zip, int phone, String email, String name) {
+        if(phoneNumberIsUsed(phone)) {
+            return -1;
+        }
 
+        int customerID = 1;
+        boolean customerFinished = false;
+        ResultSet resultSet = null;
+        PreparedStatement selectStatement;
+        PreparedStatement insertStatement;
+
+
+        String customerSelect = "SELECT COUNT(customer_id) AS c FROM Customer;";
+        String privateCSelect = "SELECT COUNT(private_id) AS c FROM Company";
+        String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
+        String privateCInsert = "INSERT INTO Company(company_name, customer_id) VALUES(?, ?);";
+
+        while(!customerFinished) {
+            try {
+                selectStatement = getConnection().prepareStatement(customerSelect);
+                resultSet = selectStatement.executeQuery();
+                resultSet.next();
+
+                customerID = resultSet.getInt("c") + 1;
+                insertStatement = getConnection().prepareStatement(customerInsert);
+                insertStatement.setString(1, address);
+                insertStatement.setInt(2, zip);
+
+                int privateID = 1;
+                boolean privateFinished = false;
+                ResultSet resultSet1 = null;
+                PreparedStatement privateSelect;
+                PreparedStatement privateInsert;
+
+                while(!privateFinished) {
+                    try {
+                        privateSelect = getConnection().prepareStatement(privateCSelect);
+                        resultSet1 = privateSelect.executeQuery();
+                        resultSet1.next();
+
+                        privateID = resultSet1.getInt("c") + 1;
+                        privateInsert = getConnection().prepareStatement(privateCInsert);
+                        privateInsert.setString(1, name);
+                        privateInsert.setInt(2, customerID);
+
+                        privateInsert.executeUpdate();
+                        privateFinished = true;
+                    } catch (SQLException sqle) {
+                        writeError(sqle.getMessage()); //// FIXME: 14.04.2016
+                    } catch (Exception e) {
+                        writeError(e.getMessage()); // TODO : SHIT
+                    }
+                }
+
+                insertStatement.executeUpdate();
+                customerFinished = true;
+
+            } catch (SQLException sqle) {
+                writeError(sqle.getMessage());
+            } catch (Exception e) {
+                writeError(e.getMessage());
+            }
+        }
+        return customerID;
     }
 
     /*public boolean UpdateCompany() {
@@ -86,7 +198,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
     //LEGGE TIL NY ZIP-METODE
 
     private boolean checkZipExists(int zip) {
-
+        String sqlCommand = "SELECT * FROM Postal WHERE zip = " + zip + ";";
+        return checkExists(sqlCommand);
     }
 
     /*public boolean UpdatePrivateCustomer() {
@@ -96,7 +209,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
     public Customer viewCustomer(int customerID) {
         if(customerExists(customerID)) {
             if(isCompany(customerID)) {
-                String sqlCommand = "SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = ?;\n";
+                String sqlCommand = "SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = " + customerID + ";";
                 try {
                     Statement statement = getConnection().createStatement();
                     ResultSet resultSet = statement.executeQuery(sqlCommand);
@@ -116,7 +229,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
                     writeError(e.getMessage());
                 }
             } else {
-                String sqlCommand = "SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = ?;";
+                String sqlCommand = "SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = " + customerID + ";";
                 try {
                     Statement statement = getConnection().createStatement();
                     ResultSet resultSet = statement.executeQuery(sqlCommand);
@@ -142,7 +255,21 @@ public abstract class CustomerConnection extends DatabaseConnection {
     }
 
     public ArrayList<Customer> viewAllCustomers() {
-
+        ArrayList<Customer> customers = new ArrayList<Customer>();
+        String sqlAllCustomers = "SELECT * FROM Customers";
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlAllCustomers);
+            while (resultSet.next()) {
+                int customerID = resultSet.getInt("customer_id");
+                customers.add(viewCustomer(customerID));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        }
+        return customers;
     }
 
     private boolean isCompany(int customerID) {

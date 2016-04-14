@@ -40,7 +40,7 @@ CREATE TABLE Private_customer(
 
 CREATE TABLE Company(
   company_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
+  company_name VARCHAR(30) NOT NULL,
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -163,6 +163,8 @@ INSERT INTO Customer(address, zip) VALUES('Trondheims gate 2', 1234);
 INSERT INTO Private_customer(last_name, first_name, phone, email_address, customer_id)
   VALUES('Sund', 'Ingunn', 12345678, 'ingunn@sund.no', 1);
 
+
+
 /**
 
 ---SQL-setninger under her:
@@ -216,3 +218,21 @@ SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = ?;
 
 /** Update Customer addresse */
 UPDATE Customer SET address = ? AND zip = ? WHERE customer_id = ?;
+
+/** Check if a zip address is in the dataabse */
+SELECT * FROM Postal WHERE zip = ?;
+
+/** Select all customer ids*/
+SELECT customer_id FROM Customer;
+
+/** Check if a phone is in use*/
+SELECT phone FROM Customer WHERE phone = ?;
+
+/**Sette inn verdi i Customer tabell: */
+INSERT INTO Customer(address, zip) VALUES('Trondheims gate 2', 1234);
+/** i private customer: */
+INSERT INTO Private_customer(last_name, first_name, phone, email_address, customer_id)
+VALUES('Sund', 'Ingunn', 12345678, 'ingunn@sund.no', 1);
+
+/** i company: */
+INSERT INTO Company(company_name, customer_id) VALUES('', 2);
