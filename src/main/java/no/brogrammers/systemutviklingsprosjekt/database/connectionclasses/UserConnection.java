@@ -219,7 +219,7 @@ public class UserConnection extends DatabaseConnection {
     }
 
     public ArrayList<User> viewAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<User>();
 
         String sqlCommand = "SELECT * FROM Employee;";
         try {

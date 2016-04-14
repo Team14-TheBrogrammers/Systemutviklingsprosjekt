@@ -87,10 +87,10 @@ CREATE TABLE Instruction(
   REFERENCES Recipe(recipe_name)
 );
 
-CREATE TABLE Recipe_orders(
+CREATE TABLE Order_recipe(
   order_id INTEGER NOT NULL,
   recipe_name VARCHAR(30) NOT NULL,
-  quantity CHAR(30),
+  quantity INTEGER NOT NULL,
   PRIMARY KEY(order_id, recipe_name),
   FOREIGN KEY(order_id) REFERENCES Orders(order_id),
   FOREIGN KEY(recipe_name) REFERENCES Recipe(recipe_name)
@@ -114,15 +114,6 @@ CREATE TABLE Employee(
   email_address VARCHAR(30),
   CONSTRAINT employee_fk FOREIGN KEY(position_id)
   REFERENCES Positions(position_id)
-);
-
-CREATE TABLE Order_recipe(
-  order_id INTEGER NOT NULL,
-  recipe_name VARCHAR(30) NOT NULL,
-  quantity INTEGER NOT NULL,
-  PRIMARY KEY(order_id, recipe_name),
-  FOREIGN KEY(order_id) REFERENCES Orders(order_id),
-  FOREIGN KEY(recipe_name) REFERENCES Recipe(recipe_name)
 );
 
 /*Insert setninger: */
