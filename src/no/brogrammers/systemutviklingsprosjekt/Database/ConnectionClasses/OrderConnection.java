@@ -6,7 +6,7 @@ import no.brogrammers.systemutviklingsprosjekt.Database.DatabaseConnection;
  * Created by Knut on 11.03.2016.
  */
 public class OrderConnection extends DatabaseConnection {
-    /*public OrderConnection() {
+    public OrderConnection() {
         super();
     }
 
@@ -148,5 +148,5 @@ public class OrderConnection extends DatabaseConnection {
         return null;
     }
 
-    //Legge alle metodene for ManageOrder her ??*/
+    //Legge alle metodene for ManageOrder her ??
 }

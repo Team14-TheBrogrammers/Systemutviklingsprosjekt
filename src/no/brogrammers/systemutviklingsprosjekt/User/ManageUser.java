@@ -59,9 +59,9 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
     public String deleteUser(int id) {
         int delete = super.deleteUser(id);
         if(delete == 1) {
-            return "User was deleted";
+            return "user was deleted";
         } else if(delete == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else {
             return "An error occurred";
         }
@@ -72,7 +72,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         if(change == 1) {
             return "Last name was changed to " + lastName;
         } else if(change == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else {
             return "An error occurred";
         }
@@ -83,7 +83,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         if(change == 1) {
             return "First name was changed to " + firstName;
         } else if(change == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else {
             return "An error occurred";
         }
@@ -94,7 +94,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         if(change == 1) {
             return "Phone number was changed to " + phone;
         } else if(change == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else {
             return "An error occurred";
         }
@@ -105,7 +105,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         if(change == 1) {
             return "Email address was changed to " + mail;
         } else if(change == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else {
             return "An error occurred";
         }
@@ -116,7 +116,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         if(change == 1) {
             return "Username was changed to " + username;
         } else if(change == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else if(change == -3) {
             return "New username is already in use"
         } else {
@@ -129,7 +129,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         if(change == 1) {
             return "Password was changed";
         } else if(change == -1) {
-            return "User does not exist";
+            return "user does not exist";
         } else {
             return "An error occurred";
         }
