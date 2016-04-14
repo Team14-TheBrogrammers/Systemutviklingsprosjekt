@@ -13,7 +13,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         super();
     }
 
-    public String regManager(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+    public String registerManager(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
         int reg = super.regManager(lastName, firstName, phone, mail, doe, username, password);
         if(reg == 1) {
             return "A new manager was registered";
@@ -24,7 +24,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         }
     }
 
-    public String regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+    public String registerCashier(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
         int reg = super.regCashier(lastName, firstName, phone, mail, doe, username, password);
         if(reg == 1) {
             return "A new cashier was registered";
@@ -35,7 +35,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         }
     }
 
-    public String regCook(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+    public String registerCook(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
         int reg = super.regCook(lastName, firstName, phone, mail, doe, username, password);
         if(reg == 1) {
             return "A new cook was registered";
@@ -46,7 +46,7 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         }
     }
 
-    public String regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
+    public String registerDriver(String lastName, String firstName, int phone, String mail, java.sql.Date doe, String username, String password) {
         int reg = super.regDriver(lastName, firstName, phone, mail, doe, username, password);
         if(reg == 1) {
             return "A new driver was registered";
@@ -57,80 +57,80 @@ public class ManageUser extends UserConnection implements ChangeUserInterface, V
         }
     }
 
-    public String deleteUser(int id) {
+    public String deleteUserByID(int id) {
         int delete = super.deleteUser(id);
         if(delete == 1) {
-            return "user was deleted";
+            return "User was deleted";
         } else if(delete == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else {
             return "An error occurred";
         }
     }
 
-    public String changeLastName(int id, String lastName) {
+    public String changeLastNameByID(int id, String lastName) {
         int change = super.changeLastName(id, lastName);
         if(change == 1) {
             return "Last name was changed to " + lastName;
         } else if(change == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else {
             return "An error occurred";
         }
     }
 
-    public String changeFirstName(int id, String firstName) {
+    public String changeFirstNameByID(int id, String firstName) {
         int change = super.changeFirstName(id, firstName);
         if(change == 1) {
             return "First name was changed to " + firstName;
         } else if(change == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else {
             return "An error occurred";
         }
     }
 
-    public String changePhone(int id, int phone) {
+    public String changePhoneByID(int id, int phone) {
         int change = super.changePhone(id, phone);
         if(change == 1) {
             return "Phone number was changed to " + phone;
         } else if(change == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else {
             return "An error occurred";
         }
     }
 
-    public String changeMail(int id, String mail) {
+    public String changeMailByID(int id, String mail) {
         int change = super.changeMail(id, mail);
         if(change == 1) {
             return "Email address was changed to " + mail;
         } else if(change == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else {
             return "An error occurred";
         }
     }
 
-    public String changeUsername(int id, String username) {
-        int change = (super.changeUsername(id, username);
+    public String changeUsernameByID(int id, String username) {
+        int change = (super.changeUsername(id, username));
         if(change == 1) {
             return "Username was changed to " + username;
         } else if(change == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else if(change == -3) {
-            return "New username is already in use"
+            return "New username is already in use";
         } else {
             return "An error occurred";
         }
     }
 
-    public String changePassword(int id, String password) {
+    public String changePasswordByID(int id, String password) {
         int change = super.changePassword(id, password);
         if(change == 1) {
             return "Password was changed";
         } else if(change == -1) {
-            return "user does not exist";
+            return "User does not exist";
         } else {
             return "An error occurred";
         }

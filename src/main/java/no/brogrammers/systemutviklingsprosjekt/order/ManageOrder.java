@@ -4,7 +4,7 @@
  */
 
 package no.brogrammers.systemutviklingsprosjekt.order;
-import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.*;
 
 import java.util.ArrayList;
 
