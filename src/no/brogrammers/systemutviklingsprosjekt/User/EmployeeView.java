@@ -1,7 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.user;
 
 import no.brogrammers.systemutviklingsprosjekt.order.*;
-import no.brogrammers.systemutviklingsprosjekt.recipe.ViewRecipeInterface;
 
 /**
  * Created by Ingunn on 10.03.2016.
@@ -17,9 +16,5 @@ public abstract class EmployeeView extends User {
 
     public ViewUserInterface newManageUserView() {
         return new ManageUser();
-    }
-
-    public ViewRecipeInterface newManageRecipeView() {
-        return new ManageRecipe();
     }
 }

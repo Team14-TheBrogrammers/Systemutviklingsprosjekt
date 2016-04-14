@@ -3,7 +3,6 @@
  */
 
 package no.brogrammers.systemutviklingsprosjekt.order;
-import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 import java.util.ArrayList;
 
