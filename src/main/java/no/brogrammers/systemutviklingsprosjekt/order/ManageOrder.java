@@ -4,7 +4,7 @@
  */
 
 package no.brogrammers.systemutviklingsprosjekt.order;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.OrderConnection;
 
 import java.util.ArrayList;
 
@@ -16,17 +16,17 @@ public class ManageOrder extends OrderConnection implements ViewOrderInterface, 
 
     //Add order for a spesific customer. Not later than three days in advance.
     public int addOrder(Order order) {
-        Order order2 = new Order();
-
+        //Order order2 = new Order();
+/*
         if(super.addOrder(order) >= 0) {
             return super.addOrder(order);
-        }
+        }*/
         return -1;
     }
 
     public boolean checkCorrectTimeStamp(java.sql.Date orderDate, java.sql.Date deliveryDate) {
         long days = (deliveryDate.getTime()-orderDate.getTime())/86400000;
-        (currentTime - (currentTime % 86400000));
+        //(currentTime - (currentTime % 86400000));
         if(days >= 3) {
             return true;
         }
