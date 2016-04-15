@@ -4,6 +4,7 @@ import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +17,7 @@ public class OrderConnection extends DatabaseConnection {
         super();
     }
 
-    public int addOrder(Order order) {
+    public int addOrder(Order order) { // TODO: clean connection properly and do fix this code
         if(checkCustomerId(order.getCustomerID())) {
             int newNumber = 1; //If there is no other numbers before this number will be set as the id
             boolean finished = false;
@@ -64,22 +65,61 @@ public class OrderConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }
 
-    public Order viewOrderByID(int orderID) {
-        Order order = null;
-        String sqlCommand = "SELECT payment_status, delivery_date, delivery_time, address, total_price FROM orders WHERE order_id = " + orderID + ";";
+    private ArrayList<Recipe> getRecipesToOrder(int orderID) {
+        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+        String sqlCommand = "SELECT * FROM Order_recipe NATURAL JOIN Recipe WHERE order_id = " + orderID + ";";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
-            while(resultSet.next()) {
-
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+            while (resultSet.next()) {
+                String name = resultSet.getString("recipe_name");
+                String type = resultSet.getString("recipe_type");
+                double price = resultSet.getDouble("price");
+                recipes.add(new Recipe());
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
+        return recipes;
+    }
 
-        return new Order(0,0,false,0,0,0.0,"asd",0);
+    public Order viewOrderByID(int orderID) {
+        //String sqlCommand = "SELECT payment_status, delivery_date, delivery_time, address, total_price FROM orders WHERE order_id = " + orderID + ";";
+
+        String sqlCommand = "SELECT * FROM Orders WHERE order_id = " + orderID + ";";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+
+                boolean paymentStatus = resultSet.getBoolean("payment_status");
+                java.sql.Date orderDate = resultSet.getDate("order_date");
+                java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
+                double deliveryTime = resultSet.getDouble("delivery_time");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+                int customerID = resultSet.getInt("customer_id");
+
+                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return null;
     }
 
     public boolean deleteOrder(int id) {
@@ -87,42 +127,87 @@ public class OrderConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }
 
-    public ArrayList<Order> getOrders() {
-        ArrayList<Order> orders  = new ArrayList<>();
+    public ArrayList<Order> viewAllOrders() {
+        ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
-                int id = resultSet.getInt("order_id");
-                int customerId = resultSet.getInt("customer_id");
+                int orderID = resultSet.getInt("order_id");
+                boolean paymentStatus = resultSet.getBoolean("payment_status");
+                java.sql.Date orderDate = resultSet.getDate("order_date");
+                java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
+                double deliveryTime = resultSet.getDouble("delivery_time");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+                int customerID = resultSet.getInt("customer_id");
 
-                orders.add(new Order(id, customerId, ));
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return orders;
+    }
+
+    public ArrayList<Order> viewOrdersToCustomer(int customerID) {
+        ArrayList<Order> orders = new ArrayList<Order>();
+        String sqlOrder = "SELECT * FROM Customer NATURAL JOIN Orders WHERE customer_id = " + customerID + ";";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlOrder);
+            while (resultSet.next()) {
+                int orderID = resultSet.getInt("order_id");
+                boolean paymentStatus = resultSet.getBoolean("payment_status");
+                java.sql.Date orderDate = resultSet.getDate("order_date");
+                java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
+                double deliveryTime = resultSet.getDouble("delivery_time");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return orders;
     }
 
     public ArrayList<Order> viewActiveOrders() {
-        ArrayList<Order> orders  = new ArrayList<>();
+        ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
                 if(resultSet.getDate("delivery_date").getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) {
-                    int id = resultSet.getInt("order_id");
-                    int customerId = resultSet.getInt("customer_id");
+                    int orderID = resultSet.getInt("order_id");
+                    int customerID = resultSet.getInt("customer_id");
                     boolean paymentStatus = resultSet.getBoolean("payment_status");
-                    int orderDate = resultSet.getInt("order_date");
-                    int deliveryDate = resultSet.getInt("delivery_date");
-                    int deliveryTime = resultSet.getInt("");
+                    java.sql.Date orderDate = resultSet.getDate("order_date");
+                    java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
+                    double deliveryTime = resultSet.getDouble("delivery_time");
+                    String address = resultSet.getString("address");
+                    int zip = resultSet.getInt("zip");
 
-                    orders.add(new Order(id, customerId, paymentStatus, orderDate, deliveryDate, deliveryTime, adress, ));
+                    orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
                 }
 
                 if(resultSet.getInt("delivery_date") - new Date(Calendar.getInstance().getTimeInMillis())) {
@@ -134,42 +219,9 @@ public class OrderConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
-        }
-        return orders;
-    }
-
-    public ArrayList<Order> viewOrdersToCustomer(int customerID) {
-        ArrayList<Order> orders = new ArrayList<>();
-        String sqlOrder = "SELECT * FROM Customer NATURAL JOIN Orders WHERE customer_id = " + customerID + ";";
-        try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlOrder);
-            while (resultSet.next()) {
-                int orderID = resultSet.getInt("order_id");
-                boolean paymentStatus = resultSet.getBoolean("payment_status");
-                java.sql.Date orderDate = resultSet.getDate("order_date");
-                java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
-                double deliveryTime = resultSet.getDouble("delivery_time");
-                String address = resultSet.getString("address");
-                int zip = resultSet.getInt("zip");
-
-                ArrayList<Recipe> recipes = new ArrayList<>();
-                String sqlRecipe = "SELECT * FROM Recipe NATURAL JOIN Order_recipe WHERE Order_recipe.order_id = " + orderID + ";";
-                Statement statement1 = getConnection().createStatement();
-                ResultSet resultSet1 = statement1.executeQuery(sqlRecipe);
-                while (resultSet1.next()) {
-                    String recipeName  = resultSet1.getString("recipe_name");
-                    double price = resultSet1.getDouble("price");
-                    orders.add(new Recipe(recipeName, price));
-                }
-
-
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, recipes));
-            }
-        } catch (SQLException sqle) {
-            writeError(sqle.getMessage());
-        } catch (Exception e) {
-            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return orders;
     }
