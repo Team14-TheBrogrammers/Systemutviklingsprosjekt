@@ -81,7 +81,7 @@ CREATE TABLE Recipe_ingredient (
 CREATE TABLE Recipe_instruction(
   recipe_name VARCHAR(30) NOT NULL,
   step_number INTEGER NOT NULL,
-  description VARCHAR(100),
+  description VARCHAR(500),
   PRIMARY KEY (recipe_name, step_number),
   CONSTRAINT recipeIns_fk FOREIGN KEY (recipe_name)
   REFERENCES Recipe(recipe_name)

@@ -1,10 +1,16 @@
-package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
+package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
+import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +22,7 @@ public class RecipeConnection {
 
     Connection connection;
 
-    public RecipeDAO(Connection connection) {
+    public RecipeConnection(Connection connection) {
         this.connection = connection;
     }
 
@@ -96,8 +102,54 @@ public class RecipeConnection {
         return true;
     }
 
-    public Recipe read() {
-        return null;
+    public Recipe read(String recipeName) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        List<Instruction> instructions = new ArrayList<>();
+        RecipeType recipeType = null;
+        double price = 0;
+        try {
+            PreparedStatement pStatement = connection.prepareStatement(
+                    "SELECT * from recipe_ingredients WHERE recipe_name = (?)"
+            );
+            pStatement.setString(1, recipeName);
+            pStatement.execute();
+
+            ResultSet rs = pStatement.getResultSet();
+
+            while (rs.next()) {
+                ingredients.add(new Ingredient(rs.getString("ingredient_name"), rs.getString("quantity")));
+            }
+
+            pStatement = connection.prepareStatement(
+                    "SELECT * from recipe_instructions WHERE recipe_name = (?)"
+            );
+
+            pStatement.setString(1, recipeName);
+            pStatement.execute();
+
+            rs = pStatement.getResultSet();
+
+            while (rs.next()) {
+                instructions.add(new Instruction(rs.getInt("step_number"), rs.getString("description")));
+            }
+
+            pStatement = connection.prepareStatement(
+                    "SELECT recipe_type from recipe WHERE recipe_name = (?)"
+            );
+
+            pStatement.setString(1, recipeName);
+            pStatement.execute();
+
+            rs = pStatement.getResultSet();
+
+            while (rs.next()) {
+                recipeType = RecipeType.valueOf(rs.getString("recipe_type"));
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return new Recipe(recipeName, recipeType, ingredients, instructions, price);
     }
 
     public boolean update() {
