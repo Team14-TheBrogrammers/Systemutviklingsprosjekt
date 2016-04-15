@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Positions;
 DROP TABLE IF EXISTS Recipe_orders;
-DROP TABLE IF EXISTS Instruction;
+DROP TABLE IF EXISTS Recipe_instruction;
 DROP TABLE IF EXISTS Recipe_ingredient;
 DROP TABLE IF EXISTS Ingredient;
 DROP TABLE IF EXISTS Recipe;
