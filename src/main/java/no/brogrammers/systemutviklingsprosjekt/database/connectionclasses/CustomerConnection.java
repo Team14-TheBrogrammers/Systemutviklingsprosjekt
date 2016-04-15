@@ -31,8 +31,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
         int customerID = 1;
         boolean customerFinished = false;
         ResultSet resultSet = null;
-        PreparedStatement selectStatement;
-        PreparedStatement insertStatement;
+        PreparedStatement selectStatement = null;
+        PreparedStatement insertStatement = null;
 
 
         String customerSelect = "SELECT COUNT(customer_id) AS c FROM Customer;";
@@ -57,8 +57,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 int privateID = 1;
                 boolean privateFinished = false;
                 ResultSet resultSet1 = null;
-                PreparedStatement privateSelect;
-                PreparedStatement privateInsert;
+                PreparedStatement privateSelect = null;
+                PreparedStatement privateInsert = null;
 
                 while(!privateFinished) {
                     try {
@@ -78,6 +78,10 @@ public abstract class CustomerConnection extends DatabaseConnection {
                         writeError(sqle.getMessage()); //// FIXME: 14.04.2016
                     } catch (Exception e) {
                         writeError(e.getMessage()); // TODO : SHIT
+                    } finally {
+                        getCleaner().closePreparedStatement(privateInsert);
+                        getCleaner().closeResultSet(resultSet1);
+                        getCleaner().closePreparedStatement(privateSelect);
                     }
                 }
 
@@ -88,6 +92,10 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 writeError(sqle.getMessage());
             } catch (Exception e) {
                 writeError(e.getMessage());
+            } finally {
+                getCleaner().closePreparedStatement(insertStatement);
+                getCleaner().closeResultSet(resultSet);
+                getCleaner().closePreparedStatement(selectStatement);
             }
         }
         return customerID;
@@ -101,8 +109,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
         int customerID = 1;
         boolean customerFinished = false;
         ResultSet resultSet = null;
-        PreparedStatement selectStatement;
-        PreparedStatement insertStatement;
+        PreparedStatement selectStatement = null;
+        PreparedStatement insertStatement = null;
 
 
         String customerSelect = "SELECT COUNT(customer_id) AS c FROM Customer;";
@@ -124,8 +132,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 int privateID = 1;
                 boolean privateFinished = false;
                 ResultSet resultSet1 = null;
-                PreparedStatement privateSelect;
-                PreparedStatement privateInsert;
+                PreparedStatement privateSelect = null;
+                PreparedStatement privateInsert = null;
 
                 while(!privateFinished) {
                     try {
@@ -144,6 +152,10 @@ public abstract class CustomerConnection extends DatabaseConnection {
                         writeError(sqle.getMessage()); //// FIXME: 14.04.2016
                     } catch (Exception e) {
                         writeError(e.getMessage()); // TODO : SHIT
+                    } finally {
+                        getCleaner().closePreparedStatement(privateInsert);
+                        getCleaner().closeResultSet(resultSet1);
+                        getCleaner().closePreparedStatement(privateSelect);
                     }
                 }
 
@@ -154,6 +166,10 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 writeError(sqle.getMessage());
             } catch (Exception e) {
                 writeError(e.getMessage());
+            } finally {
+                getCleaner().closePreparedStatement(insertStatement);
+                getCleaner().closeResultSet(resultSet);
+                getCleaner().closePreparedStatement(selectStatement);
             }
         }
         return customerID;
@@ -210,9 +226,11 @@ public abstract class CustomerConnection extends DatabaseConnection {
         if(customerExists(customerID)) {
             if(isCompany(customerID)) {
                 String sqlCommand = "SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = " + customerID + ";";
+                Statement statement = null;
+                ResultSet resultSet = null;
                 try {
-                    Statement statement = getConnection().createStatement();
-                    ResultSet resultSet = statement.executeQuery(sqlCommand);
+                    statement = getConnection().createStatement();
+                    resultSet = statement.executeQuery(sqlCommand);
                     while (resultSet.next()) {
                         String address = resultSet.getString("address");
                         int zip = resultSet.getInt("zip");
@@ -227,12 +245,17 @@ public abstract class CustomerConnection extends DatabaseConnection {
                     writeError(sqle.getMessage());
                 } catch (Exception e) {
                     writeError(e.getMessage());
+                } finally {
+                    getCleaner().closeResultSet(resultSet);
+                    getCleaner().closeStatement(statement);
                 }
             } else {
                 String sqlCommand = "SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = " + customerID + ";";
+                Statement statement = null;
+                ResultSet resultSet = null;
                 try {
-                    Statement statement = getConnection().createStatement();
-                    ResultSet resultSet = statement.executeQuery(sqlCommand);
+                    statement = getConnection().createStatement();
+                    resultSet = statement.executeQuery(sqlCommand);
                     while (resultSet.next()) {
                         String address = resultSet.getString("address");
                         int zip = resultSet.getInt("zip");
@@ -248,6 +271,9 @@ public abstract class CustomerConnection extends DatabaseConnection {
                     writeError(sqle.getMessage());
                 } catch (Exception e) {
                     writeError(e.getMessage());
+                } finally {
+                    getCleaner().closeResultSet(resultSet);
+                    getCleaner().closeStatement(statement);
                 }
             }
         }
@@ -257,9 +283,11 @@ public abstract class CustomerConnection extends DatabaseConnection {
     public ArrayList<Customer> viewAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<Customer>();
         String sqlAllCustomers = "SELECT * FROM Customers";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlAllCustomers);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlAllCustomers);
             while (resultSet.next()) {
                 int customerID = resultSet.getInt("customer_id");
                 customers.add(viewCustomer(customerID));
@@ -268,6 +296,9 @@ public abstract class CustomerConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return customers;
     }

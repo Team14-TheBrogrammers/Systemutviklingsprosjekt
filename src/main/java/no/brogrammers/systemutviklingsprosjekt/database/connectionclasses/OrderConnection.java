@@ -17,7 +17,7 @@ public class OrderConnection extends DatabaseConnection {
         super();
     }
 
-    public int addOrder(Order order) {
+    public int addOrder(Order order) { // TODO: clean connection properly and do fix this code
         if(checkCustomerId(order.getCustomerID())) {
             int newNumber = 1; //If there is no other numbers before this number will be set as the id
             boolean finished = false;
@@ -68,9 +68,11 @@ public class OrderConnection extends DatabaseConnection {
     private ArrayList<Recipe> getRecipesToOrder(int orderID) {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
         String sqlCommand = "SELECT * FROM Order_recipe NATURAL JOIN Recipe WHERE order_id = " + orderID + ";";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while (resultSet.next()) {
                 String name = resultSet.getString("recipe_name");
                 String type = resultSet.getString("recipe_type");
@@ -81,6 +83,9 @@ public class OrderConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return recipes;
     }
@@ -89,9 +94,11 @@ public class OrderConnection extends DatabaseConnection {
         //String sqlCommand = "SELECT payment_status, delivery_date, delivery_time, address, total_price FROM orders WHERE order_id = " + orderID + ";";
 
         String sqlCommand = "SELECT * FROM Orders WHERE order_id = " + orderID + ";";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
 
                 boolean paymentStatus = resultSet.getBoolean("payment_status");
@@ -108,6 +115,9 @@ public class OrderConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return null;
     }
@@ -120,9 +130,11 @@ public class OrderConnection extends DatabaseConnection {
     public ArrayList<Order> viewAllOrders() {
         ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
                 int orderID = resultSet.getInt("order_id");
                 boolean paymentStatus = resultSet.getBoolean("payment_status");
@@ -139,6 +151,9 @@ public class OrderConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return orders;
     }
@@ -146,9 +161,11 @@ public class OrderConnection extends DatabaseConnection {
     public ArrayList<Order> viewOrdersToCustomer(int customerID) {
         ArrayList<Order> orders = new ArrayList<Order>();
         String sqlOrder = "SELECT * FROM Customer NATURAL JOIN Orders WHERE customer_id = " + customerID + ";";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlOrder);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlOrder);
             while (resultSet.next()) {
                 int orderID = resultSet.getInt("order_id");
                 boolean paymentStatus = resultSet.getBoolean("payment_status");
@@ -164,6 +181,9 @@ public class OrderConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return orders;
     }
@@ -171,9 +191,11 @@ public class OrderConnection extends DatabaseConnection {
     public ArrayList<Order> viewActiveOrders() {
         ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
                 if(resultSet.getDate("delivery_date").getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) {
                     int orderID = resultSet.getInt("order_id");
@@ -197,6 +219,9 @@ public class OrderConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return orders;
     }
