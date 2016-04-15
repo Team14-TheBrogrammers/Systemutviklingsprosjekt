@@ -78,7 +78,7 @@ CREATE TABLE Recipe_ingredient (
   REFERENCES Ingredient(ingredient_name)
 );
 
-CREATE TABLE Instruction(
+CREATE TABLE Recipe_instruction(
   recipe_name VARCHAR(30) NOT NULL,
   step_number INTEGER NOT NULL,
   description VARCHAR(100),
