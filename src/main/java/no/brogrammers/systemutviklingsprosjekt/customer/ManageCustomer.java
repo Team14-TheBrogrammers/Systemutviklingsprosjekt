@@ -1,6 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.customer;
 
-import no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses.CustomerConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.*;
 
 import java.util.ArrayList;
 
@@ -9,18 +9,63 @@ import java.util.ArrayList;
  */
 public class ManageCustomer extends CustomerConnection implements CustomerInteface {
 
-    public boolean regPrivateCustomer() {
-
+    public String registerPrivateCustomer(String address, int zip, String email, int phone, String lastName, String firstName) {
+        int reg = super.regPrivateCustomer(address, zip, email, phone, lastName, firstName);
+        switch(reg) {
+            case -1:
+                return "Phone number already registered";
+            case -2:
+                return "Private customer was not registered";
+            default:
+                return "Private customer was registered with customer ID = " + reg;
+        }
     }
 
-    public boolean regCompany() {
+    public String registerCompany(String address, int zip, String email, int phone, String name) {
+        int reg = super.regCompany(address, zip, email, phone, name);
+        switch(reg) {
+            case -1:
+                return "Phone number already registered";
+            case -2:
+                return "Company was not registered";
+            default:
+                return "Company was registered with customer ID = " + reg;
+        }
+    }
 
+
+    public String changeAddressAndZip(int customerID, String address, int zip) {
+        int change = super.updateCustomerAddressAndZip(customerID, address, zip);
+        switch(change) {
+            case 1:
+                return "Address was changed to " + address + ", " + zip;
+            case -1:
+                return "Customer does not exist";
+            case -3:
+                return "The zip code does not exist in Trondheim";
+            default:
+                return "Address was not changed";
+        }
+    }
+
+    public String changeAddress(int customerID, String address) {
+        int change = super.updateCustomerAddress(customerID, address);
+        switch(change) {
+            case 1:
+                return "Address was changed to " + address;
+            case -1:
+                return "Customer does not exist";
+            default:
+                return "Address was not changed";
+        }
     }
 
     public ArrayList<Customer> viewAllCustomers() {
-
+        return super.viewAllCustomers();
     }
 
-    public boolean
+    public Customer viewCustomer(int ID) {
+        return super.viewCustomer(ID);
+    }
 
 }
