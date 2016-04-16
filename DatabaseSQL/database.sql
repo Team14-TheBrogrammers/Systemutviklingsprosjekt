@@ -64,7 +64,8 @@ CREATE TABLE Recipe(
 );
 
 CREATE TABLE Ingredient (
-  ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY
+  ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
+  quantity INTEGER(30) NOT NULL
 );
 
 CREATE TABLE Recipe_ingredient (
