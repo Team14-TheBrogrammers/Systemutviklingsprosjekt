@@ -3,6 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -77,7 +78,7 @@ public class OrderConnection extends DatabaseConnection {
                 String name = resultSet.getString("recipe_name");
                 String type = resultSet.getString("recipe_type");
                 double price = resultSet.getDouble("price");
-                recipes.add(new Recipe());
+                recipes.add(new Recipe(name, type, price));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
