@@ -3,9 +3,9 @@ package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,11 +49,43 @@ public class OrderConnection extends DatabaseConnection {
                     writeError(sqle.getMessage());
                 } catch (Exception e) {
                     writeError(e.getMessage());
+                } finally {
+
                 }
             }
             return newNumber;
         }
         return -1;
+    }
+
+    /** //TODO: FIX THIS documentationSHIT
+     * Method for generating price for a order. This method does a query for all recipes that match an order.
+     * @param orderID is the ID for the order.
+     * @return -1.0 if something wrong happend. etc
+     */
+    private double getOrderPrice(int orderID) {
+        String sqlCommand = "SELECT * FROM Order_recipe NATURAL JOIN Recipe WHERE order_id = " + orderID + ";";
+        double totalPrice = -1.0;
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+
+            while (resultSet.next()) {
+                totalPrice += (resultSet.getInt("quantity") * resultSet.getDouble("price"));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return totalPrice;
     }
 
     private boolean checkCustomerId(int id) {

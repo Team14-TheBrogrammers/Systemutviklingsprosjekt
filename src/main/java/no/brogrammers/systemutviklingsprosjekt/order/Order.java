@@ -30,16 +30,6 @@ public class Order {
         this.recipes = recipes;
     }
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
-        this.orderID = orderID;
-        this.customerID = customerID;
-        this.paymentStatus = paymentStatus;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.deliveryTime = deliveryTime;
-        this.recipes = recipes;
-    }
-
     public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes) {
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -48,15 +38,6 @@ public class Order {
         this.deliveryTime = deliveryTime;
         this.address = address;
         this.zipCode = zipCode;
-        this.recipes = recipes;
-    }
-
-    public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
-        this.customerID = customerID;
-        this.paymentStatus = paymentStatus;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.deliveryTime = deliveryTime;
         this.recipes = recipes;
     }
 

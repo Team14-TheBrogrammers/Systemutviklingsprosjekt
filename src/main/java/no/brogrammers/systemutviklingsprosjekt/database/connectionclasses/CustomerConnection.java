@@ -23,7 +23,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return checkExists(sqlCommand);
     }
 
-    public int regPrivateCustomer(String address, int zip, int phone, String email, String lastName, String firstName) {
+    public int regPrivateCustomer(String address, int zip, String email, int phone, String lastName, String firstName) {
         if(phoneNumberIsUsed(phone)) {
             return -1;
         }
@@ -101,7 +101,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return customerID;
     }
 
-    public int regCompany(String address, int zip, int phone, String email, String name) {
+    public int regCompany(String address, int zip, String email, int phone, String name) {
         if(phoneNumberIsUsed(phone)) {
             return -1;
         }
