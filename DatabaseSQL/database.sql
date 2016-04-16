@@ -65,7 +65,8 @@ CREATE TABLE Recipe(
 
 CREATE TABLE Ingredient (
   ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
-  quantity INTEGER(30) NOT NULL
+  quantity INTEGER(30) NOT NULL,
+  measurement VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Recipe_ingredient (
@@ -140,10 +141,10 @@ INSERT INTO Recipe(recipe_name, price) VALUES('Spaghetti', 45);
 INSERT INTO Recipe(recipe_name, price) VALUES('Tomato Soup', 10);
 
 INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Pancakes', 'Egg', '8 pcs');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Pancakes', 'Milk', '2 cups');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Tomato Soup', 'Tomatoes', '2 tbsp');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Spaghetti', 'Meat', '2 tsp');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Spaghetti', 'Cheese', '2 cups');
+INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Pancakes', 'Milk', '2 L');
+INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Tomato Soup', 'Tomatoes', '2');
+INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Spaghetti', 'Meat', '2 kg');
+INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Spaghetti', 'Cheese', '2 kg');
 
 INSERT INTO Instruction(recipe_name, step_number, description) VALUES('Pancakes', 1, 'Whisk together milk, butter, and egg.');
 INSERT INTO Instruction(recipe_name, step_number, description) VALUES('Pancakes', 2, 'Heat a large skillet.');
