@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Positions;
 DROP TABLE IF EXISTS Recipe_orders;
-DROP TABLE IF EXISTS Instruction;
+DROP TABLE IF EXISTS Recipe_instruction;
 DROP TABLE IF EXISTS Recipe_ingredient;
 DROP TABLE IF EXISTS Ingredient;
 DROP TABLE IF EXISTS Recipe;
@@ -25,7 +25,7 @@ CREATE TABLE Customer(
   address VARCHAR(30) NOT NULL,
   zip INTEGER(4) NOT NULL,
   phone INTEGER(8) NOT NULL,
-  email_address VARCHAR(20),
+  email_address VARCHAR(40),
   PRIMARY KEY(customer_id),
   FOREIGN KEY(zip) REFERENCES Postal(zip)
 );
@@ -78,10 +78,10 @@ CREATE TABLE Recipe_ingredient (
   REFERENCES Ingredient(ingredient_name)
 );
 
-CREATE TABLE Instruction(
+CREATE TABLE Recipe_instruction(
   recipe_name VARCHAR(30) NOT NULL,
   step_number INTEGER NOT NULL,
-  description VARCHAR(100),
+  description VARCHAR(500),
   PRIMARY KEY (recipe_name, step_number),
   CONSTRAINT recipeIns_fk FOREIGN KEY (recipe_name)
   REFERENCES Recipe(recipe_name)
