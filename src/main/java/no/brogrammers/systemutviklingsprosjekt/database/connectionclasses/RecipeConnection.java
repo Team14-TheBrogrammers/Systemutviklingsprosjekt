@@ -16,7 +16,6 @@ import java.util.List;
 
 /**
  * Created by Nicole on 07.04.2016.
- *
  */
 public class RecipeConnection {
 
@@ -26,29 +25,27 @@ public class RecipeConnection {
         this.connection = connection;
     }
 
-    public boolean create(String recipeName, List<Ingredient> ingredients) {
-        if( !addRecipe(recipeName) ) {
+    public boolean create(String recipeName, RecipeType recipeType, List<Ingredient> ingredients, List<Instruction> instructions, double price) {
+        if (!addRecipe(recipeName, recipeType, price)) {
             return false;
         }
-        if( !addIngredients(recipeName, ingredients) ) {
+        if (!addIngredients(recipeName, ingredients)) {
             return false;
         }
-        return addInstructions(recipeName);
+        return addInstructions(recipeName, instructions);
     }
 
-    private boolean addInstructions(String recipeName) {
-        return false;
-    }
-
-    private boolean addRecipe(String recipeName) {
+    private boolean addRecipe(String recipeName, RecipeType recipeType, double price) {
         try {
             PreparedStatement pStatement = connection.prepareStatement(
-                    "INSERT INTO recipe(recipe_name) VALUES (?)"
+                    "INSERT INTO recipe(recipe_name, recipe_type, price) VALUES (?,?,?)"
             );
             pStatement.setString(1, recipeName);
+            pStatement.setString(2, recipeType.name());
+            pStatement.setDouble(3, price);
             pStatement.execute();
             return true;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e);
             return false;
         }
@@ -85,10 +82,9 @@ public class RecipeConnection {
 
     private boolean addInstructions(String recipeName, List<Instruction> instructions) {
         for (Instruction instruction : instructions) {
-
             try {
                 PreparedStatement pStatement = connection.prepareStatement(
-                        "INSERT INTO recipe_intructions(recipe_name, step_number, description) VALUES (?,?,?)"
+                        "INSERT INTO recipe_instructions(recipe_name, step_number, description) VALUES (?,?,?)"
                 );
                 pStatement.setString(1, recipeName);
                 pStatement.setInt(2, instruction.getStepNumber());
@@ -97,7 +93,6 @@ public class RecipeConnection {
             } catch (SQLException e) {
                 System.err.println(e);
             }
-
         }
         return true;
     }
@@ -144,11 +139,13 @@ public class RecipeConnection {
 
             while (rs.next()) {
                 recipeType = RecipeType.valueOf(rs.getString("recipe_type"));
+                price = Double.parseDouble((rs.getString("price")));
             }
 
         } catch (SQLException e) {
             System.err.println(e);
         }
+
         return new Recipe(recipeName, recipeType, ingredients, instructions, price);
     }
 
@@ -159,6 +156,5 @@ public class RecipeConnection {
     public boolean delete() {
         return false;
     }
-
 
 }
