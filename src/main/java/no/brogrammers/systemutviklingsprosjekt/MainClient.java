@@ -1,7 +1,12 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
+import com.google.common.collect.ImmutableList;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
+import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -18,6 +23,9 @@ public class MainClient {
         //System.out.println(Encryption.encryptPassword("asdsad"));
 
         //test();
+
+
+
     }
 
     private static void test() {

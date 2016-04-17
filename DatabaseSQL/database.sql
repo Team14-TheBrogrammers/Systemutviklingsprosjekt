@@ -2,7 +2,6 @@
 
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Positions;
-DROP TABLE IF EXISTS Recipe_orders;
 DROP TABLE IF EXISTS Recipe_instruction;
 DROP TABLE IF EXISTS Recipe_ingredient;
 DROP TABLE IF EXISTS Ingredient;
@@ -85,15 +84,6 @@ CREATE TABLE Recipe_instruction(
   PRIMARY KEY (recipe_name, step_number),
   CONSTRAINT recipeIns_fk FOREIGN KEY (recipe_name)
   REFERENCES Recipe(recipe_name)
-);
-
-CREATE TABLE Recipe_orders(
-  order_id INTEGER NOT NULL,
-  recipe_name VARCHAR(30) NOT NULL,
-  quantity CHAR(30),
-  PRIMARY KEY(order_id, recipe_name),
-  FOREIGN KEY(order_id) REFERENCES Orders(order_id),
-  FOREIGN KEY(recipe_name) REFERENCES Recipe(recipe_name)
 );
 
 CREATE TABLE Positions(
