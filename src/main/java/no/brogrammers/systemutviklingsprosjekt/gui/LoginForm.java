@@ -26,17 +26,13 @@ public class LoginForm extends JFrame {
         setSize(420, 400);
         setLocationRelativeTo(null);
         setTitle("Login");
+        setContentPane(mainPanel);
+
+        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/loginBackground.png"));
+        backgroundLabel.setIcon(new ImageIcon(image));
 
         setVisible(true);
 
-        //Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("login.png"));
-        //Image pic = Toolkit.getDefaultToolkit().getImage(getClass().getResource("login.png"));//test123455.png"));//"C:\\Users\\Knut\\IdeaProjects\\test swing applikasjon\\src\\main/resources"));//"test1234.png"));
-
-        //backgroundLabel.setIcon(new ImageIcon(pic));
-        //Image pic = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Knut\\Documents\\GitHub\\Systemutviklingsprosjekt\\src\\main\\resources\\login.png");//test123455.png"));//"C:\\Users\\Knut\\IdeaProjects\\test swing applikasjon\\src\\main/resources"));//"test1234.png"));
-        //backgroundLabel.setIcon(new ImageIcon(pic));
-
-        setContentPane(mainPanel);
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

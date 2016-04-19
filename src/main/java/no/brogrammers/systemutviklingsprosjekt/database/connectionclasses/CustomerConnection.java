@@ -165,7 +165,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
                     } catch (SQLException sqle) {
                         writeError(sqle.getMessage()); //// FIXME: 14.04.2016
                     } catch (Exception e) {
-                        writeError(e.getMessage()); // TODO : SHIT
+                        writeError(e.getMessage()); // TODO : SHIT : Transaksjonshåndtering??
                     } finally {
                         getCleaner().closePreparedStatement(privateInsert);
                         getCleaner().closeResultSet(resultSet1);
@@ -225,7 +225,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
     }
 
-    //LEGGE TIL NY METODE: addNewZip(int zip)
+    //TODO: LEGGE TIL NY METODE: addNewZip(int zip)
 
 
     private boolean checkZipExists(int zip) {

@@ -23,9 +23,18 @@ public class MainForm extends JFrame{
     private JList list1;
     private JTable table2;
     private JScrollPane scrollPane1;
+    private JButton addNewOrderButton;
+    private JToolBar toolBarTest;
+    private JButton button1;
+    private JPanel driverRouteTab;
+    private JPanel statisticsTab;
+    private JPanel aboutTab;
+    private JPanel homeTab;
+    private JButton removeOrderSButton;
+    private JTable table3;
 
     private ManageOrder manageOrder = new ManageOrder();
-    private ManageCustomer manageCustomer = new ManageCustomer();
+    private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
 
     public MainForm(User user) {
         setContentPane(mainPanel);
@@ -41,7 +50,7 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         //scrollPane1.setViewportView(table2);
 
-        String orderColumns[] = {"OrderID", "CustomerID", "Payment Status", "Order date", "Delivery time", "Address", "Zip"};
+        String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
 
         //Customer tab: //TODO: Private customer og company tab for seg sjøl?
         /*String customerColumns[] = {"", "", ""};
@@ -49,11 +58,14 @@ public class MainForm extends JFrame{
         table1.setModel(defaultTableModel);*/
 
         //Employee:
-        String employeeColumns[] =
+        String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};
 
         //Ingredients:
+        ///toolBarTest.add("Test");
+        String ingredientColumns[] = {"Name", "Quantity"}; //Measurment in own row?
 
         //Recipes:
+        String recipeColumns[] = {"Name", "Type", "Price"};
 
         //Subscription:
 
