@@ -2,7 +2,7 @@
 
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Positions;
-DROP TABLE IF EXISTS Recipe_orders;
+DROP TABLE IF EXISTS Order_recipe;
 DROP TABLE IF EXISTS Recipe_instruction;
 DROP TABLE IF EXISTS Recipe_ingredient;
 DROP TABLE IF EXISTS Ingredient;
@@ -25,7 +25,7 @@ CREATE TABLE Customer(
   address VARCHAR(30) NOT NULL,
   zip INTEGER(4) NOT NULL,
   email_address VARCHAR(40),
-  phone INTEGER(8) NOT NULL,
+  phone INTEGER(8) UNIQUE NOT NULL,
   PRIMARY KEY(customer_id),
   FOREIGN KEY(zip) REFERENCES Postal(zip)
 );
@@ -65,14 +65,14 @@ CREATE TABLE Recipe(
 
 CREATE TABLE Ingredient (
   ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
-  quantity INTEGER(30) NOT NULL,
+  quantity DOUBLE NOT NULL,
   measurement VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Recipe_ingredient (
   recipe_name VARCHAR(30) NOT NULL,
   ingredient_name VARCHAR(30) NOT NULL,
-  quantity CHAR(30),
+  quantity DOUBLE NOT NULL,
   PRIMARY KEY (recipe_name,ingredient_name),
   CONSTRAINT recipeIng_fk FOREIGN KEY (recipe_name)
   REFERENCES Recipe(recipe_name),
@@ -108,7 +108,7 @@ CREATE TABLE Employee(
   emp_id INTEGER AUTO_INCREMENT PRIMARY KEY,
   last_name VARCHAR(30) NOT NULL,
   first_name VARCHAR(30) NOT NULL,
-  phone INTEGER(8) NOT NULL,
+  phone INTEGER(8) UNIQUE NOT NULL,
   date_of_employment DATE,
   position_id INTEGER NOT NULL,
   username VARCHAR(10) NOT NULL,
@@ -127,34 +127,34 @@ INSERT INTO Positions(position_name) VALUES('Driver');
 INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address)
 VALUES('Sund', 'Ingunn', 98765432, '2015-03-04', 1, 'ingunnsu', 'ingunnIzc00l', 'ingunnsu@yahoo.no');
 
-INSERT INTO Ingredient(ingredient_name) VALUES('Egg');
-INSERT INTO Ingredient(ingredient_name) VALUES('Milk');
-INSERT INTO Ingredient(ingredient_name) VALUES('Flour');
-INSERT INTO Ingredient(ingredient_name) VALUES('Tomatoes');
-INSERT INTO Ingredient(ingredient_name) VALUES('Cheese');
-INSERT INTO Ingredient(ingredient_name) VALUES('Lettuce');
-INSERT INTO Ingredient(ingredient_name) VALUES('Beef');
-INSERT INTO Ingredient(ingredient_name) VALUES('Meat');
+INSERT INTO Ingredient VALUES('Egg', 12.0, 'asd');
+INSERT INTO Ingredient VALUES('Milk', 4.2, 'L');
+INSERT INTO Ingredient VALUES('Flour', 2.1, 'Kg');
+INSERT INTO Ingredient VALUES('Tomatoes', 4.0, 'Kg');
+INSERT INTO Ingredient VALUES('Cheese', 5.8, 'Kg');
+INSERT INTO Ingredient VALUES('Lettuce', 2.0, 'Kg');
+INSERT INTO Ingredient VALUES('Beef', 3.5, 'Kg');
+INSERT INTO Ingredient VALUES('Meat', 2.2, 'Kg');
 
-INSERT INTO Recipe(recipe_name, price) VALUES('Pancakes', 20);
-INSERT INTO Recipe(recipe_name, price) VALUES('Spaghetti', 45);
-INSERT INTO Recipe(recipe_name, price) VALUES('Tomato Soup', 10);
+INSERT INTO Recipe VALUES('Pancakes', 'Vegetarian', 20);
+INSERT INTO Recipe VALUES('Spaghetti', 'Beeeeeeef', 45);
+INSERT INTO Recipe VALUES('Tomato Soup', 'suppelover1337', 10);
 
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Pancakes', 'Egg', '8 pcs');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Pancakes', 'Milk', '2 L');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Tomato Soup', 'Tomatoes', '2');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Spaghetti', 'Meat', '2 kg');
-INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES('Spaghetti', 'Cheese', '2 kg');
+INSERT INTO Recipe_ingredient VALUES('Pancakes', 'Egg', 8.0);
+INSERT INTO Recipe_ingredient VALUES('Pancakes', 'Milk', 2.0);
+INSERT INTO Recipe_ingredient VALUES('Tomato Soup', 'Tomatoes', 2.0);
+INSERT INTO Recipe_ingredient VALUES('Spaghetti', 'Meat', 2.0);
+INSERT INTO Recipe_ingredient VALUES('Spaghetti', 'Cheese', 2.0);
 
-INSERT INTO Instruction(recipe_name, step_number, description) VALUES('Pancakes', 1, 'Whisk together milk, butter, and egg.');
-INSERT INTO Instruction(recipe_name, step_number, description) VALUES('Pancakes', 2, 'Heat a large skillet.');
+INSERT INTO Recipe_instruction VALUES('Pancakes', 1, 'Whisk together milk, butter, and egg.');
+INSERT INTO Recipe_instruction VALUES('Pancakes', 2, 'Heat a large skillet.');
 
-INSERT INTO Postal(zip, postal) VALUES(1234, 'Trondheim');
+INSERT INTO Postal VALUES(1234, 'Trondheim');
 
-INSERT INTO Customer(customer_id, address, zip) VALUES(DEFAULT, 'Trondheims gate 1', 1234);
-INSERT INTO Customer(address, zip) VALUES('Trondheims gate 2', 1234);
-INSERT INTO Private_customer(last_name, first_name, phone, email_address, customer_id)
-  VALUES('Sund', 'Ingunn', 12345678, 'ingunn@sund.no', 1);
+INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'ingunn@sund.no', 23123333);
+INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'saasds@asdasd.no', 21312333);
+INSERT INTO Private_customer(last_name, first_name, customer_id)
+  VALUES('Sund', 'Ingunn', 1);
 
 
 

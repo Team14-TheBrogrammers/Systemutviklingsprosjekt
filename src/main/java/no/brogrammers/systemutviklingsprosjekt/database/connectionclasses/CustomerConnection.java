@@ -18,6 +18,20 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return checkExists(sqlCommand);
     }
 
+    private boolean isPrivateCustomerOrCompany(int customerID) { //customer exists as a private customer or a company
+        String sqlPrivateCustomer = "SELECT * FROM Private_customer WHERE customer_id = " + customerID + ";";
+        if(checkExists(sqlPrivateCustomer)) {
+            return true;
+        } else {
+            String sqlCompany = "SELECT * FROM Company WHERE customer_id = " + customerID + ";";
+            if (checkExists(sqlCompany)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     private boolean phoneNumberIsUsed(int phone) {
         String sqlCommand = "SELECT phone FROM Customer WHERE phone = " + phone + ";";
         return checkExists(sqlCommand);
@@ -211,7 +225,8 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
     }
 
-    //LEGGE TIL NY ZIP-METODE
+    //LEGGE TIL NY METODE: addNewZip(int zip)
+
 
     private boolean checkZipExists(int zip) {
         String sqlCommand = "SELECT * FROM Postal WHERE zip = " + zip + ";";
@@ -282,7 +297,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
 
     public ArrayList<Customer> viewAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<Customer>();
-        String sqlAllCustomers = "SELECT * FROM Customers";
+        String sqlAllCustomers = "SELECT * FROM Customer";
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -290,7 +305,9 @@ public abstract class CustomerConnection extends DatabaseConnection {
             resultSet = statement.executeQuery(sqlAllCustomers);
             while (resultSet.next()) {
                 int customerID = resultSet.getInt("customer_id");
-                customers.add(viewCustomer(customerID));
+                if(isPrivateCustomerOrCompany(customerID)) {
+                    customers.add(viewCustomer(customerID));
+                }
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());

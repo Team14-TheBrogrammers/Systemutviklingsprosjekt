@@ -19,5 +19,6 @@
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.4" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.teamdev.jxbrowser:jxbrowser-cross-platform:6.0" level="project" />
   </component>
 </module>

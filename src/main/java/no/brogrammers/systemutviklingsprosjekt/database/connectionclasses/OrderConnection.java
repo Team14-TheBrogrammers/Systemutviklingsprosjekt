@@ -38,10 +38,10 @@ public class OrderConnection extends DatabaseConnection {
                     resultSet.next();
                     newNumber = resultSet.getInt("c") + 1;
                     insertStatement = getConnection().prepareStatement(insertCommand);
-                    insertStatement.setInt(1, order.getDeliveryDate());
+                    //insertStatement.setInt(1, order.getDeliveryDate()); //TODO: FIX
                     insertStatement.setDouble(2, order.getDeliveryTime());
                     insertStatement.setString(3, order.getAddress());
-                    insertStatement.setDouble(4, order.getPrice());
+                    //insertStatement.setDouble(4, order.getPrice()); //TODO: FIX
                     insertStatement.setInt(5, order.getCustomerID());
                     insertStatement.executeUpdate();
                     finished = true;
@@ -110,7 +110,7 @@ public class OrderConnection extends DatabaseConnection {
                 String name = resultSet.getString("recipe_name");
                 String type = resultSet.getString("recipe_type");
                 double price = resultSet.getDouble("price");
-                recipes.add(new Recipe(name, type, price));
+                //recipes.add(new Recipe(name, type, price)); //TODO: FIX
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -221,7 +221,8 @@ public class OrderConnection extends DatabaseConnection {
         return orders;
     }
 
-    public ArrayList<Order> viewActiveOrders() {
+    //TODO: FIX THIS METHOD
+    /*public ArrayList<Order> viewActiveOrders() {
         ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
         Statement statement = null;
@@ -257,7 +258,7 @@ public class OrderConnection extends DatabaseConnection {
             getCleaner().closeStatement(statement);
         }
         return orders;
-    }
+    }*/
 
     public ArrayList<Ingredient> listMissingIngredients() {
         return null;

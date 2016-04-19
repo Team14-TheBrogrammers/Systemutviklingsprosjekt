@@ -2,7 +2,9 @@ package no.brogrammers.systemutviklingsprosjekt;
 
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -18,23 +20,21 @@ public class MainClient {
         //System.out.println(Encryption.encryptPassword("asdsad"));
 
         //test();
+        setJFrameLookAndFeel();
+        LoginForm loginForm = new LoginForm();
     }
 
-    private static void test() {
-        DatabaseConnection databaseConnection = new UserConnection(); //databaseDriver, databaseName, errorFileLocation);
-
+    private static void setJFrameLookAndFeel() {
         try {
-            Statement statement = databaseConnection.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM test;");
-            while(resultSet.next()) {
-                String name = resultSet.getString("navn");
-                System.out.println(name);
-            }
-        } catch (Exception e) {
-            System.out.println("Error occoured.");
-            System.out.println(e.getMessage());
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
-
-        databaseConnection.stopConnection();
     }
 }

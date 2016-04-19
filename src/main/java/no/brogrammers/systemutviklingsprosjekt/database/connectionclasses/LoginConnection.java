@@ -28,7 +28,7 @@ public class LoginConnection extends DatabaseConnection{
                 String lastName = resultSet.getString("last_name");
                 String firstName = resultSet.getString("first_name");
                 int phone = resultSet.getInt("phone");
-                java.sql.Date dateOfEmplyment = resultSet.getDate("date_of_emplyment");
+                java.sql.Date dateOfEmplyment = resultSet.getDate("date_of_employment");
                 int posistionID = resultSet.getInt("position_id");
                 String email = resultSet.getString("email_address");
                 switch (posistionID) {
