@@ -2,7 +2,8 @@
  * Created by Ingunn on 15.04.2016.
  */
 
-var address = "Stjørdal";
+
+var address = "London";
 
 function geocodeAddress(geocoder, resultsMap) {
     var address = document.getElementById('address').value;
@@ -19,6 +20,7 @@ function geocodeAddress(geocoder, resultsMap) {
 
     });
 }
+//icon source: https://s-media-cache-ak0.pinimg.com/736x/08/bb/50/08bb50e8b4c52ae527507fb01af1d127.jpg
 
 
 function setMarker(geocoder, resultsMap, address) {
@@ -32,7 +34,5 @@ function setMarker(geocoder, resultsMap, address) {
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
-
     });
-
 }

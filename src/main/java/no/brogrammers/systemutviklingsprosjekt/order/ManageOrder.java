@@ -24,14 +24,7 @@ public class ManageOrder extends OrderConnection implements ViewOrderInterface, 
         return -1;
     }
 
-    public boolean checkCorrectTimeStamp(java.sql.Date orderDate, java.sql.Date deliveryDate) {
-        long days = (deliveryDate.getTime()-orderDate.getTime())/86400000;
-        //(currentTime - (currentTime % 86400000));
-        if(days >= 3) {
-            return true;
-        }
-        return false;
-    }
+
 
     //View all orders that has not been delivered yet.
     public ArrayList<Order> viewAllActiveOrders() {

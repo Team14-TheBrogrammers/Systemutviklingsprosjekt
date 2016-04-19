@@ -30,16 +30,6 @@ public class Order {
         this.recipes = recipes;
     }
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
-        this.orderID = orderID;
-        this.customerID = customerID;
-        this.paymentStatus = paymentStatus;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.deliveryTime = deliveryTime;
-        this.recipes = recipes;
-    }
-
     public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes) {
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -48,15 +38,6 @@ public class Order {
         this.deliveryTime = deliveryTime;
         this.address = address;
         this.zipCode = zipCode;
-        this.recipes = recipes;
-    }
-
-    public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
-        this.customerID = customerID;
-        this.paymentStatus = paymentStatus;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.deliveryTime = deliveryTime;
         this.recipes = recipes;
     }
 
@@ -129,6 +110,6 @@ public class Order {
             orderList += rec.toString() + "\n";
         }
         String pay = paymentStatus ? "Paid" : "Not paid";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\norder: \n" + orderList;
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\nOrder: \n" + orderList;
     }
 }
