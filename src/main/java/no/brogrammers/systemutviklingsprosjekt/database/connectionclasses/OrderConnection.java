@@ -18,44 +18,82 @@ public class OrderConnection extends DatabaseConnection {
         super();
     }
 
-    public int addOrder(Order order) { // TODO: clean connection properly and do fix this code
-        if(checkCustomerId(order.getCustomerID())) {
-            int newNumber = 1; //If there is no other numbers before this number will be set as the id
-            boolean finished = false;
-            ResultSet resultSet;
-            PreparedStatement selectStatement;
-            PreparedStatement insertStatement;
-
-            String selectCommand = "SELECT MAX(order_id) AS c FROM Orders;";
-            String insertCommand = "INSERT INTO Orders(delivery_date, delivery_time, adress, total_price, customer_id)\n" +
-                    "VALUES(?, ?, ?, ?, ?);";
-
-            while(!finished) {
-                try {
-                    selectStatement = getConnection().prepareStatement(selectCommand);
-                    resultSet = selectStatement.executeQuery();
-
-                    resultSet.next();
-                    newNumber = resultSet.getInt("c") + 1;
-                    insertStatement = getConnection().prepareStatement(insertCommand);
-                    //insertStatement.setInt(1, order.getDeliveryDate()); //TODO: FIX
-                    insertStatement.setDouble(2, order.getDeliveryTime());
-                    insertStatement.setString(3, order.getAddress());
-                    //insertStatement.setDouble(4, order.getPrice()); //TODO: FIX
-                    insertStatement.setInt(5, order.getCustomerID());
-                    insertStatement.executeUpdate();
-                    finished = true;
-                } catch (SQLException sqle) {
-                    writeError(sqle.getMessage());
-                } catch (Exception e) {
-                    writeError(e.getMessage());
-                } finally {
-
-                }
+    private boolean checkCorrectOrderDates(java.sql.Date deliveryDate, double deliveryTime) {
+        if(deliveryTime <= 21 && deliveryTime >= 7) {
+            long MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
+            int days = (int) ((deliveryDate.getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) / MILLISECONDS_IN_DAY);
+            if(days >= 3) {
+                System.out.println(days);
+                return true;
             }
-            return newNumber;
         }
-        return -1;
+        return false;
+    }
+
+    /**
+     * This method is for adding a new order to the database.
+     * @param customerID
+     * @param paymentStatus
+     * @param orderDate
+     * @param deliveryDate
+     * @param deliveryTime
+     * @param address
+     * @param zipCode
+     * @param recipes
+     * @return
+     */
+    public int addOrder(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes, int[] quantity) { // TODO: clean connection properly and do fix this code
+        if(checkCorrectOrderDates(deliveryDate, deliveryTime)) {
+            if(checkCustomerId(customerID)) {
+                int newNumber = 1; //If there is no other numbers before this number will be set as the id
+                boolean finished = false;
+                ResultSet resultSet = null;
+                PreparedStatement selectStatement = null;
+                PreparedStatement insertStatement = null;
+
+                String selectCommand = "SELECT MAX(order_id) AS c FROM Orders;";
+                String insertCommand = "INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, address, zip, customer_id)\n" +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?);";
+
+                while(!finished) {
+                    try {
+                        selectStatement = getConnection().prepareStatement(selectCommand);
+                        resultSet = selectStatement.executeQuery();
+
+                        resultSet.next();
+                        newNumber = resultSet.getInt("c") + 1;
+                        insertStatement = getConnection().prepareStatement(insertCommand);
+                        insertStatement.setBoolean(1, paymentStatus);
+                        insertStatement.setDate(2, orderDate);
+                        insertStatement.setDate(3, deliveryDate);
+                        insertStatement.setDouble(4, deliveryTime);
+                        insertStatement.setString(5, address);
+                        insertStatement.setInt(5, zipCode);
+                        insertStatement.setInt(5, customerID);
+
+                        for(int i = 0; i < recipes.size(); i++) {
+                            String sqlCommand = "INSERT INTO Order_recipe(order_id, recipe_name, quantity) VALUES(" + newNumber + ", " + recipes.get(i).getRecipeName() + ", " + quantity[i] + ");";
+                            checkUpdated(sqlCommand);
+                        }
+
+                        insertStatement.executeUpdate();
+                        finished = true;
+                    } catch (SQLException sqle) {
+                        writeError(sqle.getMessage());
+                    } catch (Exception e) {
+                        writeError(e.getMessage());
+                    } finally {
+                        getCleaner().closePreparedStatement(insertStatement);
+                        getCleaner().closePreparedStatement(selectStatement);
+                        getCleaner().closeResultSet(resultSet);
+                    }
+                }
+                return newNumber;
+            } else {
+                return -1;
+            }
+        }
+        return -2;
     }
 
     /** //TODO: FIX THIS documentationSHIT
@@ -160,14 +198,15 @@ public class OrderConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }
 
-    public ArrayList<Order> viewAllOrders() {
+    public ArrayList<Order> getOrders(String sqlCommand) {
         ArrayList<Order> orders  = new ArrayList<Order>();
-        String sqlCommand = "SELECT * FROM Orders;";
         Statement statement = null;
         ResultSet resultSet = null;
+
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sqlCommand);
+
             while(resultSet.next()) {
                 int orderID = resultSet.getInt("order_id");
                 boolean paymentStatus = resultSet.getBoolean("payment_status");
@@ -177,9 +216,9 @@ public class OrderConnection extends DatabaseConnection {
                 String address = resultSet.getString("address");
                 int zip = resultSet.getInt("zip");
                 int customerID = resultSet.getInt("customer_id");
-
                 orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
             }
+
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
         } catch (Exception e) {
@@ -189,6 +228,11 @@ public class OrderConnection extends DatabaseConnection {
             getCleaner().closeStatement(statement);
         }
         return orders;
+    }
+
+    public ArrayList<Order> viewPreviousOrders() {//viewAllOrders() {
+        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date < CURDATE();";//"SELECT * FROM Orders;";
+        return getOrders(sqlCommand);
     }
 
     public ArrayList<Order> viewOrdersToCustomer(int customerID) {
@@ -222,8 +266,11 @@ public class OrderConnection extends DatabaseConnection {
     }
 
     //TODO: FIX THIS METHOD
-    /*public ArrayList<Order> viewActiveOrders() {
-        ArrayList<Order> orders  = new ArrayList<Order>();
+    public ArrayList<Order> viewActiveOrders() {
+        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date >= CURDATE();";
+        return getOrders(sqlCommand);
+    }
+        /*ArrayList<Order> orders  = new ArrayList<Order>();
         String sqlCommand = "SELECT * FROM Orders;";
         Statement statement = null;
         ResultSet resultSet = null;

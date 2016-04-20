@@ -1,14 +1,16 @@
 package no.brogrammers.systemutviklingsprosjekt.gui;
 
-import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.user.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -19,7 +21,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class MainForm extends JFrame{
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
-    private JTable table1;
     private JPanel orderTab;
     private JList list1;
     private JTable table2;
@@ -31,15 +32,20 @@ public class MainForm extends JFrame{
     private JPanel statisticsTab;
     private JPanel aboutTab;
     private JPanel homeTab;
-    private JButton removeOrderSButton;
     private JTable table3;
     private JTabbedPane tabbedPane2;
-    private JTable table4;
+    private JTable deliveriesTodayTable;
+    private JTabbedPane tabbedPane3;
+    private JButton addOrderButton;
+    private JButton deleteOrderSButton;
+    private JTable activeOrdersTable;
+    private JTable previousOrdersTable;
     private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
+    private OrderConnection orderConnection = new OrderConnection();
 
     public MainForm(User user) {
         setContentPane(mainPanel);
@@ -50,6 +56,12 @@ public class MainForm extends JFrame{
         setVisible(true);
 
         loadTabs();
+        addOrderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     private void loadTabs() {
@@ -58,7 +70,7 @@ public class MainForm extends JFrame{
         //Driver tab:
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
         DefaultTableModel defaultTableModel2 = new DefaultTableModel(orderColumns, 0);
-        table4.setModel(defaultTableModel2);
+        deliveriesTodayTable.setModel(defaultTableModel2);
         ArrayList<Order> orders = driverConnection.deliveriesToday();
 
         for(int i = 0; i < orders.size(); i++) {
@@ -79,7 +91,7 @@ public class MainForm extends JFrame{
         //Customer tab: //TODO: Private customer og company tab for seg sjøl?
         /*String customerColumns[] = {"", "", ""};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        table1.setModel(defaultTableModel);*/
+        activeOrdersTable.setModel(defaultTableModel);*/
 
         //Employee:
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};
@@ -90,6 +102,43 @@ public class MainForm extends JFrame{
 
         //Recipes:
         String recipeColumns[] = {"Name", "Type", "Price"};
+
+        //Orders
+        String orderrColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
+        DefaultTableModel defaultTableModel3 = new DefaultTableModel(orderColumns, 0);
+        previousOrdersTable.setModel(defaultTableModel3);
+        ArrayList<Order> previousOrders = orderConnection.viewPreviousOrders();
+        for (int i = 0; i < previousOrders.size(); i++) {
+            int orderID = previousOrders.get(i).getOrderID();
+            int customerID = previousOrders.get(i).getCustomerID();
+            boolean paymentStatus = previousOrders.get(i).isPaymentStatus();
+            java.sql.Date orderDate = previousOrders.get(i).getOrderDate();
+            java.sql.Date deliveryDate = previousOrders.get(i).getDeliveryDate();
+            double deliveryTime = previousOrders.get(i).getDeliveryTime();
+            String address = previousOrders.get(i).getAddress();
+            int zip = previousOrders.get(i).getZipCode();
+
+            Object[] objects = {orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip};
+            defaultTableModel3.addRow(objects);
+        }
+
+        DefaultTableModel defaultTableModel4 = new DefaultTableModel(orderColumns, 0);
+        activeOrdersTable.setModel(defaultTableModel4);
+        ArrayList<Order> activeOrders = orderConnection.viewActiveOrders();
+        for (int i = 0; i < activeOrders.size(); i++) {
+            int orderID = activeOrders.get(i).getOrderID();
+            int customerID = activeOrders.get(i).getCustomerID();
+            boolean paymentStatus = activeOrders.get(i).isPaymentStatus();
+            java.sql.Date orderDate = activeOrders.get(i).getOrderDate();
+            java.sql.Date deliveryDate = activeOrders.get(i).getDeliveryDate();
+            double deliveryTime = activeOrders.get(i).getDeliveryTime();
+            String address = activeOrders.get(i).getAddress();
+            int zip = activeOrders.get(i).getZipCode();
+
+            Object[] objects = {orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip};
+            defaultTableModel4.addRow(objects);
+        }
+
 
         //Subscription:
 
@@ -107,7 +156,7 @@ public class MainForm extends JFrame{
             /*if(customers.get(i) != null) {
                 showMessageDialog(null, customers.get(i).toString());
             }
-            //table1.add();
+            //activeOrdersTable.add();
             int id = customers.get(i).getID();
             String address = customers.get(i).getAddress();
             String emailAddress = customers.get(i).getEmail();
