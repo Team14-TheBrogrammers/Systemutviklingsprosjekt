@@ -2,6 +2,7 @@ package no.brogrammers.systemutviklingsprosjekt.gui;
 
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.user.User;
@@ -32,9 +33,13 @@ public class MainForm extends JFrame{
     private JPanel homeTab;
     private JButton removeOrderSButton;
     private JTable table3;
+    private JTabbedPane tabbedPane2;
+    private JTable table4;
+    private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
+    private DriverConnection driverConnection = new DriverConnection();
 
     public MainForm(User user) {
         setContentPane(mainPanel);
@@ -50,7 +55,26 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         //scrollPane1.setViewportView(table2);
 
+        //Driver tab:
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
+        DefaultTableModel defaultTableModel2 = new DefaultTableModel(orderColumns, 0);
+        table4.setModel(defaultTableModel2);
+        ArrayList<Order> orders = driverConnection.deliveriesToday();
+
+        for(int i = 0; i < orders.size(); i++) {
+            int orderID = orders.get(i).getOrderID();
+            int customerID = orders.get(i).getCustomerID();
+            boolean paymentStatus = orders.get(i).isPaymentStatus();
+            java.sql.Date orderDate = orders.get(i).getOrderDate();
+            java.sql.Date deliveryDate = orders.get(i).getDeliveryDate();
+            double deliveryTime = orders.get(i).getDeliveryTime();
+            String address = orders.get(i).getAddress();
+            int zip = orders.get(i).getZipCode();
+
+            Object[] objects = {orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip};
+            defaultTableModel2.addRow(objects);
+        }
+
 
         //Customer tab: //TODO: Private customer og company tab for seg sjøl?
         /*String customerColumns[] = {"", "", ""};

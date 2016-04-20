@@ -28,7 +28,7 @@ public class LoginForm extends JFrame {
         setTitle("Login");
         setContentPane(mainPanel);
 
-        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/loginBackground.png"));
+        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/login_background.png"));
         backgroundLabel.setIcon(new ImageIcon(image));
 
         setVisible(true);

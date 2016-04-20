@@ -98,7 +98,7 @@ public class OrderConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }
 
-    private ArrayList<Recipe> getRecipesToOrder(int orderID) {
+    public ArrayList<Recipe> getRecipesToOrder(int orderID) {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
         String sqlCommand = "SELECT * FROM Order_recipe NATURAL JOIN Recipe WHERE order_id = " + orderID + ";";
         Statement statement = null;
@@ -264,13 +264,6 @@ public class OrderConnection extends DatabaseConnection {
         return null;
     }
 
-    public ArrayList<Order> deliveriesToday() {
-        return null;
-    }
-
-    public ArrayList<Order> deliveriesOnDay(int deliveryTime) {
-        return null;
-    }
 
     //Legge alle metodene for ManageOrder her ??
 }
