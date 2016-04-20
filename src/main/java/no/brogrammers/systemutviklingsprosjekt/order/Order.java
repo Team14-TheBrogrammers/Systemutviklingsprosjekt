@@ -16,7 +16,7 @@ public class Order {
     private double deliveryTime; //From 8 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
     private String address;
     private int zipCode;
-    private ArrayList<Recipe> recipes = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
     public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
@@ -30,16 +30,6 @@ public class Order {
         this.recipes = recipes;
     }
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
-        this.orderID = orderID;
-        this.customerID = customerID;
-        this.paymentStatus = paymentStatus;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.deliveryTime = deliveryTime;
-        this.recipes = recipes;
-    }
-
     public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes) {
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -48,15 +38,6 @@ public class Order {
         this.deliveryTime = deliveryTime;
         this.address = address;
         this.zipCode = zipCode;
-        this.recipes = recipes;
-    }
-
-    public Order(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, ArrayList<Recipe> recipes) {
-        this.customerID = customerID;
-        this.paymentStatus = paymentStatus;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.deliveryTime = deliveryTime;
         this.recipes = recipes;
     }
 

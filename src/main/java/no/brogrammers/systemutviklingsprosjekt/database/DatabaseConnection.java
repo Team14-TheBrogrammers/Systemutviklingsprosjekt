@@ -19,6 +19,8 @@ public abstract class DatabaseConnection {
     private File errorFile;
     private File informationFile;
 
+    private ConnectionCleaner cleaner = new ConnectionCleaner();
+
     public DatabaseConnection() {
         //Set location for local files
         errorFile = new File(errorLocation);
@@ -36,9 +38,9 @@ public abstract class DatabaseConnection {
             Class.forName(databaseDriver);
             connection = DriverManager.getConnection(databaseName);
             //statement = connection.createStatement();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException cnfe) {
             //e.printStackTrace();
-            writeError(e.getMessage());
+            writeError(cnfe.getMessage());
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
         } catch (Exception e) {
@@ -89,14 +91,16 @@ public abstract class DatabaseConnection {
      * Method for closing the connection properly.
      */
     public /*abstract*/ void stopConnection() {
-        try {
+        /*try {
             //statement.close();
-            connection.close();
+            //connection.close();
+
         } catch (SQLException e) {
             writeError(e.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
-        }
+        }*/
+        cleaner.closeConnection(connection);
     }
 
     /**
@@ -106,8 +110,10 @@ public abstract class DatabaseConnection {
      */
 
     public boolean checkUpdated(String sqlCommand) {
+        Statement statement = null;
+
         try {
-            Statement statement = getConnection().createStatement();
+            statement = getConnection().createStatement();
             if(statement.executeUpdate(sqlCommand) != 0) {
                 return true;
             }
@@ -115,6 +121,8 @@ public abstract class DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            cleaner.closeStatement(statement);
         }
         return false;
     }
@@ -126,9 +134,12 @@ public abstract class DatabaseConnection {
      */
 
     public boolean checkExists(String sqlCommand) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
                 return true;
             }
@@ -136,11 +147,18 @@ public abstract class DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            cleaner.closeResultSet(resultSet);
+            cleaner.closeStatement(statement);
         }
         return false;
     }
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public ConnectionCleaner getCleaner() {
+        return cleaner;
     }
 }
