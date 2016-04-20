@@ -147,10 +147,12 @@ public class UserConnection extends DatabaseConnection {
     public User viewUser(int userID) {
         if(userExists(userID)) {
             String sqlCommand = "SELECT * FROM Employee WHERE emp_id = " + userID + ";";
+            Statement statement = null;
+            ResultSet resultSet = null;
 
             try {
-                Statement statement = getConnection().createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlCommand);
+                statement = getConnection().createStatement();
+                resultSet = statement.executeQuery(sqlCommand);
                 while (resultSet.next()) {
                     String lastName = resultSet.getString("last_name");
                     String firstName = resultSet.getString("first_name");
@@ -176,6 +178,9 @@ public class UserConnection extends DatabaseConnection {
                 writeError(sqle.getMessage());
             } catch (Exception e) {
                 writeError(e.getMessage());
+            } finally {
+                getCleaner().closeResultSet(resultSet);
+                getCleaner().closeStatement(statement);
             }
         }
         return null;
@@ -184,10 +189,12 @@ public class UserConnection extends DatabaseConnection {
     public User viewUser(String username) {
         if(usernameExists(username)) {
             String sqlCommand = "SELECT * FROM Employee WHERE username = '" + username + "';";
+            Statement statement = null;
+            ResultSet resultSet = null;
 
             try {
-                Statement statement = getConnection().createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlCommand);
+                statement = getConnection().createStatement();
+                resultSet = statement.executeQuery(sqlCommand);
                 while (resultSet.next()) {
                     int userID = resultSet.getInt("emp_id");
                     String lastName = resultSet.getString("last_name");
@@ -213,18 +220,24 @@ public class UserConnection extends DatabaseConnection {
                 writeError(sqle.getMessage());
             } catch (Exception e) {
                 writeError(e.getMessage());
+            } finally {
+                getCleaner().closeResultSet(resultSet);
+                getCleaner().closeStatement(statement);
             }
         }
         return null;
     }
 
     public ArrayList<User> viewAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<User>();
 
         String sqlCommand = "SELECT * FROM Employee;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while(resultSet.next()) {
                 int id = resultSet.getInt("emp_id");
                 String lastName = resultSet.getString("last_name");
@@ -254,6 +267,9 @@ public class UserConnection extends DatabaseConnection {
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         //get information from database here
 

@@ -18,15 +18,17 @@ public class LoginConnection extends DatabaseConnection{
     public User checkLoginDetails(String username, String password) {
 
         String sqlCommand = "SELECT * FROM Employee WHERE username = '" + username + "' AND password = '" + password + "';";
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlCommand);
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
             while (resultSet.next()) {
                 int employeeID = resultSet.getInt("emp_id");
                 String lastName = resultSet.getString("last_name");
                 String firstName = resultSet.getString("first_name");
                 int phone = resultSet.getInt("phone");
-                java.sql.Date dateOfEmplyment = resultSet.getDate("date_of_emplyment");
+                java.sql.Date dateOfEmplyment = resultSet.getDate("date_of_employment");
                 int posistionID = resultSet.getInt("position_id");
                 String email = resultSet.getString("email_address");
                 switch (posistionID) {
@@ -48,6 +50,9 @@ public class LoginConnection extends DatabaseConnection{
             writeError(sqle.getMessage());
         } catch (Exception e) {
             writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
         }
         return null;
     }
