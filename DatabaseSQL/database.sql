@@ -126,28 +126,52 @@ INSERT INTO Positions(position_name) VALUES('Driver');
 
 INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address)
 VALUES('Sund', 'Ingunn', 98765432, '2015-03-04', 1, 'ingunnsu', 'ingunnIzc00l', 'ingunnsu@yahoo.no');
+INSERT INTO Recipe (recipe_name, recipe_type, price)
+VALUES
+  ('Pancakes', 'VEGETARIAN', 100),
+  ('Tomato Soup', 'VEGETARIAN', 100),
+  ('Spaghetti bolognese', 'MEATLOVER', 100);
 
-INSERT INTO Ingredient VALUES('Egg', 12.0, 'asd');
-INSERT INTO Ingredient VALUES('Milk', 4.2, 'L');
-INSERT INTO Ingredient VALUES('Flour', 2.1, 'Kg');
-INSERT INTO Ingredient VALUES('Tomatoes', 4.0, 'Kg');
-INSERT INTO Ingredient VALUES('Cheese', 5.8, 'Kg');
-INSERT INTO Ingredient VALUES('Lettuce', 2.0, 'Kg');
-INSERT INTO Ingredient VALUES('Beef', 3.5, 'Kg');
-INSERT INTO Ingredient VALUES('Meat', 2.2, 'Kg');
+INSERT INTO Ingredient (ingredient_name)
+VALUES
+  ('Egg'),
+  ('Milk'),
+  ('All-purpose flour'),
+  ('Tomatoes'),
+  ('Cheese'),
+  ('Baking powder'),
+  ('Salt'),
+  ('Onion'),
+  ('Vegetable oil'),
+  ('Olive oil'),
+  ('Lettuce'),
+  ('Tomato purée'),
+  ('Beef'),
+  ('White sugar'),
+  ('Brown sugar');
 
-INSERT INTO Recipe VALUES('Pancakes', 'Vegetarian', 20);
-INSERT INTO Recipe VALUES('Spaghetti', 'Beeeeeeef', 45);
-INSERT INTO Recipe VALUES('Tomato Soup', 'suppelover1337', 10);
+INSERT INTO Recipe_ingredient (recipe_name, ingredient_name, quantity)
+VALUES
+  ('Pancakes', 'Egg', '1 pc'),
+  ('Pancakes', 'Milk', '1 cup'),
+  ('Pancakes', 'All-purpose flour', '1 cup'),
+  ('Pancakes', 'Salt', '1 teaspoon'),
+  ('Pancakes', 'White sugar', '2 tablespoons'),
+  ('Pancakes', 'Vegetable oil', '2 tablespoons'),
+  ('Tomato soup', 'Onion', '1 pc'),
+  ('Tomato soup', 'Olive oil', '2 tablespoon'),
+  ('Tomato soup', 'Tomato purée', '2 teaspoons');
 
-INSERT INTO Recipe_ingredient VALUES('Pancakes', 'Egg', 8.0);
-INSERT INTO Recipe_ingredient VALUES('Pancakes', 'Milk', 2.0);
-INSERT INTO Recipe_ingredient VALUES('Tomato Soup', 'Tomatoes', 2.0);
-INSERT INTO Recipe_ingredient VALUES('Spaghetti', 'Meat', 2.0);
-INSERT INTO Recipe_ingredient VALUES('Spaghetti', 'Cheese', 2.0);
-
-INSERT INTO Recipe_instruction VALUES('Pancakes', 1, 'Whisk together milk, butter, and egg.');
-INSERT INTO Recipe_instruction VALUES('Pancakes', 2, 'Heat a large skillet.');
+INSERT INTO Recipe_instruction (recipe_name, step_number, description)
+VALUES
+  ('Pancakes', 1, 'In a large bowl, mix flour, sugar, baking powder and salt.
+    Make a well in the center, and pour in milk, egg and oil. Mix until smooth.'),
+  ('Pancakes', 2, 'Heat a lightly oiled griddle or frying pan over medium high heat.
+    Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.
+    Brown on both sides and serve hot.'),
+  ('Tomato soup', 1, 'Prepare your vegetables'),
+  ('Tomato soup', 2, 'Spoon 2 tbsp olive oil into a large heavy-based pan and heat it over a low heat.'),
+  ('Tomato soup', 3, 'When the pan is ready, add 2 tsp of tomato purée, then stir it around so it turns the vegetables red.');
 
 INSERT INTO Postal VALUES(1234, 'Trondheim');
 
