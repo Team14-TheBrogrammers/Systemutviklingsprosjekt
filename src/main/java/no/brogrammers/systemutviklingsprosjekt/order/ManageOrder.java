@@ -61,7 +61,7 @@ public class ManageOrder extends OrderConnection implements ViewOrderInterface, 
     }
 
     //Spesific time: 0 = "8to12", 1 = "12to15", 2 = "15to18", 3 = "18to21"
-    public ArrayList<Order> deliveriesOnDay(int deliveryTime) {
+    public ArrayList<Order> deliveriesOnDay(double deliveryTime) {
 
         return null;
     }

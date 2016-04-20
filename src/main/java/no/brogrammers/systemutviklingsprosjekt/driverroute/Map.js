@@ -49,14 +49,15 @@ function initialize() {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeControlDiv);
 
 
+
+    //Calculate route: input start and end values
     var onChangeHandler = function() {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     };
 
     document.getElementById('submit2').addEventListener('click', onChangeHandler);
 
-    //calculateRoute();
-
+    //
     var onChangeHandler2 = function() {
         calculateAndDisplayRouteWithButton(directionsService, directionsDisplay);
     };

@@ -25,4 +25,6 @@ function HomeControl(controlDiv, map) {
     google.maps.event.addDomListener(controlUI, 'click', function() {
         map.setCenter(home)
     });
+
+
 }
