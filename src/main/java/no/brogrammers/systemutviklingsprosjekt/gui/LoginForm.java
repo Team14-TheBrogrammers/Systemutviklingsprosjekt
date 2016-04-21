@@ -22,7 +22,7 @@ public class LoginForm extends JFrame {
     private LoginConnection loginConnection = new LoginConnection();
 
     public LoginForm() {
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(420, 400);
         setLocationRelativeTo(null);
         setTitle("Login");
@@ -66,12 +66,16 @@ public class LoginForm extends JFrame {
 
     private void logIn() {
         logInButton.setEnabled(false);
+        loginConnection = new LoginConnection();
         User user = loginConnection.checkLoginDetails("ingunnsu", "ingunnIzc00l");
         if (user != null) {//usernameTextField.getText(), passwordPasswordField.getText()) != null) { //TODO: Change .getText()
             MainForm mainForm = new MainForm(user);
+            dispose();//TODO: gjøre noe når man lukker main: åpne dette vinduet igjen?
         } else {
             showMessageDialog(null, "Invalid login details.");
         }
+
+        loginConnection.stopConnection();
         logInButton.setEnabled(true);
     }
 }
