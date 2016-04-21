@@ -1,6 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.userforms;
 
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
+import no.brogrammers.systemutviklingsprosjekt.user.ManageUser;
 import no.brogrammers.systemutviklingsprosjekt.user.User;
 
 import javax.swing.*;
@@ -22,6 +23,15 @@ public class ChangeUserDetailsForm extends JFrame {
 
     private MainForm mainForm;
     private User user;
+
+    private boolean firstNameChanged = false;
+    private boolean lastNameChanged = false;
+    private boolean phoneChanged = false;
+    private boolean emailChanged = false;
+    private boolean usernameChanged = false;
+    private boolean passwordChanged = false;
+
+    private ManageUser manageUser = new ManageUser();
 
     public ChangeUserDetailsForm(MainForm mainForm) {
         this.mainForm = mainForm;
