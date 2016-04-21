@@ -71,11 +71,11 @@ public class StatisticsConnection extends DatabaseConnection{
                 weekdays[resultSet.getInt("wday")]++;
             }
 
-            /*for (int i = 0; i < weekdays.length; i++) {
+            for (int i = 0; i < weekdays.length; i++) {
                 String test = "";
                 test += weekdays[i] + "\n";
                 System.out.println(test);
-            }*/
+            }
 
             return weekdays;
 
@@ -129,6 +129,11 @@ public class StatisticsConnection extends DatabaseConnection{
         return null;
     }
 
+    /**
+     * By times ordered
+     * @return
+     */
+
     public String[][] top10Recipes() {
         String sqlCommand = "SELECT recipe_name, SUM(quantity) AS quantity FROM Recipe NATURAL JOIN Order_recipe GROUP BY recipe_name ORDER BY quantity DESC LIMIT 10;";
         Statement statement = null;
@@ -147,11 +152,12 @@ public class StatisticsConnection extends DatabaseConnection{
                 count++;
             }
 
+            String test = "";
             for (int i = 0; i < recipes.length; i++) {
-                    String test = "";
-                    test += recipes[i][0] + recipes[i][1] + "\n";
-                    System.out.println(test);
+                test += (recipes[i][0] + recipes[i][1] + "\n");
+
             }
+            System.out.println(test);
 
             return recipes;
         } catch (SQLException sqle) {
