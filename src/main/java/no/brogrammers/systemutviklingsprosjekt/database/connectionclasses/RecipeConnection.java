@@ -1,48 +1,48 @@
-package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
+package no.brogrammers.systemutviklingsprosjekt.Database.ConnectionClasses;
 
 
-import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
-import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * Created by Nicole on 07.04.2016.
+ *
  */
-public class RecipeConnection extends DatabaseConnection {
+public class RecipeConnection {
 
     Connection connection;
 
-    public boolean create(String recipeName, RecipeType recipeType, List<Ingredient> ingredients, List<Instruction> instructions, double price) {
-        if (!addRecipe(recipeName, recipeType, price)) {
-            return false;
-        }
-        if (!addIngredients(recipeName, ingredients)) {
-            return false;
-        }
-        return addInstructions(recipeName, instructions);
+    public RecipeDAO(Connection connection) {
+        this.connection = connection;
     }
 
-    private boolean addRecipe(String recipeName, RecipeType recipeType, double price) {
+    public boolean create(String recipeName, List<Ingredient> ingredients) {
+        if( !addRecipe(recipeName) ) {
+            return false;
+        }
+        if( !addIngredients(recipeName, ingredients) ) {
+            return false;
+        }
+        return addInstructions(recipeName);
+    }
+
+    private boolean addInstructions(String recipeName) {
+        return false;
+    }
+
+    private boolean addRecipe(String recipeName) {
         try {
             PreparedStatement pStatement = connection.prepareStatement(
-                    "INSERT INTO Recipe(recipe_name, recipe_type, price) VALUES (?,?,?)"
+                    "INSERT INTO recipe(recipe_name) VALUES (?)"
             );
             pStatement.setString(1, recipeName);
-            pStatement.setString(2, recipeType.name());
-            pStatement.setDouble(3, price);
             pStatement.execute();
             return true;
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             System.err.println(e);
             return false;
         }
@@ -53,7 +53,7 @@ public class RecipeConnection extends DatabaseConnection {
         for (Ingredient ingredient : ingredients) {
             try {
                 PreparedStatement pStatement = connection.prepareStatement(
-                        "INSERT INTO Ingredient(ingredient_name) VALUES (?)"
+                        "INSERT INTO ingredients(ingredient_name) VALUES (?)"
                 );
                 pStatement.setString(1, ingredient.getIngredientName());
                 pStatement.execute();
@@ -63,7 +63,7 @@ public class RecipeConnection extends DatabaseConnection {
 
             try {
                 PreparedStatement pStatement = connection.prepareStatement(
-                        "INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES (?,?,?)"
+                        "INSERT INTO recipe_ingredients(recipe_name, ingredient_name, quantity) VALUES (?,?,?)"
                 );
                 pStatement.setString(1, recipeName);
                 pStatement.setString(2, ingredient.getIngredientName());
@@ -79,9 +79,10 @@ public class RecipeConnection extends DatabaseConnection {
 
     private boolean addInstructions(String recipeName, List<Instruction> instructions) {
         for (Instruction instruction : instructions) {
+
             try {
                 PreparedStatement pStatement = connection.prepareStatement(
-                        "INSERT INTO Recipe_instruction(recipe_name, step_number, description) VALUES (?,?,?)"
+                        "INSERT INTO recipe_intructions(recipe_name, step_number, description) VALUES (?,?,?)"
                 );
                 pStatement.setString(1, recipeName);
                 pStatement.setInt(2, instruction.getStepNumber());
@@ -90,79 +91,22 @@ public class RecipeConnection extends DatabaseConnection {
             } catch (SQLException e) {
                 System.err.println(e);
             }
+
         }
         return true;
     }
 
-    public Recipe read(String recipeName) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        List<Instruction> instructions = new ArrayList<>();
-        RecipeType recipeType = null;
-        double price = 0;
-        try {
-            PreparedStatement pStatement = connection.prepareStatement(
-                    "SELECT * from Recipe_ingredient WHERE recipe_name = (?)"
-            );
-            pStatement.setString(1, recipeName);
-            pStatement.execute();
-
-            ResultSet rs = pStatement.getResultSet();
-
-            while (rs.next()) {
-                ingredients.add(new Ingredient(rs.getString("ingredient_name"), rs.getString("quantity")));
-            }
-
-            pStatement = connection.prepareStatement(
-                    "SELECT * from Recipe_instruction WHERE recipe_name = (?)"
-            );
-
-            pStatement.setString(1, recipeName);
-            pStatement.execute();
-
-            rs = pStatement.getResultSet();
-
-            while (rs.next()) {
-                instructions.add(new Instruction(rs.getInt("step_number"), rs.getString("description")));
-            }
-
-            pStatement = connection.prepareStatement(
-                    "SELECT recipe_type from Recipe WHERE recipe_name = (?)"
-            );
-
-            pStatement.setString(1, recipeName);
-            pStatement.execute();
-
-            rs = pStatement.getResultSet();
-
-            while (rs.next()) {
-                recipeType = RecipeType.valueOf(rs.getString("recipe_type"));
-                price = Double.parseDouble((rs.getString("price")));
-            }
-
-        } catch (SQLException e) {
-            System.err.println(e);
-        }
-
-        return new Recipe(recipeName, recipeType, ingredients, instructions, price);
+    public Recipe read() {
+        return null;
     }
 
     public boolean update() {
         return false;
     }
 
-    public boolean delete(String recipeName) {
-        try {
-            PreparedStatement pStatement = connection.prepareStatement(
-                    "DELETE FROM Recipe WHERE recipe_name = (?) "
-            );
-            pStatement.setString(1, recipeName);
-            pStatement.execute();
-            return true;
-
-        } catch (SQLException e) {
-            System.err.println(e);
-            return false;
-        }
+    public boolean delete() {
+        return false;
     }
+
 
 }

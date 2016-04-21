@@ -1,7 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.recipe;
 
 import java.util.List;
-import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 /**
  * Created by Nicole on 07.04.2016.
@@ -11,16 +10,14 @@ public class Recipe {
 
     private String recipeName;
     private RecipeType recipeType;
-    private List<Ingredient> ingredients;
-    private List<Instruction> instructions;
-    private double price;
+    private List<String> ingredients;
+    private List<String> instructions;
 
-    public Recipe(String recipeName, RecipeType recipeType, List<Ingredient> ingredients, List<Instruction> instructions, double price) {
+    public Recipe(String recipeName, RecipeType recipeType, List<String> ingredients, List<String> instructions) {
         this.recipeName = recipeName;
         this.recipeType = recipeType;
         this.ingredients = ingredients;
         this.instructions = instructions;
-        this.price = price;//
     }
 
     public String getRecipeName() { return recipeName; }
@@ -37,28 +34,20 @@ public class Recipe {
         this.recipeType = recipeType;
     }
 
-    public List<Ingredient> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<Instruction> getInstructions() {
+    public List<String> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(List<Instruction> instructions) {
+    public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String toString() {
