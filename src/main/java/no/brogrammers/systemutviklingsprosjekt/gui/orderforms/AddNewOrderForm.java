@@ -72,8 +72,8 @@ public class AddNewOrderForm extends JFrame {
 
         String name = recipe.getRecipeName();
         RecipeType recipeType = recipe.getRecipeType();
-        double price = recipe.getPrice();
-        Object[] objects = {name, recipeType, price};
+        //double price = recipe.getPrice();
+        Object[] objects = {name, recipeType};//, price};//TODO: FIX
         defaultTableModel.addRow(objects);
     }
 

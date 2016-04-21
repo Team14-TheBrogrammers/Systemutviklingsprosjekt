@@ -61,7 +61,6 @@ public class MainForm extends JFrame{
     private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
-    private OrderConnection orderConnection = new OrderConnection();
     private ManageUser manageUser = new ManageUser();
 
     //Current user object
@@ -186,7 +185,7 @@ public class MainForm extends JFrame{
         String orderrColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
         DefaultTableModel defaultTableModel3 = new DefaultTableModel(orderColumns, 0);
         previousOrdersTable.setModel(defaultTableModel3);
-        ArrayList<Order> previousOrders = orderConnection.viewPreviousOrders();
+        ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
         for (int i = 0; i < previousOrders.size(); i++) {
             int orderID = previousOrders.get(i).getOrderID();
             int customerID = previousOrders.get(i).getCustomerID();
@@ -203,7 +202,7 @@ public class MainForm extends JFrame{
 
         DefaultTableModel defaultTableModel4 = new DefaultTableModel(orderColumns, 0);
         activeOrdersTable.setModel(defaultTableModel4);
-        ArrayList<Order> activeOrders = orderConnection.viewActiveOrders();
+        ArrayList<Order> activeOrders = manageOrder.viewActiveOrders();
         for (int i = 0; i < activeOrders.size(); i++) {
             int orderID = activeOrders.get(i).getOrderID();
             int customerID = activeOrders.get(i).getCustomerID();
@@ -228,7 +227,7 @@ public class MainForm extends JFrame{
         nameLabel.setText("Name: " + user.getFirstName() + " " + user.getLastName());
         phoneLabel.setText("Phone Address: " + String.valueOf(user.getPhoneNumber()));
         emailLabel.setText("Email Address: " + user.getEmail());
-        //employmentLabel.setText(user.getDateOfEmployment());
+        employmentLabel.setText("Date of Employment: " + user.getDateOfEmployment().toString());
         usernameLabel.setText("Username: " + user.getUsername());
         passwordLabel.setText("Password: " + user.getPassword());
 

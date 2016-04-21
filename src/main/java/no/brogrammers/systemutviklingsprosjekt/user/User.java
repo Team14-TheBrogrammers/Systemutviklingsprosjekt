@@ -22,6 +22,8 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.dateOfEmployment = dateOfEmployment;
+        this.username = username;
+        this.password = password;
     }
 
     public int getID() {
