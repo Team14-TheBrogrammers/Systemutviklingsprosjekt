@@ -1,5 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
+import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
@@ -27,10 +28,11 @@ public class AddNewOrderForm extends JFrame {
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private int[] quantity;
     private int customerID;
+    private ManageOrder manageOrder = new ManageOrder();
 
     public AddNewOrderForm() {
         setTitle("Add New Order");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 450);
         setContentPane(mainPanel);
         setVisible(true);
@@ -44,7 +46,13 @@ public class AddNewOrderForm extends JFrame {
         selectCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SelectCustomerForm selectCustomerForm = new SelectCustomerForm(AddNewOrderForm.this);
+            }
+        });
+        addNewOrderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //manageOrder.addOrder(customerID, payment)
             }
         });
     }
@@ -64,8 +72,8 @@ public class AddNewOrderForm extends JFrame {
 
         String name = recipe.getRecipeName();
         RecipeType recipeType = recipe.getRecipeType();
-        double price = recipe.getPrice();
-        Object[] objects = {name, recipeType, price};
+        //double price = recipe.getPrice();
+        Object[] objects = {name, recipeType};//, price};//TODO: FIX
         defaultTableModel.addRow(objects);
     }
 

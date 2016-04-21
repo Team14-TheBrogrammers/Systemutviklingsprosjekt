@@ -13,7 +13,7 @@ import java.util.Calendar;
 /**
  * Created by Knut on 05.04.2016.
  */
-public class UserConnection extends DatabaseConnection {
+public abstract class UserConnection extends DatabaseConnection {
 
     public UserConnection() {
         super();
