@@ -1,5 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
+import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
@@ -27,6 +28,7 @@ public class AddNewOrderForm extends JFrame {
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private int[] quantity;
     private int customerID;
+    private ManageOrder manageOrder = new ManageOrder();
 
     public AddNewOrderForm() {
         setTitle("Add New Order");
@@ -45,6 +47,12 @@ public class AddNewOrderForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SelectCustomerForm selectCustomerForm = new SelectCustomerForm(AddNewOrderForm.this);
+            }
+        });
+        addNewOrderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //manageOrder.addOrder(customerID, payment)
             }
         });
     }

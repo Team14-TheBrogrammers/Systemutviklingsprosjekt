@@ -4,7 +4,9 @@ import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
@@ -46,6 +48,14 @@ public class MainForm extends JFrame{
     private JButton deleteCustomerButton;
     private JButton addEmployeeButton;
     private JButton button3;
+    private JButton changeMyProfileDataButton;
+    private JLabel userIdLabel;
+    private JLabel nameLabel;
+    private JLabel phoneLabel;
+    private JLabel emailLabel;
+    private JLabel employmentLabel;
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
     private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
@@ -54,7 +64,17 @@ public class MainForm extends JFrame{
     private OrderConnection orderConnection = new OrderConnection();
     private ManageUser manageUser = new ManageUser();
 
+    //Current user object
+    private final User user;
+
+    //Setup all array lists
+    private ArrayList<Order> orders = new ArrayList<Order>();
+    private ArrayList<Customer> customers = new ArrayList<Customer>();
+    private ArrayList<User> users = new ArrayList<User>();
+    //private ArrayList<> //TODO: driverroute:?
+
     public MainForm(User user) {
+        this.user = user;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(700, 450);
@@ -78,9 +98,23 @@ public class MainForm extends JFrame{
         addEmployeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
             }
         });
+        changeMyProfileDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChangeUserDetailsForm changeUserDetailsForm = new ChangeUserDetailsForm(MainForm.this);
+            }
+        });
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    private void checkUserType() {
+
     }
 
     private void loadTabs() {
@@ -188,6 +222,15 @@ public class MainForm extends JFrame{
         //Subscription:
 
         //Maps:
+
+        //Load "my profile":
+        userIdLabel.setText("User ID: " + String.valueOf(user.getID()));
+        nameLabel.setText("Name: " + user.getFirstName() + " " + user.getLastName());
+        phoneLabel.setText("Phone Address: " + String.valueOf(user.getPhoneNumber()));
+        emailLabel.setText("Email Address: " + user.getEmail());
+        //employmentLabel.setText(user.getDateOfEmployment());
+        usernameLabel.setText("Username: " + user.getUsername());
+        passwordLabel.setText("Password: " + user.getPassword());
 
 
 
