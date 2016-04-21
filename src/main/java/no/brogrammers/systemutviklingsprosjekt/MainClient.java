@@ -24,7 +24,7 @@ public class MainClient {
         //test();
         setJFrameLookAndFeel();
         LoginForm loginForm = new LoginForm();
-        //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
+        //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();/
     }
 
     private static void setJFrameLookAndFeel() {

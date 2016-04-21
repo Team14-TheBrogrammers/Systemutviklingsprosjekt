@@ -13,7 +13,7 @@ public class Order {
     private boolean paymentStatus;
     private java.sql.Date orderDate; //Date when the order was placed:
     private java.sql.Date deliveryDate;
-    private double deliveryTime; //From 8 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
+    private double deliveryTime; //From 7 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
     private String address;
     private int zipCode;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
@@ -110,6 +110,6 @@ public class Order {
             orderList += rec.toString() + "\n";
         }
         String pay = paymentStatus ? "Paid" : "Not paid";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\norder: \n" + orderList;
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\nOrder: \n" + orderList;
     }
 }

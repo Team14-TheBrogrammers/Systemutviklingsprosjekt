@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<script
+        src="http://maps.googleapis.com/maps/api/js">
+</script>
+
+<!--
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-fxXlWqvOi1rlxYX7aztxfwfTnliT5nE&callback=initialize">
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO3kBTs9VsVHKPmEgS3F7Xti_7cxL1iVk&callback=initialize"
+        type="text/javascript">
+</script>-->
+
+<head>
+
+    <div id="page-wrapper">
+
+        <h1>Text File Reader</h1>
+        <div>
+            <input id="buttoon" type="button" value="Read file">
+        </div>
+        <!--<div>
+            Select a text file:
+            <input type="file" id="fileInput">
+        </div> -->
+        <pre id="fileDisplayArea"></pre>
+
+    </div>
+
+    <!--<script>
+        window.onload = function() {
+            //var fileInput = document.getElementById('fileInput');
+            var fileInput = "file:///C:/Users/Ingunn/Documents/GitHub/Systemutviklingsprosjekt/src/main/java/no/brogrammers/systemutviklingsprosjekt/driverroute/File.txt";
+            var fileDisplayArea = document.getElementById('fileDisplayArea');
+            //document.getElementById('submit2').addEventListener('click', onChangeHandler);
+            //fileInput.addEventListener('change', function(e) {
+
+            var onChangeHandler = function() {
+                testt();
+            };
+
+            document.getElementById('buttoon').addEventListener('click', function(e) {
+                var file = fileInput.files[0];
+                var textType = /text.*/;
+
+                if (file.type.match(textType)) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        fileDisplayArea.innerText = reader.result;
+                    }
+
+                    reader.readAsText(file);
+                } else {
+                    fileDisplayArea.innerText = "File not supported!"
+                }
+            });
+        }
+
+    </script>-->
+
+    <script>
+        //document.getElementById('submit2').addEventListener('click', onChangeHandler);
+        var fileDisplayArea = document.getElementById('fileDisplayArea');
+        function readTextFile(file)
+        {
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        var allText = rawFile.responseText;
+                        fileDisplayArea.innerText = allText
+                    }
+                }
+            }
+            rawFile.send(null);
+        }
+
+        function readTextFile2(file)
+        {
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        var allText = rawFile.responseText;
+                        alert(allText);
+                    }
+                }
+            }
+            rawFile.send(null);
+        }
+
+        //readTextFile("file:///C:/Users/Ingunn/Documents/GitHub/Systemutviklingsprosjekt/src/main/java/no/brogrammers/systemutviklingsprosjekt/driverroute/File.txt");
+
+
+        var onChangeHandler = function() {
+            readTextFile2("file:///C:/Users/Ingunn/Documents/GitHub/Systemutviklingsprosjekt/src/main/java/no/brogrammers/systemutviklingsprosjekt/driverroute/File.txt");
+        };
+        document.getElementById('buttoon').addEventListener('click', onChangeHandler);
+
+
+    </script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>

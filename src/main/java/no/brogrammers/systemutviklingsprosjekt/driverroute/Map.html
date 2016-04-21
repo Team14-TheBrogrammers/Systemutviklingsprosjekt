@@ -1,25 +1,97 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script
-            src="http://maps.googleapis.com/maps/api/js">
-    </script>
+    <head>
+        <script
+                src="http://maps.googleapis.com/maps/api/js">
+        </script>
 
-    <script>
-        function initialize() {
-            var mapProp = {
-                center:new google.maps.LatLng(63.420297,10.411906),
-                zoom:11,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
-            };
-            var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-</head>
+        <title>Driver route</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 100%;
+            }
+            #floating-panel {
+                position: absolute;
+                top: 10px;
+                left: 20%;
+                z-index: 5;
+                background-color: #fff;
+                padding: 5px;
+                border: 1px solid #999;
+                text-align: center;
+                font-family: 'Roboto','sans-serif';
+                line-height: 30px;
+                padding-left: 10px;
+            }
 
-<body>
-<div id="googleMap" style="width:500px;height:380px;"></div>
+            #floating-panel2 {
+                position: absolute;
+                top: 10px;
+                left: 40%;
+                z-index: 5;
+                background-color: #fff;
+                padding: 5px;
+                border: 1px solid #999;
+                text-align: center;
+                font-family: 'Roboto','sans-serif';
+                line-height: 30px;
+                padding-left: 10px;
+            }
 
-</body>
+            #routeButton {
+                position: absolute;
+                top: 10px;
+                left: 10%;
+                z-index: 5;
+                background-color: #723;
+                padding: 5px;
+                border: 1px solid #999;
+                text-align: center;
+                font-family: 'Roboto','sans-serif';
+                line-height: 30px;
+                padding-left: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+
+        <script type="text/javascript" src="Map.js"></script>
+        <script type="text/javascript" src="HomeControl.js"></script>
+        <script type="text/javascript" src="GeocodeMarker.js"></script>
+        <script type="text/javascript" src="Route.js"></script>
+        <script type="text/javascript" src="Directions.js"></script>
+
+        <div id="floating-panel">
+            <input id="address" type="textbox" value="Trondheim">
+            <input id="submit" type="button" value="Geocode">
+        </div>
+
+        <div id="floating-panel2">
+            <b>Start: </b>
+            <input id="start" type="textbox" value="Trondheim">
+            <b>End: </b>
+            <input id="end" type="textbox" value="Oslo">
+
+            <input id="submit2" type="button" value="Geocode">
+        </div>
+
+        <div id="routeButton">
+            <input id="route" type="button" value="Calculate route">
+        </div>
+
+        <div id="googleMap" style="width:600px;height:450px;"></div>
+    <!-- THIS IS A COMMENT -->
+
+    </body>
+
 </html>
+

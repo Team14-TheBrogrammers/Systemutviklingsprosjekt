@@ -6,5 +6,5 @@ package no.brogrammers.systemutviklingsprosjekt.recipe;
  */
 
 public enum RecipeType {
-    Vegan, Vegetarian, PESCETARIAN, MEATLOVER;//TODO: Legge til flere her? Fix?
+    VEGAN, VEGETARIAN, PESCETARIAN, MEATLOVER;
 }

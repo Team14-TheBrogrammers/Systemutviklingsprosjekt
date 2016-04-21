@@ -24,14 +24,7 @@ public class ManageOrder extends OrderConnection implements ViewOrderInterface, 
         return -1;
     }
 
-    public boolean checkCorrectTimeStamp(java.sql.Date orderDate, java.sql.Date deliveryDate) {
-        long days = (deliveryDate.getTime()-orderDate.getTime())/86400000;
-        //(currentTime - (currentTime % 86400000));
-        if(days >= 3) {
-            return true;
-        }
-        return false;
-    }
+
 
     //View all orders that has not been delivered yet.
     public ArrayList<Order> viewAllActiveOrders() {
@@ -68,7 +61,7 @@ public class ManageOrder extends OrderConnection implements ViewOrderInterface, 
     }
 
     //Spesific time: 0 = "8to12", 1 = "12to15", 2 = "15to18", 3 = "18to21"
-    public ArrayList<Order> deliveriesOnDay(int deliveryTime) {
+    public ArrayList<Order> deliveriesOnDay(double deliveryTime) {
 
         return null;
     }

@@ -33,7 +33,6 @@
             <version>4.12</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.teamdev.jxbrowser</groupId>
             <artifactId>jxbrowser-cross-platform</artifactId>
@@ -44,6 +43,12 @@
             <groupId>org.jdatepicker</groupId>
             <artifactId>jdatepicker</artifactId>
             <version>1.3.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
         </dependency>
     </dependencies>
 </project>
