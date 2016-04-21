@@ -65,7 +65,7 @@ CREATE TABLE Recipe(
 
 CREATE TABLE Ingredient (
   ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
-  quantity DOUBLE NOT NULL,
+  stock_quantity DOUBLE NOT NULL,
   measurement VARCHAR(20) NOT NULL
 );
 
