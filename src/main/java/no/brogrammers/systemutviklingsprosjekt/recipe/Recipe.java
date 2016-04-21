@@ -20,7 +20,7 @@ public class Recipe {
         this.recipeType = recipeType;
         this.ingredients = ingredients;
         this.instructions = instructions;
-        this.price = price;
+        this.price = price;//
     }
 
     public String getRecipeName() { return recipeName; }
