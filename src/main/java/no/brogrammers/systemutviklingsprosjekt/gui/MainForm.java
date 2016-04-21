@@ -3,6 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt.gui;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.user.User;
@@ -22,7 +23,6 @@ public class MainForm extends JFrame{
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JPanel orderTab;
-    private JList list1;
     private JTable table2;
     private JScrollPane scrollPane1;
     private JButton addNewOrderButton;
@@ -59,7 +59,7 @@ public class MainForm extends JFrame{
         addOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
             }
         });
     }

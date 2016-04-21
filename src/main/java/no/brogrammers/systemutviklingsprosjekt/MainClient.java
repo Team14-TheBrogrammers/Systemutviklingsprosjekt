@@ -3,6 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 
 import javax.swing.*;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ public class MainClient {
         //test();
         setJFrameLookAndFeel();
         LoginForm loginForm = new LoginForm();
+        //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();/
     }
 
     private static void setJFrameLookAndFeel() {
