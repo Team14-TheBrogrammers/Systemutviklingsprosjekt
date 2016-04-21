@@ -10,14 +10,16 @@ public class Recipe {
 
     private String recipeName;
     private RecipeType recipeType;
-    private List<String> ingredients;
-    private List<String> instructions;
+    private List<Ingredient> ingredients;
+    private List<Instruction> instructions;
+    private double price;
 
-    public Recipe(String recipeName, RecipeType recipeType, List<String> ingredients, List<String> instructions) {
+    public Recipe(String recipeName, RecipeType recipeType, List<Ingredient> ingredients, List<Instruction> instructions, double price) {
         this.recipeName = recipeName;
         this.recipeType = recipeType;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.price = price;
     }
 
     public String getRecipeName() { return recipeName; }
@@ -34,24 +36,25 @@ public class Recipe {
         this.recipeType = recipeType;
     }
 
-    public List<String> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<String> getInstructions() {
+    public List<Instruction> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(List<String> instructions) {
+    public void setInstructions(List<Instruction> instructions) {
         this.instructions = instructions;
     }
 
     public String toString() {
-        return recipeName + " (" + recipeType.name() + "):\n" + ingredients + "\n" + instructions;
+        return recipeName + " (" + recipeType.name() + "):\n" + ingredients + "\n" + instructions + "\n" + price;
+
     }
 
 }
