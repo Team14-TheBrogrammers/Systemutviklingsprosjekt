@@ -65,8 +65,15 @@ CREATE TABLE Recipe(
 
 CREATE TABLE Ingredient (
   ingredient_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
+);
+
+CREATE TABLE Stock(
+  stock_id INTEGER AUTO_INCREMENT NOT NULL,
+  ingredient_name VARCHAR(30) NOT NULL,
   quantity DOUBLE NOT NULL,
-  measurement VARCHAR(20) NOT NULL
+  measurement VARCHAR(20) NOT NULL,
+  PRIMARY KEY(stock_id),
+  FOREIGN KEY(ingredient_name) REFERENCES Ingredient(ingredient_name)
 );
 
 CREATE TABLE Recipe_ingredient (

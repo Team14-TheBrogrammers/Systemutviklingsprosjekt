@@ -30,7 +30,7 @@ public class AddNewOrderForm extends JFrame {
 
     public AddNewOrderForm() {
         setTitle("Add New Order");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 450);
         setContentPane(mainPanel);
         setVisible(true);
@@ -44,7 +44,7 @@ public class AddNewOrderForm extends JFrame {
         selectCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SelectCustomerForm selectCustomerForm = new SelectCustomerForm(AddNewOrderForm.this);
             }
         });
     }

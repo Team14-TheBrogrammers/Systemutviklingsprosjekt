@@ -1,17 +1,19 @@
 package no.brogrammers.systemutviklingsprosjekt.gui;
 
+import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
-import no.brogrammers.systemutviklingsprosjekt.user.User;
+import no.brogrammers.systemutviklingsprosjekt.user.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -23,7 +25,7 @@ public class MainForm extends JFrame{
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JPanel orderTab;
-    private JTable table2;
+    private JTable customersTable;
     private JScrollPane scrollPane1;
     private JButton addNewOrderButton;
     private JToolBar toolBarTest;
@@ -32,7 +34,7 @@ public class MainForm extends JFrame{
     private JPanel statisticsTab;
     private JPanel aboutTab;
     private JPanel homeTab;
-    private JTable table3;
+    private JTable employeesTable;
     private JTabbedPane tabbedPane2;
     private JTable deliveriesTodayTable;
     private JTabbedPane tabbedPane3;
@@ -40,12 +42,17 @@ public class MainForm extends JFrame{
     private JButton deleteOrderSButton;
     private JTable activeOrdersTable;
     private JTable previousOrdersTable;
+    private JButton addCustomerButton;
+    private JButton deleteCustomerButton;
+    private JButton addEmployeeButton;
+    private JButton button3;
     private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
     private OrderConnection orderConnection = new OrderConnection();
+    private ManageUser manageUser = new ManageUser();
 
     public MainForm(User user) {
         setContentPane(mainPanel);
@@ -62,10 +69,22 @@ public class MainForm extends JFrame{
                 AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
             }
         });
+        addCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addEmployeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     private void loadTabs() {
-        //scrollPane1.setViewportView(table2);
+        //scrollPane1.setViewportView(customersTable);
 
         //Driver tab:
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
@@ -88,13 +107,39 @@ public class MainForm extends JFrame{
         }
 
 
-        //Customer tab: //TODO: Private customer og company tab for seg sjøl?
-        /*String customerColumns[] = {"", "", ""};
+        //Customer tab:
+        String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        activeOrdersTable.setModel(defaultTableModel);*/
+        customersTable.setModel(defaultTableModel);
+        //ArrayList<Customer> customers
 
-        //Employee:
+        //Employee (user):
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};
+        DefaultTableModel employeesTableModel = new DefaultTableModel(employeeColumns, 0);
+        employeesTable.setModel(employeesTableModel);
+        ArrayList<User> users = manageUser.viewAllUsers();
+        for(int i = 0; i < users.size(); i++) {
+            int id = users.get(i).getID();
+            String lastName = users.get(i).getLastName();
+            String firstName = users.get(i).getFirstName();
+            int phone = users.get(i).getPhoneNumber();
+            Date dateOfEmployment = users.get(i).getDateOfEmployment();
+            /*if (users.get(i) instanceof Manager) {
+
+            } else if (users.get(i) instanceof Cashier) {
+
+            } else if (users.get(i) instanceof Cook) {
+
+            } else if (users.get(i) instanceof Driver) {
+
+            }*/
+            int pos = 1;
+            String username = users.get(i).getUsername();
+            String password = users.get(i).getPassword();
+            String emailAddress = users.get(i).getEmail();
+            Object objects[] = {id, lastName, firstName, phone, dateOfEmployment, pos, username, password, emailAddress};
+            employeesTableModel.addRow(objects);
+        }
 
         //Ingredients:
         ///toolBarTest.add("Test");
