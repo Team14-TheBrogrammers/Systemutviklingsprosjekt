@@ -7,6 +7,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
@@ -72,7 +73,7 @@ public class AddNewEmployeeForm extends JFrame{
         JDatePanelImpl datePanel = new JDatePanelImpl(utilDateModel, properties);
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DatePickerFormatter());
 
-        //datePickerPanel.add(datePicker);
+        mainPanel.add(datePicker);
         //add(datePicker);
     }
 }
