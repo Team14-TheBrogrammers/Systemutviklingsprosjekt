@@ -1,7 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.recipe;
 
 import java.util.List;
-import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 /**
  * Created by Nicole on 07.04.2016.
@@ -57,11 +56,9 @@ public class Recipe {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public String toString() {
+        return recipeName + " (" + recipeType.name() + "):\n" + ingredients + "\n" + instructions + "\n" + price;
+
     }
 
-    public String toString() {
-        return recipeName + " (" + recipeType.name() + "):\n" + ingredients + "\n" + instructions;
-    }
 }

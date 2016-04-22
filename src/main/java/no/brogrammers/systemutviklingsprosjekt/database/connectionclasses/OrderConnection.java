@@ -13,7 +13,7 @@ import java.util.Calendar;
 /**
  * Created by Knut on 11.03.2016.
  */
-public class OrderConnection extends DatabaseConnection {
+public abstract class OrderConnection extends DatabaseConnection {
     public OrderConnection() {
         super();
     }
