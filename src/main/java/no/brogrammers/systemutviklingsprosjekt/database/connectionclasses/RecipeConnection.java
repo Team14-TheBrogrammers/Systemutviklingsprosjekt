@@ -3,10 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
-import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
+import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -121,6 +118,7 @@ public class RecipeConnection extends DatabaseConnection {
         List<Ingredient> ingredients = new ArrayList<>();
         List<Instruction> instructions = new ArrayList<>();
         RecipeType recipeType = null;
+        DietType dietType = null;
         double price = 0;
         try {
             PreparedStatement pStatement = getConnection().prepareStatement(
@@ -166,7 +164,7 @@ public class RecipeConnection extends DatabaseConnection {
             System.err.println(e);
         }
 
-        return new Recipe(recipeName, recipeType, ingredients, instructions, price);
+        return new Recipe(recipeName, recipeType, dietType, ingredients, instructions, price);
     }
 
     public boolean update() {
