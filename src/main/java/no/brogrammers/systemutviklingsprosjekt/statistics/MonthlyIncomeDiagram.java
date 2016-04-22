@@ -5,7 +5,6 @@ import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.Statis
 import org.jfree.chart.*;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import javax.swing.*;
@@ -28,7 +27,7 @@ public class MonthlyIncomeDiagram extends JFrame {
 
     public ChartPanel createChartPanel() {
         JFreeChart chart = ChartFactory.createLineChart("Monthly Income Last 12 Months", "Month", "Income", createDataset(), PlotOrientation.VERTICAL, true,true,false);
-        chart.setBackgroundPaint(Color.WHITE);
+        //chart.setBackgroundPaint(Color.WHITE);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(Color.WHITE);
         LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();

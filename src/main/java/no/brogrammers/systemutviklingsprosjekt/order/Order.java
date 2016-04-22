@@ -17,9 +17,10 @@ public class Order {
     private double deliveryTime; //From 7 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
     private String address;
     private int zipCode;
+    private boolean takeAway;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -28,6 +29,7 @@ public class Order {
         this.deliveryTime = deliveryTime;
         this.address = address;
         this.zipCode = zipCode;
+        this.takeAway = takeAway;
         this.recipes = recipes;
     }
 
@@ -67,7 +69,9 @@ public class Order {
         return zipCode;
     }
 
-
+    public boolean isTakeAway() {
+        return takeAway;
+    }
 
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
@@ -89,6 +93,10 @@ public class Order {
         this.zipCode = zipCode;
     }
 
+    public void setTakeAway(boolean takeAway) {
+        this.takeAway = takeAway;
+    }
+
     public double convertTime() {
         String time = Double.toString(deliveryTime).substring(2);
         return 2.0;
@@ -100,6 +108,7 @@ public class Order {
             orderList += rec.toString() + "\n";
         }
         String pay = paymentStatus ? "Paid" : "Not paid";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\nOrder: \n" + orderList;
+        String ta = takeAway ? "Take away" : "Delivery";
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOrder: \n" + orderList;
     }
 }

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Subscription extends Order {
     private int frequency;
 
-    public Subscription(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, ArrayList<Recipe> recipes, int frequency) {
-        super(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zipCode, recipes);
+    public Subscription(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeaway, ArrayList<Recipe> recipes, int frequency) {
+        super(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zipCode, takeaway, recipes);
         this.frequency = frequency;
     }
 
