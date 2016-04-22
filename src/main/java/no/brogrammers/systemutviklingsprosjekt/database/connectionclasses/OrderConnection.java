@@ -268,7 +268,7 @@ public abstract class OrderConnection extends DatabaseConnection {
         return orders;
     }
 
-    //TODO: FIX THIS METHOD
+    //TODO: FIX THIS METHOD SOON
     public ArrayList<Order> viewActiveOrders() {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date >= CURDATE();";
         return getOrders(sqlCommand);
