@@ -20,7 +20,7 @@ public class CustomerTypeDiagram extends JFrame {
     public CustomerTypeDiagram() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //setContentPane(mainPanel);
-        setContentPane(createDemoPanel(createDataset()));
+        setContentPane(createChartPanel(createDataset()));
         setTitle("Diagram");
         setVisible(true);
         setSize(500, 500);
@@ -41,7 +41,7 @@ public class CustomerTypeDiagram extends JFrame {
         return dataset;
     }
 
-    public JPanel createDemoPanel(PieDataset dataset) {
+    public ChartPanel createChartPanel(PieDataset dataset) { //TODO: hvis error: prøv jFrame i stedet for ChartPanel etter public
         JFreeChart chart = ChartFactory.createPieChart("Customers", dataset, true, true, false);
         chart.getTitle().setFont(new Font("Arial", 0, 24));
 
