@@ -10,5 +10,5 @@ public interface ViewOrderInterface {
     ArrayList<Order> viewAllActiveOrders();
     //ArrayList<Ingredient> listMissingIngredents();
     ArrayList<Order> deliveriesToday();
-    ArrayList<Order> deliveriesOnDay(int deliveryTime);
+    ArrayList<Order> deliveriesOnDay(double deliveryTime);
 }
