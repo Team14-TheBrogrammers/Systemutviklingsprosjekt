@@ -52,6 +52,10 @@ public class Recipe {
         this.instructions = instructions;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public String toString() {
         return recipeName + " (" + recipeType.name() + "):\n" + ingredients + "\n" + instructions + "\n" + price;
 

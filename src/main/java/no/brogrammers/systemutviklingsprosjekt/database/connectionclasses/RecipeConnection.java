@@ -8,10 +8,7 @@ import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +19,28 @@ import java.util.List;
  */
 public class RecipeConnection extends DatabaseConnection {
 
+    public ArrayList<Recipe> viewAllRecipes() {
+        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+        String sqlCommand = "SELECT * FROM Recipe";
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                recipes.add(read(resultSet.getString("recipe_name")));
+            }
+        } catch(SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch(Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return recipes;
+    }
 
     public boolean create(String recipeName, List<Ingredient> ingredients) {
         if( !addRecipe(recipeName) ) {

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public abstract class CustomerConnection extends DatabaseConnection {
 
     private boolean customerExists(int customerID) {
-        String sqlCommand = "SELECT * FROM Customer WHERE " + customerID + ";";
+        String sqlCommand = "SELECT * FROM Customer WHERE customer_id = " + customerID + ";";
         return checkExists(sqlCommand);
     }
 
@@ -311,8 +311,10 @@ public abstract class CustomerConnection extends DatabaseConnection {
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
+            System.out.println("viewCust2omer");
         } catch (Exception e) {
             writeError(e.getMessage());
+            System.out.println("viewCu2stomer");
         } finally {
             getCleaner().closeResultSet(resultSet);
             getCleaner().closeStatement(statement);
