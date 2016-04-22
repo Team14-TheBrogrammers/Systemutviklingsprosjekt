@@ -1,5 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.employeeforms;
 
+import no.brogrammers.systemutviklingsprosjekt.converter.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.converter.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.user.ManageUser;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Properties;
 
 /**
@@ -23,9 +25,10 @@ public class AddNewEmployeeForm extends JFrame{
     private JTextField phoneTextField;
     private JPanel mainPanel;
     private JTextField usernameTextField;
-    private JTextField passwordTextField;
-    private JTextField emailAddressTextField;
     private JPanel datePickerPanel;
+    private JDatePickerImpl datePickerTest;
+    private JPasswordField passwordField1;
+    private JTextField emailTextField;
 
     private ManageUser manageUser = new ManageUser();
 
@@ -37,14 +40,24 @@ public class AddNewEmployeeForm extends JFrame{
         setVisible(true);
         setLocationRelativeTo(null);
 
-        loadDatePicker();
+        //loadDatePicker();
 
         addNewEmployeeToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*String lastName = lastNameTextField.getText();
+                String firstName = firstNameTextField.getText();
+                int phone = Integer.parseInt(phoneTextField.getText());
+                String email = emailTextField.getText();
+                DateConverter dateConverter = new DateConverter();
+                java.sql.Date dateOfEmployment = dateConverter.stringToSqlDate(datePickerTest.getModel().getValue().toString());
+                String username = usernameTextField.getText();
+                String password = passwordField1.getText();*/
+
                 switch (userTypeComboBox.getSelectedIndex()) {
                     case 0:
-                        //manageUser.registerManager(lastNameTextField.getText(), firstNameTextField.getText(), 1, "", "", "", "");phoneTextField.getText(), "",)
+                        //System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
+                        System.out.println(datePickerTest.getModel().getValue().toString());
                         break;
                     case 1:
                         //manageUser.registerCashier()
@@ -62,7 +75,8 @@ public class AddNewEmployeeForm extends JFrame{
 
     private void loadDatePicker() {
         UtilDateModel utilDateModel = new UtilDateModel();
-        utilDateModel.setDate(2016, 4, 22);
+        Calendar calendar = Calendar.getInstance();
+        utilDateModel.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
         utilDateModel.setSelected(true);
 
         Properties properties = new Properties();
@@ -71,9 +85,14 @@ public class AddNewEmployeeForm extends JFrame{
         properties.put("text.year", "Year");
 
         JDatePanelImpl datePanel = new JDatePanelImpl(utilDateModel, properties);
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DatePickerFormatter());
+        //JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DatePickerFormatter());
 
-        mainPanel.add(datePicker);
+        datePickerTest = new JDatePickerImpl(datePanel, new DatePickerFormatter());
+        //mainPanel.add(datePicker);
         //add(datePicker);
+    }
+
+    private void createUIComponents() {
+        loadDatePicker();
     }
 }
