@@ -6,7 +6,7 @@ import java.sql.*;
  * Created by Knut on 05.04.2016.
  * This class is used to properly close connections and other database objects.
  */
-public abstract class ConnectionCleaner {
+public class ConnectionCleaner {
 
     public void closeStatement(Statement statement) {
         try {

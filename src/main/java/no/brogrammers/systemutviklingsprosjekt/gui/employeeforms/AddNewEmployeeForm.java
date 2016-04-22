@@ -1,15 +1,15 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.employeeforms;
 
+import no.brogrammers.systemutviklingsprosjekt.converter.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.user.ManageUser;
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 /**
@@ -62,14 +62,18 @@ public class AddNewEmployeeForm extends JFrame{
 
     private void loadDatePicker() {
         UtilDateModel utilDateModel = new UtilDateModel();
+        utilDateModel.setDate(2016, 4, 22);
+        utilDateModel.setSelected(true);
+
         Properties properties = new Properties();
         properties.put("text.today", "Today");
         properties.put("text.month", "Month");
         properties.put("text.year", "Year");
+
         JDatePanelImpl datePanel = new JDatePanelImpl(utilDateModel, properties);
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DatePickerFormatter());
 
-
-        datePickerPanel.add(datePicker);
+        mainPanel.add(datePicker);
+        //add(datePicker);
     }
 }
