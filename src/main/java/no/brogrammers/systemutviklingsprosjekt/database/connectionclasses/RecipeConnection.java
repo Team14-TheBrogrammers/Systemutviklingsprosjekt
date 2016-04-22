@@ -1,15 +1,17 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 
-
+import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -28,12 +30,12 @@ public class RecipeConnection extends DatabaseConnection {
         try {
             statement = getConnection().createStatement();
             resultSet = statement.executeQuery(sqlCommand);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 recipes.add(read(resultSet.getString("recipe_name")));
             }
-        } catch(SQLException sqle) {
+        } catch (SQLException sqle) {
             writeError(sqle.getMessage());
-        } catch(Exception e) {
+        } catch (Exception e) {
             writeError(e.getMessage());
         } finally {
             getCleaner().closeResultSet(resultSet);
@@ -167,6 +169,10 @@ public class RecipeConnection extends DatabaseConnection {
         }
 
         return new Recipe(recipeName, recipeType, ingredients, instructions, price);
+    }
+
+    public Recipe read() {
+        return null;
     }
 
     public boolean update() {

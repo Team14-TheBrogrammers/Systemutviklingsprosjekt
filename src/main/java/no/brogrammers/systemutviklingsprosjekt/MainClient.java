@@ -1,15 +1,11 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 
 import javax.swing.*;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * Created by Ingunn on 09.03.2016.
