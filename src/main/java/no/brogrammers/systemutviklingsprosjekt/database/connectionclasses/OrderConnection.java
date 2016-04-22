@@ -179,8 +179,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                 String address = resultSet.getString("address");
                 int zip = resultSet.getInt("zip");
                 int customerID = resultSet.getInt("customer_id");
+                boolean isTakeaway = resultSet.getBoolean("takeaway");
 
-                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID));
+                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, getRecipesToOrder(orderID));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -216,7 +217,8 @@ public abstract class OrderConnection extends DatabaseConnection {
                 String address = resultSet.getString("address");
                 int zip = resultSet.getInt("zip");
                 int customerID = resultSet.getInt("customer_id");
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
+                boolean isTakeaway = resultSet.getBoolean("take_away");
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, getRecipesToOrder(orderID)));
             }
 
         } catch (SQLException sqle) {
@@ -251,8 +253,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                 double deliveryTime = resultSet.getDouble("delivery_time");
                 String address = resultSet.getString("address");
                 int zip = resultSet.getInt("zip");
+                boolean isTakeaway = resultSet.getBoolean("takeaway");
 
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, getRecipesToOrder(orderID)));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
