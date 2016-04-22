@@ -60,7 +60,7 @@ CREATE TABLE Orders(
 
 CREATE TABLE Recipe(
   recipe_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
-  recipe_type VARCHAR (20) NOT NULL,
+  recipe_type ENUM ('VEGAN', 'VEGETARIAN', 'PESCATARIAN', 'MEATLOVER'),
   price DOUBLE NOT NULL
 );
 
