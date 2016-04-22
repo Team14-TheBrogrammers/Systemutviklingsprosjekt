@@ -60,7 +60,7 @@ CREATE TABLE Orders(
 
 CREATE TABLE Recipe(
   recipe_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
-  recipe_type VARCHAR (20) NOT NULL,
+  recipe_type ENUM ('VEGAN', 'VEGETARIAN', 'PESCATARIAN', 'MEATLOVER'),
   price DOUBLE NOT NULL
 );
 
@@ -128,6 +128,26 @@ CREATE TABLE Employee(
   REFERENCES Positions(position_id)
 );
 
+CREATE TABLE Frequency(
+  frequency_id INTEGER NOT NULL AUTO_INCREMENT,
+  frequency_day INTEGER NOT NULL,
+  frequency_week INTEGER NOT NULL,
+  frequency_month INTEGER NOT NULL,
+  PRIMARY KEY (frequency_id)
+);
+
+CREATE TABLE Subscriptions(
+  subs_id INTEGER AUTO_INCREMENT NOT NULL,
+  frequency INTEGER NOT NULL,
+  order_id INTEGER NOT NULL,
+  customer_id INTEGER NOT NULL,
+  frequency_id INTEGER NOT NULL,
+  PRIMARY KEY(subs_id),
+  FOREIGN KEY(order_id) REFERENCES Orders(order_id),
+  FOREIGN KEY(customer_id) REFERENCES Customer(customer_id),
+  FOREIGN KEY(frequency_id) REFERENCES Frequency(frequency_id)
+);
+
 /*Insert setninger: */
 INSERT INTO Positions(position_name) VALUES('Manager');
 INSERT INTO Positions(position_name) VALUES('Cashier');
@@ -193,7 +213,7 @@ INSERT INTO Postal VALUES(1234, 'Trondheim');
 INSERT INTO Customer(address, zip, email_address, phone) VALUES('Trondheims gate 1', 1234, 'ingunn@sund.no', 23123333);
 INSERT INTO Customer(address, zip, email_address, phone) VALUES('Trondheims gate 1', 1234, 'saasds@asdasd.no', 21312333);
 INSERT INTO Private_customer(last_name, first_name, customer_id)
-  VALUES('Sund', 'Ingunn', 1);
+VALUES('Sund', 'Ingunn', 1);
 
 
 

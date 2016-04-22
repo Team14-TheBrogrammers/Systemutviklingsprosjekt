@@ -4,6 +4,7 @@ import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserCo
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 
 import javax.swing.*;
@@ -23,7 +24,8 @@ public class MainClient {
 
         //test();
         setJFrameLookAndFeel();
-        LoginForm loginForm = new LoginForm();
+        //LoginForm loginForm = new LoginForm();
+        AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
         //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();/
     }
 
