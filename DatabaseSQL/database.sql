@@ -365,3 +365,8 @@ INSERT INTO Company(company_name, customer_id) VALUES('', 2);
 
 /** i company: */
 /**INSERT INTO Company(company_name, customer_id) VALUES('', 2);*/
+
+/** test
+ */
+INSERT INTO Employee (last_name, first_name, phone, date_of_employment, position_id, username, password, email_address)
+VALUES ('asd', 'test', 1234, '2016-04-23', 1, 'userrrname', 'passsord', 'epo@st.no');

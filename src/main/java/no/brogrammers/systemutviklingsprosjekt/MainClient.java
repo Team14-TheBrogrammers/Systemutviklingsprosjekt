@@ -20,8 +20,9 @@ public class MainClient {
 
         //test();
         setJFrameLookAndFeel();
-        //LoginForm loginForm = new LoginForm();
-        AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+        LoginForm loginForm = new LoginForm();
+        //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+        //System.out.println(new Date(Calendar.getInstance().getTimeInMillis()));
         //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();/
     }
 

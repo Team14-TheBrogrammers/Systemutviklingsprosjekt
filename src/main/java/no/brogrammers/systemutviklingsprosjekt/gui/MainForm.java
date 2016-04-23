@@ -88,7 +88,7 @@ public class MainForm extends JFrame{
         this.user = user;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(700, 450);
+        setSize(850, 500);
         setTitle("Healty Catering Ltd.");
         setLocationRelativeTo(null);
         setVisible(true);
@@ -207,7 +207,11 @@ public class MainForm extends JFrame{
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
         customersTable.setModel(defaultTableModel);
-        //ArrayList<Customer> customers
+        ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
+        for(int i = 0; i < customers.size(); i++) {
+            int id = customers.get(i).getID();
+            
+        }
     }
 
     private void loadEmployeesTab() {
@@ -271,7 +275,7 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         loadOrdersTab();
         loadCustomersTab();
-
+        loadEmployeesTab();
         //scrollPane1.setViewportView(customersTable);
 
 
