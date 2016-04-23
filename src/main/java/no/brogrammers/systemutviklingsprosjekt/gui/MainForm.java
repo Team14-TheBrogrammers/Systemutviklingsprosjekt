@@ -67,8 +67,14 @@ public class MainForm extends JFrame{
     private JTable recipeTable;
     private JButton addRecipeButton;
     private JTabbedPane tabbedPane4;
-    private JTable table2;
+    private JTable privateCustomerTable;
     private JTable table3;
+    private JButton button2;
+    private JTable table1;
+    private JButton button4;
+    private JTable table4;
+    private JButton button5;
+    private JButton button6;
     private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
@@ -225,7 +231,7 @@ public class MainForm extends JFrame{
         //Customer tab:
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        customersTable.setModel(defaultTableModel);
+        privateCustomerTable.setModel(defaultTableModel);
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
         for(int i = 0; i < customers.size(); i++) {
             int id = customers.get(i).getID();
@@ -295,9 +301,9 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         loadOrdersTab();
         //subscriptions
-        loadRecipesTab();
-        //loadCustomersTab();
-        //loadEmployeesTab();
+        loadRecipesTab();//TODO:DOES NOT WORKSSSS
+        loadCustomersTab();
+        loadEmployeesTab();
         //scrollPane1.setViewportView(customersTable);
 
 
