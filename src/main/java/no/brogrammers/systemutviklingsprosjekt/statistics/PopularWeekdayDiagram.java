@@ -16,37 +16,34 @@ import java.awt.*;
 /**
  * Created by Ingunn on 21.04.2016.
  */
-public class PopularWeekdayDiagram extends JFrame {
+public class PopularWeekdayDiagram {
     StatisticsConnection statisticsConnection = new StatisticsConnection();
 
-    public PopularWeekdayDiagram() {
+    private CategoryDataset createDataset() {
+        int[] deliveryDates = statisticsConnection.popularWeekdaysDeliveryDate();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String order = "Order";
+        String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
+        for(int i = 0; i < deliveryDates.length; i++) {
+            dataset.addValue(deliveryDates[i], order, weekdays[i]);
+        }
+        return dataset;
+    }
+
+    Color color = new Color(85, 146, 212);
+    public ChartPanel createChartPanel() {
         JFreeChart barChart = ChartFactory.createBarChart("Most Popular Weekdays", "Weekday", "Times Ordered", createDataset(), PlotOrientation.VERTICAL, false, true, false);
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        setSize(800, 600);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
-        setContentPane(chartPanel);
 
         CategoryPlot plot = (CategoryPlot) barChart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setShadowVisible(false);
         renderer.setDrawBarOutline(true);
-        renderer.setSeriesPaint(0, Color.GREEN);
+        renderer.setSeriesPaint(0, color);
 
-        setVisible(true);
-    }
-
-    private CategoryDataset createDataset() {
-        int[] deliveryDates = statisticsConnection.popularWeekdaysDeliveryDate();
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String order = "Order";
-
-        String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-
-        for(int i = 0; i < deliveryDates.length; i++) {
-            dataset.addValue(deliveryDates[i], order, weekdays[i]);
-        }
-
-        return dataset;
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        return chartPanel;
     }
 }

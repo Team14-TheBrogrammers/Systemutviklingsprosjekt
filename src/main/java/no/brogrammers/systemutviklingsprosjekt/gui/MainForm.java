@@ -10,7 +10,12 @@ import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.statistics.CustomerTypeDiagram;
+import no.brogrammers.systemutviklingsprosjekt.statistics.MonthlyIncomeDiagram;
+import no.brogrammers.systemutviklingsprosjekt.statistics.MostPopularRecipesDiagram;
+import no.brogrammers.systemutviklingsprosjekt.statistics.PopularWeekdayDiagram;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
+import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -63,6 +68,12 @@ public class MainForm extends JFrame{
     private JLabel passwordLabel;
     private JTable table1;
     private JButton addRecipeButton;
+    private JTabbedPane tabbedPane4;
+    private ChartPanel chartPanel1;
+    private ChartPanel chartPanel2;
+    private ChartPanel chartPanel3;
+    private ChartPanel chartPanel4;
+    private JPanel incomePanel;
     private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
@@ -88,7 +99,7 @@ public class MainForm extends JFrame{
         this.user = user;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(700, 450);
+        setSize(1300, 800);
         setTitle("Healty Catering Ltd.");
         setLocationRelativeTo(null);
         setVisible(true);
@@ -183,7 +194,7 @@ public class MainForm extends JFrame{
     private void loadOrdersTab() {
         //Orders
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
-
+/*
         //Active orders:
         acticeOrdersTableModel = new DefaultTableModel(orderColumns, 0);
         activeOrdersTable.setModel(acticeOrdersTableModel);
@@ -194,7 +205,7 @@ public class MainForm extends JFrame{
         DefaultTableModel previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
-        addRowsToOrderTab(previousOrdersTableModel, previousOrders);
+        addRowsToOrderTab(previousOrdersTableModel, previousOrders);*/
     }
 
     private void loadRecipesTab() {
@@ -249,8 +260,21 @@ public class MainForm extends JFrame{
         addRowsToOrderTab(defaultTableModel2, orders);
     }
 
-    private void loadStatisticsTab() {
+    private void createUIComponents() {
+        loadStatisticsTab();
+    }
 
+    private void loadStatisticsTab() {
+        MonthlyIncomeDiagram monthlyIncomeDiagram = new MonthlyIncomeDiagram();
+        CustomerTypeDiagram customerTypeDiagram = new CustomerTypeDiagram();
+        PopularWeekdayDiagram popularWeekdayDiagram = new PopularWeekdayDiagram();
+        MostPopularRecipesDiagram mostPopularRecipesDiagram = new MostPopularRecipesDiagram();
+        //ChartPanel chartPanel = monthlyIncomeDiagram.createChartPanel();
+        chartPanel1 = monthlyIncomeDiagram.createChartPanel();
+        chartPanel2 = customerTypeDiagram.createChartPanel();
+        chartPanel3 = popularWeekdayDiagram.createChartPanel();
+        chartPanel4 = mostPopularRecipesDiagram.createChartPanel();
+        //incomePanel.add(chartPanel);
     }
 
     private void loadMyProfileTab() {
@@ -271,7 +295,7 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         loadOrdersTab();
         loadCustomersTab();
-
+        //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
 
 
