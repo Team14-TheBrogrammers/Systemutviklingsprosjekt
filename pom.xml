@@ -56,5 +56,15 @@
             <artifactId>jdatepicker</artifactId>
             <version>1.3.4</version>
         </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>com.teamdev</id>
+            <url>http://maven.teamdev.com/repository/products</url>
+        </repository>
+    </repositories>
+
 </project>
+

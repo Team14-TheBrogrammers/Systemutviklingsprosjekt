@@ -19,7 +19,7 @@ public class DriverConnection extends OrderConnection {//TODO: abstract?
 
     public ArrayList<Order> deliveriesTomorrow() {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() + INTERVAL 1 DAY;";
-
+        //getOrders(sqlCommand);
         return null;
     }
 
@@ -32,5 +32,5 @@ public class DriverConnection extends OrderConnection {//TODO: abstract?
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = '" + deliveryDate + "';";
         return null;
     }
-    
+
 }

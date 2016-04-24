@@ -1,5 +1,8 @@
 package no.brogrammers.systemutviklingsprosjekt.gui;
 
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserContext;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
@@ -20,6 +23,7 @@ import org.jfree.chart.ChartPanel;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -73,6 +77,9 @@ public class MainForm extends JFrame{
     private ChartPanel chartPanel2;
     private ChartPanel chartPanel3;
     private ChartPanel chartPanel4;
+    private JPanel mapPanel;
+    private BrowserView test123;
+    private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
 
@@ -253,15 +260,27 @@ public class MainForm extends JFrame{
 
     private void loadDriverRouteTab() {
         //Driver tab:
-        String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
+        /*String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
         DefaultTableModel defaultTableModel2 = new DefaultTableModel(orderColumns, 0);
         deliveriesTodayTable.setModel(defaultTableModel2);
         ArrayList<Order> orders = driverConnection.deliveriesToday();
-        addRowsToOrderTab(defaultTableModel2, orders);
+        addRowsToOrderTab(defaultTableModel2, orders);*/
+
+        //Browser browser = new Browser();
+        //test123 = new BrowserView(browser);
+        //view = new BrowserView(browser);
+
+        //mapPanel.add(test123);
+
     }
 
     private void createUIComponents() {
-        loadStatisticsTab();
+        //Browser browser = new Browser();
+        //test123 = new BrowserView(browser);
+        //browser.loadURL("http://www.google.com");
+        //test123.getBrowser().loadURL("google.com");
+
+        //loadStatisticsTab();
     }
 
     private void loadStatisticsTab() {
@@ -274,7 +293,6 @@ public class MainForm extends JFrame{
         chartPanel2 = customerTypeDiagram.createChartPanel();
         chartPanel3 = popularWeekdayDiagram.createChartPanel();
         chartPanel4 = mostPopularRecipesDiagram.createChartPanel();
-        //incomePanel.add(chartPanel);
     }
 
     private void loadMyProfileTab() {
@@ -297,7 +315,7 @@ public class MainForm extends JFrame{
         loadCustomersTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
-
+        //loadDriverRouteTab();
 
 
 

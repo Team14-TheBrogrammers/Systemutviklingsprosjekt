@@ -1,13 +1,18 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import no.brogrammers.systemutviklingsprosjekt.converter.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
+import no.brogrammers.systemutviklingsprosjekt.user.Manager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -23,10 +28,25 @@ public class MainClient {
         //System.out.println(Encryption.encryptPassword("asdsad"));
 
         //test();
-        setJFrameLookAndFeel();
+        //setJFrameLookAndFeel();
         //LoginForm loginForm = new LoginForm();
-        AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+        //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+        DateConverter dc = new DateConverter();
+        Manager manager = new Manager(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "hei", "hei");
+        MainForm mainForm = new MainForm(manager);
         //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();/
+
+        /*Browser browser = new Browser();
+        BrowserView browserView = new BrowserView(browser);
+
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(browserView, BorderLayout.CENTER);
+        frame.setSize(700, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        browser.loadURL("http://www.google.com");*/
     }
 
     private static void setJFrameLookAndFeel() {
