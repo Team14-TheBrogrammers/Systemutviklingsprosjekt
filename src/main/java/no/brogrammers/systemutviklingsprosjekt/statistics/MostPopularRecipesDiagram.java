@@ -14,29 +14,8 @@ import java.awt.*;
  * Class for diagram of the top 10 most ordered recipes.
  */
 
-public class MostPopularRecipesDiagram extends JFrame {
+public class MostPopularRecipesDiagram {
     StatisticsConnection statisticsConnection = new StatisticsConnection();
-
-    public MostPopularRecipesDiagram() {
-        setContentPane(createChartPanel());
-        pack();
-        setVisible(true);
-    }
-
-    private ChartPanel createChartPanel() {
-        JFreeChart barChart = ChartFactory.createBarChart("Top 10 Most Ordered Recipes", "Recipe", "Times Ordered", createDataset(), PlotOrientation.VERTICAL, false, true, false);
-        CategoryPlot plot = (CategoryPlot) barChart.getPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        renderer.setShadowVisible(false);
-        renderer.setDrawBarOutline(true);
-
-        barChart.setBackgroundImageAlpha(0.2f);
-        barChart.setBackgroundPaint(Color.WHITE);
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
-        return chartPanel;
-    }
 
     private CategoryDataset createDataset() {
         String recipe = "Recipe";
@@ -53,5 +32,20 @@ public class MostPopularRecipesDiagram extends JFrame {
             }
         }
         return dataset;
+    }
+
+    public ChartPanel createChartPanel() {
+        JFreeChart barChart = ChartFactory.createBarChart("Top 10 Most Ordered Recipes", "Recipe", "Times Ordered", createDataset(), PlotOrientation.VERTICAL, false, true, false);
+        CategoryPlot plot = (CategoryPlot) barChart.getPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setShadowVisible(false);
+        renderer.setDrawBarOutline(true);
+
+        barChart.setBackgroundImageAlpha(0.2f);
+        barChart.setBackgroundPaint(Color.WHITE);
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        return chartPanel;
     }
 }

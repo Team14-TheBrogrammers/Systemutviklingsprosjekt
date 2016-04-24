@@ -1,5 +1,8 @@
 package no.brogrammers.systemutviklingsprosjekt.gui;
 
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserContext;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
@@ -10,11 +13,17 @@ import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.statistics.CustomerTypeDiagram;
+import no.brogrammers.systemutviklingsprosjekt.statistics.MonthlyIncomeDiagram;
+import no.brogrammers.systemutviklingsprosjekt.statistics.MostPopularRecipesDiagram;
+import no.brogrammers.systemutviklingsprosjekt.statistics.PopularWeekdayDiagram;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
+import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -63,6 +72,15 @@ public class MainForm extends JFrame{
     private JLabel passwordLabel;
     private JTable table1;
     private JButton addRecipeButton;
+    private JTabbedPane tabbedPane4;
+    private ChartPanel chartPanel1;
+    private ChartPanel chartPanel2;
+    private ChartPanel chartPanel3;
+    private ChartPanel chartPanel4;
+    private JPanel mapPanel;
+    private BrowserView test123;
+    private BrowserView testassdasd;
+    private JPanel incomePanel;
     private JTable able4;
 
     private ManageOrder manageOrder = new ManageOrder();
@@ -88,7 +106,7 @@ public class MainForm extends JFrame{
         this.user = user;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(700, 450);
+        setSize(1300, 800);
         setTitle("Healty Catering Ltd.");
         setLocationRelativeTo(null);
         setVisible(true);
@@ -183,7 +201,7 @@ public class MainForm extends JFrame{
     private void loadOrdersTab() {
         //Orders
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
-
+/*
         //Active orders:
         acticeOrdersTableModel = new DefaultTableModel(orderColumns, 0);
         activeOrdersTable.setModel(acticeOrdersTableModel);
@@ -194,7 +212,7 @@ public class MainForm extends JFrame{
         DefaultTableModel previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
-        addRowsToOrderTab(previousOrdersTableModel, previousOrders);
+        addRowsToOrderTab(previousOrdersTableModel, previousOrders);*/
     }
 
     private void loadRecipesTab() {
@@ -242,15 +260,39 @@ public class MainForm extends JFrame{
 
     private void loadDriverRouteTab() {
         //Driver tab:
-        String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
+        /*String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
         DefaultTableModel defaultTableModel2 = new DefaultTableModel(orderColumns, 0);
         deliveriesTodayTable.setModel(defaultTableModel2);
         ArrayList<Order> orders = driverConnection.deliveriesToday();
-        addRowsToOrderTab(defaultTableModel2, orders);
+        addRowsToOrderTab(defaultTableModel2, orders);*/
+
+        //Browser browser = new Browser();
+        //test123 = new BrowserView(browser);
+        //view = new BrowserView(browser);
+
+        //mapPanel.add(test123);
+
+    }
+
+    private void createUIComponents() {
+        //Browser browser = new Browser();
+        //test123 = new BrowserView(browser);
+        //browser.loadURL("http://www.google.com");
+        //test123.getBrowser().loadURL("google.com");
+
+        //loadStatisticsTab();
     }
 
     private void loadStatisticsTab() {
-
+        MonthlyIncomeDiagram monthlyIncomeDiagram = new MonthlyIncomeDiagram();
+        CustomerTypeDiagram customerTypeDiagram = new CustomerTypeDiagram();
+        PopularWeekdayDiagram popularWeekdayDiagram = new PopularWeekdayDiagram();
+        MostPopularRecipesDiagram mostPopularRecipesDiagram = new MostPopularRecipesDiagram();
+        //ChartPanel chartPanel = monthlyIncomeDiagram.createChartPanel();
+        chartPanel1 = monthlyIncomeDiagram.createChartPanel();
+        chartPanel2 = customerTypeDiagram.createChartPanel();
+        chartPanel3 = popularWeekdayDiagram.createChartPanel();
+        chartPanel4 = mostPopularRecipesDiagram.createChartPanel();
     }
 
     private void loadMyProfileTab() {
@@ -271,9 +313,9 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         loadOrdersTab();
         loadCustomersTab();
-
+        //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
-
+        //loadDriverRouteTab();
 
 
 

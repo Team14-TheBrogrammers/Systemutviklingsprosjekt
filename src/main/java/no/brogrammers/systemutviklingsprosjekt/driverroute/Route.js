@@ -3,7 +3,7 @@
  */
 
 
-var file = "file:///C:/Users/Ingunn/Documents/GitHub/Systemutviklingsprosjekt/src/main/java/no/brogrammers/systemutviklingsprosjekt/driverroute/File.txt";
+/*var file = "file:///C:/Users/Ingunn/Documents/GitHub/Systemutviklingsprosjekt/src/main/java/no/brogrammers/systemutviklingsprosjekt/driverroute/File.txt";
 
 var reader = new FileReader();
 reader.onload = function(e) {
@@ -11,7 +11,7 @@ reader.onload = function(e) {
 }
 
 var teksst = reader.readAsText(file, encoding);
-
+*/
 
 
 var i;
@@ -21,7 +21,7 @@ trheim[0] = "olav tryggvasons gate 24, 7011";
 trheim[1] = "sverdrupsvei 33, 7020";
 trheim[2] = "olav tryggvasons gate 40, 7011";
 trheim[3] = "munkegata 34, 7011";
-trheim[4] = teksst;
+//trheim[4] = teksst;
 
 var eks2 = [];
 for(i=0; i<trheim.length; i++) {
@@ -38,6 +38,7 @@ function calculateAndDisplayRouteWithButton(directionsService, directionsDisplay
         origin: home,
         destination: home,
         waypoints: eks2,
+
         optimizeWaypoints: true,
         unitSystem: google.maps.UnitSystem.METRIC,
         travelMode: google.maps.TravelMode.DRIVING,
