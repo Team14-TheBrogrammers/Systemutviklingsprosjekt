@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class SubscriptionConnection extends OrderConnection {
-    
+
     /**
      * Method to obtain orderID from subscriptionID. Returns -1 if subscriptionID does not exist or an error occured.
      * @param subscriptionID is the subscription ID
