@@ -135,20 +135,16 @@ CREATE TABLE Employee(
 CREATE TABLE Frequency(
   frequency_id INTEGER NOT NULL AUTO_INCREMENT,
   frequency_day INTEGER NOT NULL,
-  frequency_week INTEGER NOT NULL,
   frequency_month INTEGER NOT NULL,
   PRIMARY KEY (frequency_id)
 );
 
 CREATE TABLE Subscription(
   subs_id INTEGER AUTO_INCREMENT NOT NULL,
-  frequency INTEGER NOT NULL,
   order_id INTEGER NOT NULL,
-  customer_id INTEGER NOT NULL,
   frequency_id INTEGER NOT NULL,
   PRIMARY KEY(subs_id),
   FOREIGN KEY(order_id) REFERENCES Orders(order_id),
-  FOREIGN KEY(customer_id) REFERENCES Customer(customer_id),
   FOREIGN KEY(frequency_id) REFERENCES Frequency(frequency_id)
 );
 

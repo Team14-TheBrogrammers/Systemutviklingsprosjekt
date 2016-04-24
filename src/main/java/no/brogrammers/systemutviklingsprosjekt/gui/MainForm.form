@@ -158,20 +158,20 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="f845c" class="javax.swing.JButton" binding="button2" default-binding="true">
+              <component id="f845c" class="javax.swing.JButton" binding="addNewIngredientButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Button"/>
+                  <text value="Add New Ingredient"/>
                 </properties>
               </component>
-              <component id="94067" class="javax.swing.JButton" binding="button4" default-binding="true">
+              <component id="94067" class="javax.swing.JButton" binding="deleteSelectedIngredientSButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Button"/>
+                  <text value="Delete selected Ingredient(s)"/>
                 </properties>
               </component>
               <scrollpane id="f1f49">
@@ -413,14 +413,7 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children>
-                  <component id="d2c17" class="com.teamdev.jxbrowser.chromium.swing.BrowserView" binding="test123">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
-                </children>
+                <children/>
               </grid>
             </children>
           </grid>

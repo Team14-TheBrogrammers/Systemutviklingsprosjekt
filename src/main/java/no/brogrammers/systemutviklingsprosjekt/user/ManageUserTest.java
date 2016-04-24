@@ -1,6 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.user;
 
-import no.brogrammers.systemutviklingsprosjekt.converter.*;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.*;
 
 /**
  * Created by Ingunn on 07.04.2016.

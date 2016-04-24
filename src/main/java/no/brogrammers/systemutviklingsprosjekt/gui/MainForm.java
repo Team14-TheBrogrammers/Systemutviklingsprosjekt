@@ -74,9 +74,9 @@ public class MainForm extends JFrame{
     private JTabbedPane tabbedPane4;
     private JTable privateCustomerTable;
     private JTable table3;
-    private JButton button2;
+    private JButton addNewIngredientButton;
     private JTable ingredientsTable;
-    private JButton button4;
+    private JButton deleteSelectedIngredientSButton;
     private JTable table4;
     private JButton button5;
     private JButton button6;
@@ -85,12 +85,11 @@ public class MainForm extends JFrame{
     private ChartPanel chartPanel3;
     private ChartPanel chartPanel4;
     private JPanel mapPanel;
-    private BrowserView test123;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
 
-    private ManageOrder manageOrder = new ManageOrder();
+    //private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
     private ManageUser manageUser = new ManageUser();
@@ -239,12 +238,20 @@ public class MainForm extends JFrame{
         }
     }
 
-    private void loadIngredients() {
+    private void loadIngredientsTab() {
         String ingredientColumns[] = {"Name", "In Stock"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
         ingredientsTable.setModel(defaultTableModel);
+        System.out.println("test2");
         ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
         ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
+        for(int i = 0; i < ingredients.size(); i++) {
+            System.out.println("test");
+            String name = ingredients.get(i).getIngredientName();
+            String measurement = ingredients.get(i).getQuantity() + " " + measurements.get(i);
+            Object objects[] = {name, measurement};
+            defaultTableModel.addRow(objects);
+        }
     }
 
     private void loadCustomersTab() {
@@ -312,7 +319,7 @@ public class MainForm extends JFrame{
         //browser.loadURL("http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
 
-        //loadStatisticsTab();
+        loadStatisticsTab();
     }
 
     private void loadStatisticsTab() {
@@ -348,24 +355,12 @@ public class MainForm extends JFrame{
         loadRecipesTab();//TODO:DOES NOT WORKSSSS
         //loadCustomersTab();
         //loadEmployeesTab();
+        loadIngredientsTab();
 
         loadCustomersTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         //loadDriverRouteTab();
-
-
-
-
-        //Ingredients:
-        ///toolBarTest.add("Test");
-        String ingredientColumns[] = {"Name", "Quantity"}; //Measurment in own row?
-
-
-
-
-
-
 
         //Subscription:
 

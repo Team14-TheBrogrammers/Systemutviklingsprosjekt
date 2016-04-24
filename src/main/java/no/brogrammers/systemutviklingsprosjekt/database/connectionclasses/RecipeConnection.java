@@ -92,7 +92,7 @@ public class RecipeConnection extends DatabaseConnection {
                 );
                 pStatement.setString(1, recipeName);
                 pStatement.setString(2, ingredient.getIngredientName());
-                pStatement.setString(3, ingredient.getQuantity());
+                pStatement.setDouble(3, ingredient.getQuantity());
                 pStatement.execute();
             } catch (SQLException e) {
                 System.err.println(e);
@@ -135,7 +135,7 @@ public class RecipeConnection extends DatabaseConnection {
             ResultSet rs = pStatement.getResultSet();
 
             while (rs.next()) {
-                ingredients.add(new Ingredient(rs.getString("ingredient_name"), rs.getString("quantity")));
+                ingredients.add(new Ingredient(rs.getString("ingredient_name"), rs.getDouble("quantity")));
             }
 
             pStatement = getConnection().prepareStatement(
