@@ -1,9 +1,12 @@
 package no.brogrammers.systemutviklingsprosjekt.recipe;
 
+import lombok.ToString;
+
 /**
  * Created by Nicole on 07.04.2016.
  *
  */
+@ToString
 public class Instruction {
 
     private int stepNumber;

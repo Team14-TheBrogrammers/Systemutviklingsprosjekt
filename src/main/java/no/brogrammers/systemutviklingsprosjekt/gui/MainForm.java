@@ -6,13 +6,18 @@ import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredientForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
+import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 import no.brogrammers.systemutviklingsprosjekt.statistics.CustomerTypeDiagram;
 import no.brogrammers.systemutviklingsprosjekt.statistics.MonthlyIncomeDiagram;
 import no.brogrammers.systemutviklingsprosjekt.statistics.MostPopularRecipesDiagram;
@@ -21,18 +26,13 @@ import no.brogrammers.systemutviklingsprosjekt.user.*;
 import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import static javax.swing.JOptionPane.OPTION_TYPE_PROPERTY;
 import static javax.swing.JOptionPane.showConfirmDialog;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by Knut on 19.04.16.
@@ -70,23 +70,32 @@ public class MainForm extends JFrame{
     private JLabel employmentLabel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
-    private JTable table1;
+    private JTable recipeTable;
     private JButton addRecipeButton;
     private JTabbedPane tabbedPane4;
+    private JTable privateCustomerTable;
+    private JTable table3;
+    private JButton addNewIngredientButton;
+    private JTable ingredientsTable;
+    private JButton deleteSelectedIngredientSButton;
+    private JTable table4;
+    private JButton button5;
+    private JButton button6;
     private ChartPanel chartPanel1;
     private ChartPanel chartPanel2;
     private ChartPanel chartPanel3;
     private ChartPanel chartPanel4;
     private JPanel mapPanel;
-    private BrowserView test123;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
 
-    private ManageOrder manageOrder = new ManageOrder();
+    //private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
     private ManageUser manageUser = new ManageUser();
+    private RecipeConnection recipeConnection = new RecipeConnection();
+    private IngredientConnection ingredientConnection = new IngredientConnection();
 
     //Current user object
     private final User user;
@@ -164,6 +173,12 @@ public class MainForm extends JFrame{
                 AddNewRecipeForm addNewRecipeForm = new AddNewRecipeForm();
             }
         });
+        addNewIngredientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm();
+            }
+        });
     }
 
     public User getUser() {
@@ -209,7 +224,7 @@ public class MainForm extends JFrame{
         addRowsToOrderTab(acticeOrdersTableModel, activeOrders);
 
         //Previous orders:
-        DefaultTableModel previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
+        previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
         addRowsToOrderTab(previousOrdersTableModel, previousOrders);*/
@@ -218,14 +233,45 @@ public class MainForm extends JFrame{
     private void loadRecipesTab() {
         //Recipes:
         String recipeColumns[] = {"Name", "Type", "Price"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(recipeColumns, 0);
+        recipeTable.setModel(defaultTableModel);
+        ArrayList<Recipe> recipes = recipeConnection.viewAllRecipes();
+        for(int i = 0; i < recipes.size(); i++) {
+            String name = recipes.get(i).getRecipeName();
+            RecipeType recipeType = recipes.get(i).getRecipeType();
+            double price = recipes.get(i).getPrice();
+            Object objects[] = {name, recipeType, price};
+            defaultTableModel.addRow(objects);
+        }
+    }
+
+    private void loadIngredientsTab() {
+        String ingredientColumns[] = {"Name", "In Stock"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
+        ingredientsTable.setModel(defaultTableModel);
+        System.out.println("test2");
+        ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
+        ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
+        for(int i = 0; i < ingredients.size(); i++) {
+            System.out.println("test");
+            String name = ingredients.get(i).getIngredientName();
+            String measurement = ingredients.get(i).getQuantity() + " " + measurements.get(i);
+            Object objects[] = {name, measurement};
+            defaultTableModel.addRow(objects);
+        }
     }
 
     private void loadCustomersTab() {
         //Customer tab:
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        customersTable.setModel(defaultTableModel);
-        //ArrayList<Customer> customers
+        privateCustomerTable.setModel(defaultTableModel);
+        ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
+        for(int i = 0; i < customers.size(); i++) {
+            int id = customers.get(i).getID();
+            //String name = customers.get(i).get
+
+        }
     }
 
     private void loadEmployeesTab() {
@@ -280,7 +326,7 @@ public class MainForm extends JFrame{
         //browser.loadURL("http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
 
-        //loadStatisticsTab();
+        loadStatisticsTab();
     }
 
     private void loadStatisticsTab() {
@@ -312,23 +358,16 @@ public class MainForm extends JFrame{
 
     private void loadTabs() {
         loadOrdersTab();
+        //subscriptions
+        loadRecipesTab();//TODO:DOES NOT WORKSSSS
+        //loadCustomersTab();
+        //loadEmployeesTab();
+        loadIngredientsTab();
+
         loadCustomersTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         //loadDriverRouteTab();
-
-
-
-
-        //Ingredients:
-        ///toolBarTest.add("Test");
-        String ingredientColumns[] = {"Name", "Quantity"}; //Measurment in own row?
-
-
-
-
-
-
 
         //Subscription:
 

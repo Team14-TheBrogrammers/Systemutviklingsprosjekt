@@ -1,4 +1,4 @@
-package no.brogrammers.systemutviklingsprosjekt.converter;
+package no.brogrammers.systemutviklingsprosjekt.miscellaneous;
 
 /**
  * Created by Ingunn on 16.04.2016.

@@ -1,17 +1,19 @@
 /* Database */
 
+DROP TABLE IF EXISTS Subscriptions;
+DROP TABLE IF EXISTS Frequency;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Positions;
 DROP TABLE IF EXISTS Order_recipe;
 DROP TABLE IF EXISTS Recipe_instruction;
 DROP TABLE IF EXISTS Recipe_ingredient;
-DROP TABLE IF EXISTS Private_customer;
-DROP TABLE IF EXISTS Company;
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS Employee;
-DROP TABLE IF EXISTS Positions;
-DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS Stock;
 DROP TABLE IF EXISTS Ingredient;
 DROP TABLE IF EXISTS Recipe;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS Private_customer;
+DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS Postal;
 
 
@@ -48,19 +50,22 @@ CREATE TABLE Company(
 
 CREATE TABLE Orders(
   order_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  payment_status BOOLEAN,
+  payment_status BOOLEAN NOT NULL,
   order_date DATE NOT NULL,
   delivery_date DATE NOT NULL,
   delivery_time DOUBLE NOT NULL,
   address VARCHAR(30),
   zip INTEGER(4),
+  take_away BOOLEAN NOT NULL,
+  other_request VARCHAR(30),
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
 
 CREATE TABLE Recipe(
   recipe_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
-  recipe_type ENUM ('VEGAN', 'VEGETARIAN', 'PESCATARIAN', 'MEATLOVER'),
+  recipe_type ENUM ('NONE', 'VEGAN', 'VEGETARIAN', 'PESCATARIAN', 'MEATLOVER') NOT NULL,
+  diet_type ENUM ('NONE', 'LOW_FAT', 'LOW_CARB', 'LOW_CALORIE', 'GLUTEN_FREE') NOT NULL,
   price DOUBLE NOT NULL
 );
 
@@ -78,7 +83,7 @@ CREATE TABLE Stock(
 
 CREATE TABLE Recipe_ingredient (
   recipe_name VARCHAR(30) NOT NULL,
-  ingredient_name VARCHAR(30) NOT NULL,
+  ingredient_name VARCHAR(30) UNIQUE NOT NULL,
   quantity DOUBLE NOT NULL,
   PRIMARY KEY (recipe_name,ingredient_name),
   CONSTRAINT recipeIng_fk FOREIGN KEY (recipe_name)
@@ -131,20 +136,16 @@ CREATE TABLE Employee(
 CREATE TABLE Frequency(
   frequency_id INTEGER NOT NULL AUTO_INCREMENT,
   frequency_day INTEGER NOT NULL,
-  frequency_week INTEGER NOT NULL,
   frequency_month INTEGER NOT NULL,
   PRIMARY KEY (frequency_id)
 );
 
-CREATE TABLE Subscriptions(
+CREATE TABLE Subscription(
   subs_id INTEGER AUTO_INCREMENT NOT NULL,
-  frequency INTEGER NOT NULL,
   order_id INTEGER NOT NULL,
-  customer_id INTEGER NOT NULL,
   frequency_id INTEGER NOT NULL,
   PRIMARY KEY(subs_id),
   FOREIGN KEY(order_id) REFERENCES Orders(order_id),
-  FOREIGN KEY(customer_id) REFERENCES Customer(customer_id),
   FOREIGN KEY(frequency_id) REFERENCES Frequency(frequency_id)
 );
 
@@ -206,68 +207,20 @@ VALUES
 INSERT INTO Postal VALUES(1234, 'Trondheim');
 
 INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'ingunn@sund.no', 23123333);
-INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'saasds@asdasd.no', 21312333);
+INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'saasds@asdasd.no', 21312433);
 INSERT INTO Private_customer(last_name, first_name, customer_id)
 VALUES('Sund', 'Ingunn', 1);
-
-INSERT INTO Recipe (recipe_name, recipe_type, price)
-VALUES
-  ('Pancakes', 'VEGETARIAN', 100),
-  ('Tomato Soup', 'VEGETARIAN', 100),
-  ('Spaghetti bolognese', 'MEATLOVER', 100);
-
-INSERT INTO Ingredient (ingredient_name)
-VALUES
-  ('Egg'),
-  ('Milk'),
-  ('All-purpose flour'),
-  ('Tomatoes'),
-  ('Cheese'),
-  ('Baking powder'),
-  ('Salt'),
-  ('Onion'),
-  ('Vegetable oil'),
-  ('Olive oil'),
-  ('Lettuce'),
-  ('Tomato purée'),
-  ('Beef'),
-  ('White sugar'),
-  ('Brown sugar');
-
-INSERT INTO Recipe_ingredient (recipe_name, ingredient_name, quantity)
-VALUES
-  ('Pancakes', 'Egg', '1 pc'),
-  ('Pancakes', 'Milk', '1 cup'),
-  ('Pancakes', 'All-purpose flour', '1 cup'),
-  ('Pancakes', 'Salt', '1 teaspoon'),
-  ('Pancakes', 'White sugar', '2 tablespoons'),
-  ('Pancakes', 'Vegetable oil', '2 tablespoons'),
-  ('Tomato soup', 'Onion', '1 pc'),
-  ('Tomato soup', 'Olive oil', '2 tablespoon'),
-  ('Tomato soup', 'Tomato purée', '2 teaspoons');
-
-INSERT INTO Recipe_instruction (recipe_name, step_number, description)
-VALUES
-  ('Pancakes', 1, 'In a large bowl, mix flour, sugar, baking powder and salt.
-    Make a well in the center, and pour in milk, egg and oil. Mix until smooth.'),
-  ('Pancakes', 2, 'Heat a lightly oiled griddle or frying pan over medium high heat.
-    Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.
-    Brown on both sides and serve hot.'),
-  ('Tomato soup', 1, 'Prepare your vegetables'),
-  ('Tomato soup', 2, 'Spoon 2 tbsp olive oil into a large heavy-based pan and heat it over a low heat.'),
-  ('Tomato soup', 3, 'When the pan is ready, add 2 tsp of tomato purée, then stir it around so it turns the vegetables red.');
 
 INSERT INTO Stock(ingredient_name, quantity, measurement) VALUES ("Egg", 60, "Pcs");
 INSERT INTO Stock(ingredient_name, quantity, measurement) VALUES ("Milk", 20, "L");
 INSERT INTO Stock(ingredient_name, quantity, measurement) VALUES ("All-purpose flour", 40, "Kg");
 
-INSERT INTO Postal VALUES(1234, 'Trondheim');
 
-INSERT INTO Customer(address, zip, email_address, phone) VALUES('Trondheims gate 1', 1234, 'ingunn@sund.no', 23123333);
-INSERT INTO Customer(address, zip, email_address, phone) VALUES('Trondheims gate 1', 1234, 'saasds@asdasd.no', 21312333);
-INSERT INTO Private_customer(last_name, first_name, customer_id)
-VALUES('Sund', 'Ingunn', 1);
+/** Views */
 
+DROP VIEW IF EXISTS price_view;
+
+CREATE VIEW price_view AS (SELECT order_id, SUM(price*quantity) AS order_price FROM Orders NATURAL JOIN Order_recipe NATURAL JOIN Recipe GROUP BY order_id);
 
 /**
 
@@ -365,3 +318,9 @@ INSERT INTO Company(company_name, customer_id) VALUES('', 2);
 
 /** i company: */
 /**INSERT INTO Company(company_name, customer_id) VALUES('', 2);*/
+
+/** test
+ */
+/*INSERT INTO Employee (last_name, first_name, phone, date_of_employment, position_id, username, password, email_address)
+VALUES ('asd', 'test', 1234, '2016-04-23', 1, 'userrrname', 'passsord', 'epo@st.no');*/
+
