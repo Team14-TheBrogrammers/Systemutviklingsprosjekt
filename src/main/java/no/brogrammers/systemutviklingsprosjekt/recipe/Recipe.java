@@ -1,6 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.recipe;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Nicole on 07.04.2016.
@@ -10,11 +10,11 @@ public class Recipe {
 
     private String recipeName;
     private RecipeType recipeType;
-    private List<Ingredient> ingredients;
-    private List<Instruction> instructions;
+    private ArrayList<Ingredient> ingredients;
+    private ArrayList<Instruction> instructions;
     private double price;
 
-    public Recipe(String recipeName, RecipeType recipeType, List<Ingredient> ingredients, List<Instruction> instructions, double price) {
+    public Recipe(String recipeName, RecipeType recipeType, ArrayList<Ingredient> ingredients, ArrayList<Instruction> instructions, double price) {
         this.recipeName = recipeName;
         this.recipeType = recipeType;
         this.ingredients = ingredients;
@@ -36,19 +36,19 @@ public class Recipe {
         this.recipeType = recipeType;
     }
 
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<Instruction> getInstructions() {
+    public ArrayList<Instruction> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(List<Instruction> instructions) {
+    public void setInstructions(ArrayList<Instruction> instructions) {
         this.instructions = instructions;
     }
 
