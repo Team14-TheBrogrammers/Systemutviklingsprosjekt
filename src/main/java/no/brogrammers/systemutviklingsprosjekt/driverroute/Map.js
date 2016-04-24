@@ -44,11 +44,18 @@ function initialize() {
         map.setCenter(home.getPosition());
     });
 
+
+    //Home button:
     var homeControlDiv = document.createElement('div');
     var homeControl = new HomeControl(homeControlDiv, map);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeControlDiv);
 
+    //Calculate route: with button
+    var onChangeHandler2 = function() {
+        calculateAndDisplayRouteWithButton(directionsService, directionsDisplay);
+    };
 
+    document.getElementById('route').addEventListener('click', onChangeHandler2);
 
     //Calculate route: input start and end values
     var onChangeHandler = function() {
@@ -56,13 +63,6 @@ function initialize() {
     };
 
     document.getElementById('submit2').addEventListener('click', onChangeHandler);
-
-    //
-    var onChangeHandler2 = function() {
-        calculateAndDisplayRouteWithButton(directionsService, directionsDisplay);
-    };
-
-    document.getElementById('route').addEventListener('click', onChangeHandler2);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
