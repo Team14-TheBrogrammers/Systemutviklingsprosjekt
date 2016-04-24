@@ -20,8 +20,8 @@ public abstract class UserConnection extends DatabaseConnection {
     }
 
     /*private boolean regUser(int employeeType) {
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
-                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
+        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkUpdated(sqlCommand);
     }*/
 
@@ -37,8 +37,8 @@ public abstract class UserConnection extends DatabaseConnection {
         if(usernameExists(username)) {
             return -1;
         }
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
-                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
+        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()) + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkRegistered(sqlCommand);
     }
 
@@ -46,8 +46,8 @@ public abstract class UserConnection extends DatabaseConnection {
         if(usernameExists(username)) {
             return -1;
         }
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
-                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
+        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkRegistered(sqlCommand);
     }
 
@@ -55,8 +55,8 @@ public abstract class UserConnection extends DatabaseConnection {
         if(usernameExists(username)) {
             return -1;
         }
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
-                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
+        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkRegistered(sqlCommand);
     }
 
@@ -64,8 +64,8 @@ public abstract class UserConnection extends DatabaseConnection {
         if(usernameExists(username)) {
             return -1;
         }
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, hiredate, position_id, username, password, email_address) \n" +
-                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + ", '" + mail + "');";
+        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkRegistered(sqlCommand);
     }
 

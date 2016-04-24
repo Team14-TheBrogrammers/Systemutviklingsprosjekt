@@ -58,7 +58,7 @@ public class RecipeConnection extends DatabaseConnection {
         return false;
     }
 
-    private boolean addRecipe(String recipeName) {
+    private boolean addRecipe(String recipeName) {//TODO: does not work, need more than name
         try {
             PreparedStatement pStatement = getConnection().prepareStatement(
                     "INSERT INTO recipe(recipe_name) VALUES (?)"

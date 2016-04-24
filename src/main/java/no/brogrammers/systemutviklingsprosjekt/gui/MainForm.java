@@ -7,12 +7,16 @@ import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
+import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 import no.brogrammers.systemutviklingsprosjekt.statistics.CustomerTypeDiagram;
 import no.brogrammers.systemutviklingsprosjekt.statistics.MonthlyIncomeDiagram;
 import no.brogrammers.systemutviklingsprosjekt.statistics.MostPopularRecipesDiagram;
@@ -70,9 +74,17 @@ public class MainForm extends JFrame{
     private JLabel employmentLabel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
-    private JTable table1;
+    private JTable recipeTable;
     private JButton addRecipeButton;
     private JTabbedPane tabbedPane4;
+    private JTable privateCustomerTable;
+    private JTable table3;
+    private JButton button2;
+    private JTable ingredientsTable;
+    private JButton button4;
+    private JTable table4;
+    private JButton button5;
+    private JButton button6;
     private ChartPanel chartPanel1;
     private ChartPanel chartPanel2;
     private ChartPanel chartPanel3;
@@ -87,6 +99,7 @@ public class MainForm extends JFrame{
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
     private ManageUser manageUser = new ManageUser();
+    private RecipeConnection recipeConnection = new RecipeConnection();
 
     //Current user object
     private final User user;
@@ -209,7 +222,7 @@ public class MainForm extends JFrame{
         addRowsToOrderTab(acticeOrdersTableModel, activeOrders);
 
         //Previous orders:
-        DefaultTableModel previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
+        previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
         addRowsToOrderTab(previousOrdersTableModel, previousOrders);*/
@@ -218,14 +231,36 @@ public class MainForm extends JFrame{
     private void loadRecipesTab() {
         //Recipes:
         String recipeColumns[] = {"Name", "Type", "Price"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(recipeColumns, 0);
+        recipeTable.setModel(defaultTableModel);
+        ArrayList<Recipe> recipes = recipeConnection.viewAllRecipes();
+        for(int i = 0; i < recipes.size(); i++) {
+            String name = recipes.get(i).getRecipeName();
+            RecipeType recipeType = recipes.get(i).getRecipeType();
+            double price = recipes.get(i).getPrice();
+            Object objects[] = {name, recipeType, price};
+            defaultTableModel.addRow(objects);
+        }
+    }
+
+    private void loadIngredients() {
+        String ingredientColumns[] = {"Name", "In Stock"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
+        ingredientsTable.setModel(defaultTableModel);
+        //ArrayList<Ingredient> ingredients = recipe
     }
 
     private void loadCustomersTab() {
         //Customer tab:
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        customersTable.setModel(defaultTableModel);
-        //ArrayList<Customer> customers
+        privateCustomerTable.setModel(defaultTableModel);
+        ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
+        for(int i = 0; i < customers.size(); i++) {
+            int id = customers.get(i).getID();
+            //String name = customers.get(i).get
+
+        }
     }
 
     private void loadEmployeesTab() {
@@ -312,6 +347,11 @@ public class MainForm extends JFrame{
 
     private void loadTabs() {
         loadOrdersTab();
+        //subscriptions
+        loadRecipesTab();//TODO:DOES NOT WORKSSSS
+        //loadCustomersTab();
+        //loadEmployeesTab();
+
         loadCustomersTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);

@@ -23,6 +23,10 @@ public class MainClient {
         //System.out.println(Encryption.encryptPassword("asdsad"));
 
         //test();
+        setJFrameLookAndFeel();
+        LoginForm loginForm = new LoginForm();
+        //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+        //System.out.println(new Date(Calendar.getInstance().getTimeInMillis()));
         //setJFrameLookAndFeel();
         //LoginForm loginForm = new LoginForm();
         //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();

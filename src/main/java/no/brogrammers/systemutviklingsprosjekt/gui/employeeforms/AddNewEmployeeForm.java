@@ -35,8 +35,8 @@ public class AddNewEmployeeForm extends JFrame{
     public AddNewEmployeeForm() {
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("test");
-        setSize(350, 450);
+        setTitle("Add New Employee");
+        setSize(450, 500);
         setVisible(true);
         setLocationRelativeTo(null);
 
@@ -45,32 +45,35 @@ public class AddNewEmployeeForm extends JFrame{
         addNewEmployeeToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String lastName = lastNameTextField.getText();
-                String firstName = firstNameTextField.getText();
-                int phone = Integer.parseInt(phoneTextField.getText());
-                String email = emailTextField.getText();
-                DateConverter dateConverter = new DateConverter();
-                java.sql.Date dateOfEmployment = dateConverter.utilDateToSqlDate((java.util.Date)datePickerTest.getModel().getValue());
-                String username = usernameTextField.getText();
-                String password = passwordField1.getText();
-
-                switch (userTypeComboBox.getSelectedIndex()) {
-                    case 0:
-                        System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
-                        //System.out.println(datePickerTest.getModel().getValue().toString());
-                        break;
-                    case 1:
-                        //manageUser.registerCashier()
-                        break;
-                    case 2:
-                        //manageUser.registerCook()
-                        break;
-                    case 3:
-                        //manageUser.registerDriver()
-                        break;
-                }
+                performLogin();
             }
         });
+    }
+
+    private void performLogin() {
+        String lastName = lastNameTextField.getText();
+        String firstName = firstNameTextField.getText();
+        int phone = Integer.parseInt(phoneTextField.getText());
+        String email = emailTextField.getText();
+        DateConverter dateConverter = new DateConverter();
+        java.sql.Date dateOfEmployment = dateConverter.utilDateToSqlDate((java.util.Date)datePickerTest.getModel().getValue());
+        String username = usernameTextField.getText();
+        String password = passwordField1.getText();
+
+        switch (userTypeComboBox.getSelectedIndex()) {
+            case 0:
+                System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
+                break;
+            case 1:
+                //manageUser.registerCashier()//TODO:FIX more code
+                break;
+            case 2:
+                //manageUser.registerCook()
+                break;
+            case 3:
+                //manageUser.registerDriver()
+                break;
+        }
     }
 
     private void loadDatePicker() {
