@@ -101,7 +101,7 @@ public abstract class OrderConnection extends DatabaseConnection {
      * @param orderID is the ID for the order.
      * @return -1.0 if something wrong happend. etc
      */
-    private double getOrderPrice(int orderID) {
+    public double getOrderPrice(int orderID) {
         String sqlCommand = "SELECT * FROM Order_recipe NATURAL JOIN Recipe WHERE order_id = " + orderID + ";";
         double totalPrice = -1.0;
 

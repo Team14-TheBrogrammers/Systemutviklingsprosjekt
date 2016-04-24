@@ -1,14 +1,13 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.employeeforms;
 
-import no.brogrammers.systemutviklingsprosjekt.converter.DateConverter;
-import no.brogrammers.systemutviklingsprosjekt.converter.DatePickerFormatter;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.user.ManageUser;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;

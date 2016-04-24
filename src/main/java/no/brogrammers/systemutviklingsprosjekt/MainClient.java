@@ -1,12 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
 
-import no.brogrammers.systemutviklingsprosjekt.converter.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
-import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
-import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
-import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
-import no.brogrammers.systemutviklingsprosjekt.user.Manager;
 
 import javax.swing.*;
 
@@ -30,9 +25,9 @@ public class MainClient {
         //setJFrameLookAndFeel();
         //LoginForm loginForm = new LoginForm();
         //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
-        DateConverter dc = new DateConverter();
-        Manager manager = new Manager(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "hei", "hei");
-        MainForm mainForm = new MainForm(manager);
+        //DateConverter dc = new DateConverter();
+        //Manager manager = new Manager(2, "hei", "hei", 91919191, "hehe", dc.stringToSqlDate("2014-02-01"), "hei", "hei");
+        //MainForm mainForm = new MainForm(manager);
         //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();/
 
         /*Browser browser = new Browser();

@@ -7,9 +7,14 @@ package no.brogrammers.systemutviklingsprosjekt.recipe;
 public class Ingredient {
 
     private String ingredientName;
-    private String quantity;
+    private double quantity;
+    /**
+     * Quantity depends on where is it used.
+     * If used in orders the quantity is the number of ingredients in a recipe.
+     * If it is used in a table it is the number of ingredients in the stock.
+     */
 
-    public Ingredient(String ingredientName, String quantity){
+    public Ingredient(String ingredientName, double quantity){
         this.ingredientName = ingredientName;
         this.quantity = quantity;
     }
@@ -22,11 +27,11 @@ public class Ingredient {
         this.ingredientName = ingredientName;
     }
 
-    public String getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
