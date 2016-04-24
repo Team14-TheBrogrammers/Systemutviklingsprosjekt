@@ -181,7 +181,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="62456" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="62456" class="javax.swing.JTable" binding="ingredientsTable">
                     <constraints/>
                     <properties/>
                   </component>

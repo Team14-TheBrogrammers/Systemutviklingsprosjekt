@@ -11,6 +11,7 @@ import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
@@ -70,7 +71,7 @@ public class MainForm extends JFrame{
     private JTable privateCustomerTable;
     private JTable table3;
     private JButton button2;
-    private JTable table1;
+    private JTable ingredientsTable;
     private JButton button4;
     private JTable table4;
     private JButton button5;
@@ -177,9 +178,7 @@ public class MainForm extends JFrame{
      * @param orders is the ArrayList of Order objects, which is added to the table.
      */
     private void addRowsToOrderTab(DefaultTableModel defTabModel, ArrayList<Order> orders) {
-        System.out.println("test");
         for(int i = 0; i < orders.size(); i++) {
-            System.out.println(orders.get(i).getAddress());
             int orderID = orders.get(i).getOrderID();
             int customerID = orders.get(i).getCustomerID();
             boolean paymentStatus = orders.get(i).isPaymentStatus();
@@ -225,6 +224,13 @@ public class MainForm extends JFrame{
             Object objects[] = {name, recipeType, price};
             defaultTableModel.addRow(objects);
         }
+    }
+
+    private void loadIngredients() {
+        String ingredientColumns[] = {"Name", "In Stock"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
+        ingredientsTable.setModel(defaultTableModel);
+        //ArrayList<Ingredient> ingredients = recipe
     }
 
     private void loadCustomersTab() {
@@ -302,8 +308,9 @@ public class MainForm extends JFrame{
         loadOrdersTab();
         //subscriptions
         loadRecipesTab();//TODO:DOES NOT WORKSSSS
-        loadCustomersTab();
-        loadEmployeesTab();
+        //loadCustomersTab();
+        //loadEmployeesTab();
+        loadIng
         //scrollPane1.setViewportView(customersTable);
 
 

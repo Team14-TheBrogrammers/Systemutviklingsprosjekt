@@ -90,16 +90,7 @@ public abstract class DatabaseConnection {
     /**
      * Method for closing the connection properly.
      */
-    public /*abstract*/ void stopConnection() {
-        /*try {
-            //statement.close();
-            //connection.close();
-
-        } catch (SQLException e) {
-            writeError(e.getMessage());
-        } catch (Exception e) {
-            writeError(e.getMessage());
-        }*/
+    public void stopConnection() {
         cleaner.closeConnection(connection);
     }
 
