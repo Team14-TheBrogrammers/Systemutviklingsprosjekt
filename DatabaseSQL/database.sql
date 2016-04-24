@@ -79,7 +79,7 @@ CREATE TABLE Stock(
 CREATE TABLE Recipe_ingredient (
   recipe_name VARCHAR(30) NOT NULL,
   ingredient_name VARCHAR(30) NOT NULL,
-  quantity CHAR(30),
+  quantity DOUBLE NOT NULL,
   PRIMARY KEY (recipe_name,ingredient_name),
   CONSTRAINT recipeIng_fk FOREIGN KEY (recipe_name)
   REFERENCES Recipe(recipe_name)
@@ -156,6 +156,59 @@ INSERT INTO Positions(position_name) VALUES('Driver');
 
 INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address)
 VALUES('Sund', 'Ingunn', 98765432, '2015-03-04', 1, 'ingunnsu', 'ingunnIzc00l', 'ingunnsu@yahoo.no');
+INSERT INTO Recipe (recipe_name, recipe_type, price)
+VALUES
+  ('Pancakes', 'VEGETARIAN', 100),
+  ('Tomato Soup', 'VEGETARIAN', 100),
+  ('Spaghetti bolognese', 'MEATLOVER', 100);
+
+INSERT INTO Ingredient (ingredient_name)
+VALUES
+  ('Egg'),
+  ('Milk'),
+  ('All-purpose flour'),
+  ('Tomatoes'),
+  ('Cheese'),
+  ('Baking powder'),
+  ('Salt'),
+  ('Onion'),
+  ('Vegetable oil'),
+  ('Olive oil'),
+  ('Lettuce'),
+  ('Tomato purée'),
+  ('Beef'),
+  ('White sugar'),
+  ('Brown sugar');
+
+INSERT INTO Recipe_ingredient (recipe_name, ingredient_name, quantity)
+VALUES
+  ('Pancakes', 'Egg', '1 pc'),
+  ('Pancakes', 'Milk', '1 cup'),
+  ('Pancakes', 'All-purpose flour', '1 cup'),
+  ('Pancakes', 'Salt', '1 teaspoon'),
+  ('Pancakes', 'White sugar', '2 tablespoons'),
+  ('Pancakes', 'Vegetable oil', '2 tablespoons'),
+  ('Tomato soup', 'Onion', '1 pc'),
+  ('Tomato soup', 'Olive oil', '2 tablespoon'),
+  ('Tomato soup', 'Tomato purée', '2 teaspoons');
+
+INSERT INTO Recipe_instruction (recipe_name, step_number, description)
+VALUES
+  ('Pancakes', 1, 'In a large bowl, mix flour, sugar, baking powder and salt.
+    Make a well in the center, and pour in milk, egg and oil. Mix until smooth.'),
+  ('Pancakes', 2, 'Heat a lightly oiled griddle or frying pan over medium high heat.
+    Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.
+    Brown on both sides and serve hot.'),
+  ('Tomato soup', 1, 'Prepare your vegetables'),
+  ('Tomato soup', 2, 'Spoon 2 tbsp olive oil into a large heavy-based pan and heat it over a low heat.'),
+  ('Tomato soup', 3, 'When the pan is ready, add 2 tsp of tomato purée, then stir it around so it turns the vegetables red.');
+
+INSERT INTO Postal VALUES(1234, 'Trondheim');
+
+INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'ingunn@sund.no', 23123333);
+INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES(DEFAULT, 'Trondheims gate 1', 1234, 'saasds@asdasd.no', 21312333);
+INSERT INTO Private_customer(last_name, first_name, customer_id)
+VALUES('Sund', 'Ingunn', 1);
 
 INSERT INTO Recipe (recipe_name, recipe_type, price)
 VALUES
@@ -216,7 +269,6 @@ INSERT INTO Private_customer(last_name, first_name, customer_id)
 VALUES('Sund', 'Ingunn', 1);
 
 
-
 /**
 
 ---SQL-setninger under her:
@@ -270,6 +322,7 @@ SELECT * FROM Company NATURAL JOIN Customer WHERE customer_id  = ?;
 SELECT * FROM Private_customer NATURAL JOIN Customer WHERE customer_id = ?;
 
 
+<<<<<<< HEAD
 /** Update Customer addresse
 UPDATE Customer SET address = ? AND zip = ? WHERE customer_id = ?;
 
@@ -292,3 +345,23 @@ VALUES('Sund', 'Ingunn', 12345678, 'ingunn@sund.no', 1);
 INSERT INTO Company(company_name, customer_id) VALUES('', 2);
 
 */
+/** Update Customer addresse */
+/**UPDATE Customer SET address = ? AND zip = ? WHERE customer_id = ?; **/
+
+/** Check if a zip address is in the dataabse */
+/**SELECT * FROM Postal WHERE zip = ?;**/
+
+/** Select all customer ids*/
+/**SELECT customer_id FROM Customer;*/
+
+/** Check if a phone is in use*/
+/**SELECT phone FROM Customer WHERE phone = ?;*/
+
+/**Sette inn verdi i Customer tabell: */
+/**INSERT INTO Customer(address, zip) VALUES('Trondheims gate 2', 1234);*/
+/** i private customer: */
+/**INSERT INTO Private_customer(last_name, first_name, phone, email_address, customer_id)*/
+/**VALUES('Sund', 'Ingunn', 12345678, 'ingunn@sund.no', 1);*/
+
+/** i company: */
+/**INSERT INTO Company(company_name, customer_id) VALUES('', 2);*/

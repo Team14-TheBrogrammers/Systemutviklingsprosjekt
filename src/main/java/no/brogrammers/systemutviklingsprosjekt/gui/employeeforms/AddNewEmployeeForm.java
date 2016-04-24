@@ -45,19 +45,19 @@ public class AddNewEmployeeForm extends JFrame{
         addNewEmployeeToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*String lastName = lastNameTextField.getText();
+                String lastName = lastNameTextField.getText();
                 String firstName = firstNameTextField.getText();
                 int phone = Integer.parseInt(phoneTextField.getText());
                 String email = emailTextField.getText();
                 DateConverter dateConverter = new DateConverter();
-                java.sql.Date dateOfEmployment = dateConverter.stringToSqlDate(datePickerTest.getModel().getValue().toString());
+                java.sql.Date dateOfEmployment = dateConverter.utilDateToSqlDate((java.util.Date)datePickerTest.getModel().getValue());
                 String username = usernameTextField.getText();
-                String password = passwordField1.getText();*/
+                String password = passwordField1.getText();
 
                 switch (userTypeComboBox.getSelectedIndex()) {
                     case 0:
-                        //System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
-                        System.out.println(datePickerTest.getModel().getValue().toString());
+                        System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
+                        //System.out.println(datePickerTest.getModel().getValue().toString());
                         break;
                     case 1:
                         //manageUser.registerCashier()

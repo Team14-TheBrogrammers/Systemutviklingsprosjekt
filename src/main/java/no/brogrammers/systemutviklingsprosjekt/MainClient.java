@@ -1,10 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+
 import no.brogrammers.systemutviklingsprosjekt.converter.DateConverter;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.UserConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
@@ -12,9 +9,7 @@ import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.user.Manager;
 
 import javax.swing.*;
-import java.awt.*;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 
 /**
  * Created by Ingunn on 09.03.2016.
