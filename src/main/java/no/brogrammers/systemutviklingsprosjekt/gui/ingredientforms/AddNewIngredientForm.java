@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  */
 public class AddNewIngredientForm extends JFrame{
     private JButton addNewIngredientButton;
-    private JPanel panel1;
+    private JPanel mainPanel;
     private JTextField ingredientNameTextField;
     private JTextField measurementTextField;
     private JTextField quantityTextField;
@@ -21,6 +21,7 @@ public class AddNewIngredientForm extends JFrame{
     public AddNewIngredientForm() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setContentPane(mainPanel);
         setSize(500, 350);
         setTitle("Add New Ingredient");
         setVisible(true);

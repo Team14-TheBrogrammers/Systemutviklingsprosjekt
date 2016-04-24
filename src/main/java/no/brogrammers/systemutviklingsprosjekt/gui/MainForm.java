@@ -9,6 +9,7 @@ import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.Driver
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredientForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
@@ -170,6 +171,12 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddNewRecipeForm addNewRecipeForm = new AddNewRecipeForm();
+            }
+        });
+        addNewIngredientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm();
             }
         });
     }
