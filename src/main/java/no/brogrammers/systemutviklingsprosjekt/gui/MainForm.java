@@ -6,7 +6,7 @@ import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.OrderConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
@@ -25,18 +25,13 @@ import no.brogrammers.systemutviklingsprosjekt.user.*;
 import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import static javax.swing.JOptionPane.OPTION_TYPE_PROPERTY;
 import static javax.swing.JOptionPane.showConfirmDialog;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by Knut on 19.04.16.
@@ -100,6 +95,7 @@ public class MainForm extends JFrame{
     private DriverConnection driverConnection = new DriverConnection();
     private ManageUser manageUser = new ManageUser();
     private RecipeConnection recipeConnection = new RecipeConnection();
+    private IngredientConnection ingredientConnection = new IngredientConnection();
 
     //Current user object
     private final User user;
@@ -247,7 +243,8 @@ public class MainForm extends JFrame{
         String ingredientColumns[] = {"Name", "In Stock"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
         ingredientsTable.setModel(defaultTableModel);
-        //ArrayList<Ingredient> ingredients = recipe
+        ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
+        ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
     }
 
     private void loadCustomersTab() {

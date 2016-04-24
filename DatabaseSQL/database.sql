@@ -57,6 +57,7 @@ CREATE TABLE Orders(
   address VARCHAR(30),
   zip INTEGER(4),
   take_away BOOLEAN NOT NULL,
+  other_request VARCHAR(30),
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -139,7 +140,7 @@ CREATE TABLE Frequency(
   PRIMARY KEY (frequency_id)
 );
 
-CREATE TABLE Subscriptions(
+CREATE TABLE Subscription(
   subs_id INTEGER AUTO_INCREMENT NOT NULL,
   frequency INTEGER NOT NULL,
   order_id INTEGER NOT NULL,
