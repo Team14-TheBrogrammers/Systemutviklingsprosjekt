@@ -1,11 +1,8 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 
-import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
+import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,41 +41,44 @@ public class RecipeConnection extends DatabaseConnection {
         return recipes;
     }
 
-    public boolean create(String recipeName, List<Ingredient> ingredients) {
-        if( !addRecipe(recipeName) ) {
+    public boolean create(Recipe recipe) {
+        String recipeName = recipe.getRecipeName();
+        RecipeType recipeType = recipe.getRecipeType();
+        DietType dietType = recipe.getDietType();
+        List<Ingredient> ingredients = recipe.getIngredients();
+        List<Instruction> instructions = recipe.getInstructions();
+        double price = recipe.getPrice();
+        if (!addRecipe(recipeName, recipeType, dietType, price)) {
             return false;
         }
-        if( !addIngredients(recipeName, ingredients) ) {
+        if (!addIngredients(recipeName, ingredients)) {
             return false;
         }
-        return addInstructions(recipeName);
+        return addInstructions(recipeName, instructions);
     }
 
-    private boolean addInstructions(String recipeName) {
-        return false;
-    }
-
-    private boolean addRecipe(String recipeName) {//TODO: does not work, need more than name
+    private boolean addRecipe(String recipeName, RecipeType recipeType, DietType dietType, double price) {
         try {
             PreparedStatement pStatement = getConnection().prepareStatement(
-                    "INSERT INTO recipe(recipe_name) VALUES (?)"
+                    "INSERT INTO Recipe(recipe_name, recipe_type, diet_type, price) VALUES (?,?,?,?)"
             );
             pStatement.setString(1, recipeName);
+            pStatement.setString(2, recipeType.name());
+            pStatement.setString(3, dietType.name());
+            pStatement.setDouble(4, price);
             pStatement.execute();
             return true;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e);
             return false;
         }
     }
 
-
-
     private boolean addIngredients(String recipeName, List<Ingredient> ingredients) {
         for (Ingredient ingredient : ingredients) {
             try {
                 PreparedStatement pStatement = getConnection().prepareStatement(
-                        "INSERT INTO ingredients(ingredient_name) VALUES (?)"
+                        "INSERT INTO Ingredient(ingredient_name) VALUES (?)"
                 );
                 pStatement.setString(1, ingredient.getIngredientName());
                 pStatement.execute();
@@ -88,7 +88,7 @@ public class RecipeConnection extends DatabaseConnection {
 
             try {
                 PreparedStatement pStatement = getConnection().prepareStatement(
-                        "INSERT INTO recipe_ingredients(recipe_name, ingredient_name, quantity) VALUES (?,?,?)"
+                        "INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES (?,?,?)"
                 );
                 pStatement.setString(1, recipeName);
                 pStatement.setString(2, ingredient.getIngredientName());
@@ -106,7 +106,7 @@ public class RecipeConnection extends DatabaseConnection {
         for (Instruction instruction : instructions) {
             try {
                 PreparedStatement pStatement = getConnection().prepareStatement(
-                        "INSERT INTO recipe_intructions(recipe_name, step_number, description) VALUES (?,?,?)"
+                        "INSERT INTO Recipe_instruction(recipe_name, step_number, description) VALUES (?,?,?)"
                 );
                 pStatement.setString(1, recipeName);
                 pStatement.setInt(2, instruction.getStepNumber());
@@ -115,7 +115,6 @@ public class RecipeConnection extends DatabaseConnection {
             } catch (SQLException e) {
                 System.err.println(e);
             }
-
         }
         return true;
     }
@@ -124,6 +123,7 @@ public class RecipeConnection extends DatabaseConnection {
         List<Ingredient> ingredients = new ArrayList<>();
         List<Instruction> instructions = new ArrayList<>();
         RecipeType recipeType = null;
+        DietType dietType = null;
         double price = 0;
         try {
             PreparedStatement pStatement = getConnection().prepareStatement(
@@ -152,7 +152,7 @@ public class RecipeConnection extends DatabaseConnection {
             }
 
             pStatement = getConnection().prepareStatement(
-                    "SELECT recipe_type from Recipe WHERE recipe_name = (?)"
+                    "SELECT * from Recipe WHERE recipe_name = (?)"
             );
 
             pStatement.setString(1, recipeName);
@@ -162,6 +162,7 @@ public class RecipeConnection extends DatabaseConnection {
 
             while (rs.next()) {
                 recipeType = RecipeType.valueOf(rs.getString("recipe_type"));
+                dietType = DietType.valueOf(rs.getString("diet_type"));
                 price = Double.parseDouble((rs.getString("price")));
             }
 
@@ -169,15 +170,13 @@ public class RecipeConnection extends DatabaseConnection {
             System.err.println(e);
         }
 
-        return new Recipe(recipeName, recipeType, ingredients, instructions, price);
+        return new Recipe(recipeName, recipeType, dietType, ingredients, instructions, price);
     }
 
-    public Recipe read() {
-        return null;
-    }
-
-    public boolean update() {
-        return false;
+    public boolean updateRecipe(String oldRecipeName, Recipe newRecipe) {
+        delete(oldRecipeName);
+        create(newRecipe);
+        return true;
     }
 
     public boolean delete(String recipeName) {
@@ -188,7 +187,6 @@ public class RecipeConnection extends DatabaseConnection {
             pStatement.setString(1, recipeName);
             pStatement.execute();
             return true;
-
         } catch (SQLException e) {
             System.err.println(e);
             return false;

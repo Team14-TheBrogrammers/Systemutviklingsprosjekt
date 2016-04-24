@@ -65,6 +65,7 @@ CREATE TABLE Orders(
 CREATE TABLE Recipe(
   recipe_name VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
   recipe_type ENUM ('NONE', 'VEGAN', 'VEGETARIAN', 'PESCATARIAN', 'MEATLOVER') NOT NULL,
+  diet_type ENUM ('NONE', 'LOW_FAT', 'LOW_CARB', 'LOW_CALORIE', 'GLUTEN_FREE') NOT NULL,
   price DOUBLE NOT NULL
 );
 
@@ -82,7 +83,7 @@ CREATE TABLE Stock(
 
 CREATE TABLE Recipe_ingredient (
   recipe_name VARCHAR(30) NOT NULL,
-  ingredient_name VARCHAR(30) NOT NULL,
+  ingredient_name VARCHAR(30) UNIQUE NOT NULL,
   quantity DOUBLE NOT NULL,
   PRIMARY KEY (recipe_name,ingredient_name),
   CONSTRAINT recipeIng_fk FOREIGN KEY (recipe_name)
