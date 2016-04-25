@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class Recipe {
 
-
     private String recipeName;
     private RecipeType recipeType;
     private DietType dietType;
