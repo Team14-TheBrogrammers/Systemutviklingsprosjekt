@@ -69,6 +69,7 @@ public class LoginForm extends JFrame {
         loginConnection = new LoginConnection();
         User user = loginConnection.checkLoginDetails("ingunnsu", "ingunnIzc00l");
         if (user != null) {//usernameTextField.getText(), passwordPasswordField.getText()) != null) { //TODO: Change .getText()
+            //dispose();
             MainForm mainForm = new MainForm(user);
             dispose();//TODO: gjøre noe når man lukker main: åpne dette vinduet igjen?
         } else {

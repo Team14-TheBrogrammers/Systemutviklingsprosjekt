@@ -1,5 +1,8 @@
 /* Database */
 
+DROP VIEW IF EXISTS price_view;
+DROP VIEW IF EXISTS stock_view;
+
 DROP TABLE IF EXISTS Subscriptions;
 DROP TABLE IF EXISTS Frequency;
 DROP TABLE IF EXISTS Employee;
@@ -218,8 +221,6 @@ INSERT INTO Stock(ingredient_name, quantity, measurement) VALUES ("All-purpose f
 
 
 /** Views */
-
-DROP VIEW IF EXISTS price_view;
 
 CREATE VIEW price_view AS (SELECT order_id, SUM(price*quantity) AS order_price FROM Orders NATURAL JOIN Order_recipe NATURAL JOIN Recipe GROUP BY order_id);
 

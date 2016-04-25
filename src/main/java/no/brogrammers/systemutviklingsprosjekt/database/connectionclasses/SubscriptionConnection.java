@@ -151,9 +151,10 @@ public class SubscriptionConnection extends OrderConnection {
                 int customerID = resultSet.getInt("customer_id");
                 boolean takeAway = resultSet.getBoolean("take_away");
                 String otherRequests = resultSet.getString("other_request");
+                boolean made = resultSet.getBoolean("made");
                 int subscriptionID = resultSet.getInt("subs_id");
                 int frequency = resultSet.getInt("frequency_id");
-                subscriptions.add(new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, getRecipesToOrder(orderID), subscriptionID, frequency));
+                subscriptions.add(new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, getRecipesToOrder(orderID), subscriptionID, frequency));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -212,9 +213,10 @@ public class SubscriptionConnection extends OrderConnection {
                 int customerID = resultSet.getInt("customer_id");
                 boolean isTakeaway = resultSet.getBoolean("takeaway");
                 String otherRequests = resultSet.getString("other_request");
+                boolean made = resultSet.getBoolean("made");
                 int frequency = resultSet.getInt("frequency_id");
 
-                return new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, getRecipesToOrder(orderID), subscriptionID, frequency);
+                return new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, getRecipesToOrder(orderID), subscriptionID, frequency);
             }
 
         } catch (SQLException sqle) {

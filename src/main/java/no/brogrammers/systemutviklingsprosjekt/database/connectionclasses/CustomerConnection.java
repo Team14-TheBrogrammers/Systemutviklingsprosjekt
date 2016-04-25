@@ -252,7 +252,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
                         int phone = resultSet.getInt("phone");
                         String email = resultSet.getString("email_address");
                         int companyID = resultSet.getInt("company_id");
-                        String name = resultSet.getString("name");
+                        String name = resultSet.getString("company_name");
 
                         return new Company(customerID, address, zip, email, phone, companyID, name);
                     }
@@ -323,7 +323,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
     }
 
     private boolean isCompany(int customerID) {
-        String sqlCompany = "SELECT * FROM Company WHRE customer_id = " + customerID + ";";
+        String sqlCompany = "SELECT * FROM Company WHERE customer_id = " + customerID + ";";
         return checkExists(sqlCompany);
     }
 
