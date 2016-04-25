@@ -94,6 +94,7 @@ public class MainForm extends JFrame{
     private JButton buyAllIngredientsForButton;
     private JButton buyButton;
     private JTextField buyIngredientsForDeliveriesTextField;
+    private JTable allCustomersTable;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
@@ -146,7 +147,7 @@ public class MainForm extends JFrame{
         addEmployeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+                AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm(MainForm.this);
             }
         });
         changeMyProfileDataButton.addActionListener(new ActionListener() {
@@ -186,7 +187,7 @@ public class MainForm extends JFrame{
         addNewIngredientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm();
+                AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm(MainForm.this);
             }
         });
         buyAllIngredientsForButton.addActionListener(new ActionListener() {
@@ -280,13 +281,15 @@ public class MainForm extends JFrame{
         recipeConnection.stopConnection();
     }
 
-    private void loadIngredientsTab() {
+    public void loadIngredientsTab() {
+        ingredientConnection = new IngredientConnection();
         String ingredientColumns[] = {"Name", "In Stock"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
+        NonEditTableModel defaultTableModel = new NonEditTableModel(ingredientColumns, 0);
         ingredientsTable.setModel(defaultTableModel);
         ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
         ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
         for(int i = 0; i < ingredients.size(); i++) {
+            System.out.println("asd");
             String name = ingredients.get(i).getIngredientName();
             String measurement = ingredients.get(i).getQuantity() + " " + measurements.get(i);
             Object objects[] = {name, measurement};
@@ -309,6 +312,7 @@ public class MainForm extends JFrame{
 
     private void loadEmployeesTab() {
         //Employee (user):
+        manageUser = new ManageUser();
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};
         DefaultTableModel employeesTableModel = new DefaultTableModel(employeeColumns, 0);
         employeesTable.setModel(employeesTableModel);
@@ -335,6 +339,7 @@ public class MainForm extends JFrame{
             Object objects[] = {id, lastName, firstName, phone, dateOfEmployment, pos, username, password, emailAddress};
             employeesTableModel.addRow(objects);
         }
+        manageUser.stopConnection();
     }
 
     private void loadDriverRouteTab() {
@@ -442,8 +447,8 @@ public class MainForm extends JFrame{
         //subscriptions
         loadRecipesTab();//TODO:DOES NOT WORKSSSS
         //loadCustomersTab();
-        //loadEmployeesTab();
-        //loadIngredientsTab();
+        loadEmployeesTab();
+        loadIngredientsTab();
 
         //loadCustomersTab();
 

@@ -67,7 +67,7 @@ public abstract class OrderConnection extends DatabaseConnection {
                 String insertCommand = "INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, address, zip, take_away, other_request, customer_id)\n" +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-                while(!finished) {
+                while(!finished) {//TODO:not while loop
                     try {
                         selectStatement = getConnection().prepareStatement(selectCommand);
                         resultSet = selectStatement.executeQuery();
@@ -86,11 +86,12 @@ public abstract class OrderConnection extends DatabaseConnection {
                         insertStatement.setInt(9, customerID);
 
                         for(int i = 0; i < recipes.size(); i++) {
-                            String sqlCommand = "INSERT INTO Order_recipe(order_id, recipe_name, quantity) VALUES(" + newNumber + ", " + recipes.get(i).getRecipeName() + ", " + quantity[i] + ");";
+                            String sqlCommand = "INSERT INTO Order_recipe(order_id, recipe_name, quantity) VALUES(" + newNumber + ", '" + recipes.get(i).getRecipeName() + "', " + quantity[i] + ");";
                             checkUpdated(sqlCommand);
                         }
 
                         insertStatement.executeUpdate();
+
                         finished = true;
                     } catch (SQLException sqle) {
                         writeError(sqle.getMessage());

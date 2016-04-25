@@ -1,5 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.employeeforms;
 
+import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.user.ManageUser;
@@ -29,9 +30,11 @@ public class AddNewEmployeeForm extends JFrame{
     private JPasswordField passwordField1;
     private JTextField emailTextField;
 
-    private ManageUser manageUser = new ManageUser();
+    private ManageUser manageUser; // = new ManageUser();//TODO: FIX this
+    private MainForm mainForm;
 
-    public AddNewEmployeeForm() {
+    public AddNewEmployeeForm(MainForm mainForm) {
+        this.mainForm = mainForm;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add New Employee");
