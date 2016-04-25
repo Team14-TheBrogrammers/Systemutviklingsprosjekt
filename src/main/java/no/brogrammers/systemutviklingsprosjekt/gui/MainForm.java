@@ -1,7 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.gui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserContext;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
@@ -92,8 +91,10 @@ public class MainForm extends JFrame{
     private JTable ordersTodayTable;
     private JTable deliveriesIngredientsTable;
     private JButton buyAllIngredientsForButton;
-    private JButton buyButton;
+    private JButton buyIngredientsButton;
     private JTextField buyIngredientsForDeliveriesTextField;
+    private BrowserView browserView1;
+    private BrowserView test12345;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
@@ -193,7 +194,14 @@ public class MainForm extends JFrame{
             CookConnection cookConnection = new CookConnection();
             @Override
             public void actionPerformed(ActionEvent e) {
-                cookConnection.buyTakeAwayIngredientsForYesterday();
+                cookConnection.buyAllTakeAwayIngredientsForToday();
+            }
+        });
+        buyIngredientsButton.addActionListener(new ActionListener() {
+            CookConnection cookConnection = new CookConnection();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cookConnection.buyIngredientsTwoDaysFromTomorrow();
             }
         });
     }
@@ -354,10 +362,11 @@ public class MainForm extends JFrame{
     }
 
     private void createUIComponents() {
-        //Browser browser = new Browser();
-        //test123 = new BrowserView(browser);
-        //browser.loadURL("http://www.google.com");
+        Browser browser = new Browser();
+        browserView1 = new BrowserView(browser);
+        browser.loadURL(getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
+        //browser.j
 
         loadStatisticsTab();
     }
