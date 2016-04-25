@@ -12,9 +12,9 @@ public class Order {
     private int orderID;
     private int customerID;
     private boolean paymentStatus;
-    private java.sql.Date orderDate; //Date when the order was placed:
+    private java.sql.Date orderDate;    // Date when the order was placed
     private java.sql.Date deliveryDate;
-    private double deliveryTime; //From 7 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
+    private double deliveryTime;        //From 7 to 21 (time written like: 18.45 = 18.75 and 15.30 = 15.5
     private String address;
     private int zipCode;
     private boolean takeAway;

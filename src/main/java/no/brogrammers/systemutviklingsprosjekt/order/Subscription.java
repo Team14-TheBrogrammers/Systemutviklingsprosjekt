@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 /**
  * Created by Ingunn on 22.04.2016.
+ * Subscription class
  */
+
 public class Subscription extends Order {
     private int subscriptionID;
-    private int frequency;
+    private int frequency;          // Frequency is frequencyID in the database
 
     public Subscription(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeaway, String otherRequests, ArrayList<Recipe> recipes, int subscriptionID, int frequency) {
         super(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zipCode, takeaway, otherRequests, recipes);
