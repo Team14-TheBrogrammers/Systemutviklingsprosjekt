@@ -4,9 +4,9 @@ import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -22,7 +22,7 @@ public class SelectCustomerForm extends JFrame {
     private JTable customerTable;
 
     private AddNewOrderForm addNewOrderForm;
-    private ManageCustomer manageCustomer = new ManageCustomer();
+    private ManageCustomer manageCustomer;// = new ManageCustomer();
 
     public SelectCustomerForm(final AddNewOrderForm addNewOrderForm) {
         this.addNewOrderForm = addNewOrderForm;
@@ -67,14 +67,9 @@ public class SelectCustomerForm extends JFrame {
 
     private void loadTable() {
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
-        DefaultTableModel tableModel = new DefaultTableModel(customerColumns, 0) {
-            //To make the table not editable
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+        NonEditTableModel tableModel = new NonEditTableModel(customerColumns, 0);
         customerTable.setModel(tableModel);
+        manageCustomer = new ManageCustomer();
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
         for(int i = 0; i < customers.size(); i++) {
             int id = customers.get(i).getID();
@@ -96,5 +91,6 @@ public class SelectCustomerForm extends JFrame {
             Object objects[] = {id, name, address, zipCode, emailAddress, phone};
             tableModel.addRow(objects);
         }
+        manageCustomer.stopConnection();
     }
 }

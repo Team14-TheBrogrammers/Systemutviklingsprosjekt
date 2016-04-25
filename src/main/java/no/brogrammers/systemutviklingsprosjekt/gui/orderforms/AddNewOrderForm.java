@@ -6,6 +6,7 @@ import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
@@ -42,8 +43,8 @@ public class AddNewOrderForm extends JFrame {
     private int customerID;
     private Customer customer;
 
-    private ManageOrder manageOrder = new ManageOrder();
-    private ManageCustomer manageCustomer = new ManageCustomer();
+    private ManageOrder manageOrder;// = new ManageOrder();
+    private ManageCustomer manageCustomer;// = new ManageCustomer();
 
     public AddNewOrderForm() {
         setTitle("Add New Order");
@@ -68,7 +69,9 @@ public class AddNewOrderForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DateConverter dateConverter = new DateConverter();
+                manageOrder = new ManageOrder();
                 //manageOrder.addOrder(customerID, false, dateConverter.utilDateToSqlDate((java.util.Date)deliveryDatePicker.getModel().getValue()), )
+                manageOrder.stopConnection();
             }
         });
     }
@@ -77,10 +80,10 @@ public class AddNewOrderForm extends JFrame {
         this.recipes = recipes;
         this.quantity = quantity;
         String recipeColumns2[] = {"Name", "Type", "Price for each", "Total Price", "Quantity"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(recipeColumns2, 0);
-        table1.setModel(defaultTableModel);
+        NonEditTableModel tableModel = new NonEditTableModel(recipeColumns2, 0);
+        table1.setModel(tableModel);
         for(int i = 0; i < recipes.size(); i++) {
-            addRowToTable(defaultTableModel, recipes.get(i));
+            addRowToTable(tableModel, recipes.get(i));
         }
     }
 
@@ -114,6 +117,7 @@ public class AddNewOrderForm extends JFrame {
     }
 
     public void setCustomerID(int customerID) {
+        manageCustomer = new ManageCustomer();
         this.customerID = customerID;
         String name = "";
         Customer tmp = manageCustomer.viewCustomer(customerID);
@@ -125,5 +129,6 @@ public class AddNewOrderForm extends JFrame {
             //customer = (PrivateCustomer) tmp;
         }
         customerNameAndIDLabel.setText(name + " , ID: " + tmp.getID());
+        manageCustomer.stopConnection();
     }
 }
