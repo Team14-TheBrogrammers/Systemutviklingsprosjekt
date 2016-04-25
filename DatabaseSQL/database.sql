@@ -58,6 +58,7 @@ CREATE TABLE Orders(
   zip INTEGER(4),
   take_away BOOLEAN NOT NULL,
   other_request VARCHAR(30),
+  made BOOLEAN NOT NULL,
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );
@@ -222,6 +223,7 @@ DROP VIEW IF EXISTS price_view;
 
 CREATE VIEW price_view AS (SELECT order_id, SUM(price*quantity) AS order_price FROM Orders NATURAL JOIN Order_recipe NATURAL JOIN Recipe GROUP BY order_id);
 
+CREATE VIEW stock_view AS (SELECT Stock.quantity, Stock.ingredient_name, Order_recipe.order_id FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name));
 /**
 
 ---SQL-setninger under her:

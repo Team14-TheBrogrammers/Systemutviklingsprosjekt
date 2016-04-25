@@ -99,5 +99,59 @@ public class IngredientConnection extends DatabaseConnection {
         return -2;
     }
 
+    public int changeStock(ArrayList<Ingredient> ingredients) {
+        for(int i = 0; i < ingredients.size(); i++) {
+            String quantityTmp = getIngredientQuantity(ingredients.get(i).getIngredientName());
+            double quantity;
+            if(!quantityTmp.equals("Error")) {
+                quantity = Double.parseDouble(quantityTmp);
+                double currentIngredientQuantity = ingredients.get(i).getQuantity();
+                double newQuantity = -1.0;
+                //Check if quantity is positive or negative:
+                if(currentIngredientQuantity < 0) {
+                    //is negative:
+                    newQuantity = quantity + Math.abs(currentIngredientQuantity);
+                } else if (currentIngredientQuantity > 0) {
+                    //is positive:
+                    newQuantity = quantity - Math.abs(currentIngredientQuantity);
+                }
 
+                if(newQuantity != -1.0) {
+                    changeQuantity(ingredients.get(i).getIngredientName(), newQuantity);
+                }
+            } else {
+                return -1;
+            }
+        }
+        return 1;
+    }
+
+    private String getIngredientQuantity(String ingredientName) {//TODO:fix later
+        String sqlCommand = "SELECT quantity FROM Stock WHERE ingredient_name = '" + ingredientName + "';";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                return "" + resultSet.getDouble("quantity");
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return "Error";
+    }
+
+    public int changeQuantity(String ingredientName, double newQuantity) {
+        String sqlCommand = "UPDATE Stock SET quantity = " + newQuantity + " WHERE ingredient_name = '" + ingredientName + "';";
+        if(checkUpdated(sqlCommand)) {
+            return 1;
+        }
+        return -1;
+    }
 }
