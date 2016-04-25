@@ -5,6 +5,7 @@ import com.teamdev.jxbrowser.chromium.BrowserContext;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.CookConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
@@ -13,6 +14,7 @@ import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredi
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
@@ -86,6 +88,10 @@ public class MainForm extends JFrame{
     private JTabbedPane tabbedPane5;
     private JTable privateCustomersTable;
     private JTable table2;
+    private JTabbedPane tabbedPane6;
+    private JTable ordersTodayTable;
+    private JTable table1;
+    private JButton buyAllTakeAwayButton;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
@@ -356,6 +362,30 @@ public class MainForm extends JFrame{
 
     }
 
+    private void loadCookTab() {
+        //ordersTodayTable
+        //deliveriesToday() {//order_id, delivery_date, delivery_time, take_away, other_request
+        String ta = "";
+        CookConnection cookConnection = new CookConnection();
+        String cookColumns[] = {"Order ID", "Delivery Date", "Delivery Time", "Delivery/Take Away", "Other Requests", "Make Order"};
+        NonEditTableModel nonEditTableModel = new NonEditTableModel(cookColumns, 0);
+        ordersTodayTable.setModel(nonEditTableModel);
+        ArrayList<Order> orders = cookConnection.deliveriesToday();
+        for(int i = 0; i < orders.size(); i++) {
+            int id = orders.get(i).getOrderID();
+            java.sql.Date date = orders.get(i).getDeliveryDate();
+            double time = orders.get(i).getDeliveryTime();
+            if(orders.get(i).isTakeAway()) {
+                ta = "Take Away";
+            } else {
+                ta = "Delivery";
+            }
+            String otherRequests = orders.get(i).getOtherRequests();
+            Object objects[] = {id, date, time, ta, otherRequests};
+            nonEditTableModel.addRow(objects);
+        }
+    }
+
     private void loadTabs() {
         loadOrdersTab();
         //subscriptions
@@ -365,6 +395,7 @@ public class MainForm extends JFrame{
         loadIngredientsTab();
 
         loadCustomersTab();
+        loadCookTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         //loadDriverRouteTab();
