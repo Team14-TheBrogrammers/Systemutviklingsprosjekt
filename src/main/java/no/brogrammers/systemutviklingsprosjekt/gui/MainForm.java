@@ -41,8 +41,6 @@ public class MainForm extends JFrame{
     private JTabbedPane tabbedPane1;
     private JPanel mainPanel;
     private JPanel orderTab;
-    private JTable customersTable;
-    private JScrollPane scrollPane1;
     private JButton addNewOrderButton;
     private JToolBar toolBarTest;
     private JButton button1;
@@ -86,6 +84,9 @@ public class MainForm extends JFrame{
     private ChartPanel chartPanel3;
     private ChartPanel chartPanel4;
     private JPanel mapPanel;
+    private JTabbedPane tabbedPane5;
+    private JTable table1;
+    private JTable table2;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
