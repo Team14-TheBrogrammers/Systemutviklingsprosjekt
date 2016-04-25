@@ -7,7 +7,7 @@ import java.util.Calendar;
 /**
  * Created by Ingunn on 07.04.2016.
  */
-public class DateConverter {
+public class DateConverter {//TODO:static??
 
     public java.sql.Date stringToSqlDate(String date) { //Striormang ft: yyyy-MM-dd
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//TODO: does not work?
