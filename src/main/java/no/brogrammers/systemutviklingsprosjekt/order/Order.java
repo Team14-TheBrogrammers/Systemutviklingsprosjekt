@@ -18,9 +18,10 @@ public class Order {
     private String address;
     private int zipCode;
     private boolean takeAway;
+    private String otherRequests;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, ArrayList<Recipe> recipes) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -30,6 +31,7 @@ public class Order {
         this.address = address;
         this.zipCode = zipCode;
         this.takeAway = takeAway;
+        this.otherRequests = otherRequests;
         this.recipes = recipes;
     }
 
@@ -73,6 +75,10 @@ public class Order {
         return takeAway;
     }
 
+    public String getOtherRequests() {
+        return otherRequests;
+    }
+
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
@@ -97,10 +103,14 @@ public class Order {
         this.takeAway = takeAway;
     }
 
-    public double convertTime() {
+    public void setOtherRequests(String otherRequests) {
+        this.otherRequests = otherRequests;
+    }
+
+    /*public double convertTime() {
         String time = Double.toString(deliveryTime).substring(2);
         return 2.0;
-    }
+    }*/
 
     public String toString() {
         String orderList = "";
@@ -109,6 +119,6 @@ public class Order {
         }
         String pay = paymentStatus ? "Paid" : "Not paid";
         String ta = takeAway ? "Take away" : "Delivery";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOrder: \n" + orderList;
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nOrder: \n" + orderList;
     }
 }
