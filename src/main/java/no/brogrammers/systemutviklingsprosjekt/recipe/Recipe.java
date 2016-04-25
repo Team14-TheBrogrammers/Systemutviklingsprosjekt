@@ -1,10 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.recipe;
 
 import java.util.ArrayList;
-import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 /**
  * Created by Nicole on 07.04.2016.
