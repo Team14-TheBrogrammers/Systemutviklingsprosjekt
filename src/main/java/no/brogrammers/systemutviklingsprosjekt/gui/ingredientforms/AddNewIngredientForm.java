@@ -20,11 +20,11 @@ public class AddNewIngredientForm extends JFrame{
 
     public AddNewIngredientForm() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);//TODO:legge denne senere?
         setContentPane(mainPanel);
         setSize(500, 350);
         setTitle("Add New Ingredient");
         setVisible(true);
+        setLocationRelativeTo(null);
 
         addNewIngredientButton.addActionListener(new ActionListener() {
             @Override

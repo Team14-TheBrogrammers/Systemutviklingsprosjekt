@@ -13,6 +13,7 @@ import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredi
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
@@ -90,7 +91,7 @@ public class MainForm extends JFrame{
     private JPanel incomePanel;
     private JTable able4;
 
-    //private ManageOrder manageOrder = new ManageOrder();
+    private ManageOrder manageOrder = new ManageOrder();
     private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
     private DriverConnection driverConnection = new DriverConnection();
     private ManageUser manageUser = new ManageUser();
@@ -107,8 +108,8 @@ public class MainForm extends JFrame{
     //private ArrayList<> //TODO: driverroute:?
 
     //DefaultListModels for using in tables
-    DefaultTableModel acticeOrdersTableModel;
-    DefaultTableModel previousOrdersTableModel;
+    NonEditTableModel acticeOrdersTableModel;
+    NonEditTableModel previousOrdersTableModel;
 
 
     public MainForm(User user) {
@@ -158,7 +159,7 @@ public class MainForm extends JFrame{
                 title += "?";
 
                 if(showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 1) {
-                    System.out.println("test");
+                    System.out.println("test");//TODO:// FIXME: 25.04.2016 asd
                 }
 
             }
@@ -216,18 +217,18 @@ public class MainForm extends JFrame{
     private void loadOrdersTab() {
         //Orders
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
-/*
+
         //Active orders:
-        acticeOrdersTableModel = new DefaultTableModel(orderColumns, 0);
+        acticeOrdersTableModel = new NonEditTableModel(orderColumns, 0);
         activeOrdersTable.setModel(acticeOrdersTableModel);
         ArrayList<Order> activeOrders = manageOrder.viewActiveOrders();
         addRowsToOrderTab(acticeOrdersTableModel, activeOrders);
 
         //Previous orders:
-        previousOrdersTableModel = new DefaultTableModel(orderColumns, 0);
+        previousOrdersTableModel = new NonEditTableModel(orderColumns, 0);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
-        addRowsToOrderTab(previousOrdersTableModel, previousOrders);*/
+        addRowsToOrderTab(previousOrdersTableModel, previousOrders);
     }
 
     private void loadRecipesTab() {
@@ -249,11 +250,9 @@ public class MainForm extends JFrame{
         String ingredientColumns[] = {"Name", "In Stock"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
         ingredientsTable.setModel(defaultTableModel);
-        System.out.println("test2");
         ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
         ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
         for(int i = 0; i < ingredients.size(); i++) {
-            System.out.println("test");
             String name = ingredients.get(i).getIngredientName();
             String measurement = ingredients.get(i).getQuantity() + " " + measurements.get(i);
             Object objects[] = {name, measurement};
