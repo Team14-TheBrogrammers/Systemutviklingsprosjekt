@@ -2,6 +2,7 @@ package no.brogrammers.systemutviklingsprosjekt;
 
 
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 
 import javax.swing.*;
 
@@ -19,7 +20,8 @@ public class MainClient {
 
         //test();
         setJFrameLookAndFeel();
-        LoginForm loginForm = new LoginForm();
+        //LoginForm loginForm = new LoginForm();
+        AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
         //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
         //System.out.println(new Date(Calendar.getInstance().getTimeInMillis()));
         //setJFrameLookAndFeel();

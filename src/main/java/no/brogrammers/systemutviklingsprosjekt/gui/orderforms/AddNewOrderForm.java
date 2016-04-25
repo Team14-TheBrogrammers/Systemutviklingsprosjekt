@@ -8,6 +8,7 @@ import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
+import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -15,9 +16,12 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
@@ -37,6 +41,11 @@ public class AddNewOrderForm extends JFrame {
     private JTable table1;
     private JDatePickerImpl deliveryDatePicker;
     private JLabel customerNameAndIDLabel;
+    private JTextField deliveryTimeTextField;
+    private JTextField addressTextField;
+    private JTextField zipTextField;
+    private JCheckBox orderIsTakeAwayCheckBox;
+    private JTextArea otherRequestsTextField;
 
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private int[] quantity;
@@ -53,6 +62,9 @@ public class AddNewOrderForm extends JFrame {
         setContentPane(mainPanel);
         setVisible(true);
         setLocationRelativeTo(null);
+
+        documentListeners();
+
         selectRecipesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,37 +75,64 @@ public class AddNewOrderForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SelectCustomerForm selectCustomerForm = new SelectCustomerForm(AddNewOrderForm.this);
+                DateConverter dateConverter = new DateConverter();
+
+                System.out.println(dateConverter.utilDateToSqlDate((java.util.Date)deliveryDatePicker.getModel().getValue()));
+
             }
         });
         addNewOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DateConverter dateConverter = new DateConverter();
+                //System.out.println(DateConverter.utilDateToSqlDate((java.util.Date)deliveryDatePicker.getModel().getValue()));
                 manageOrder = new ManageOrder();
-                //manageOrder.addOrder(customerID, false, dateConverter.utilDateToSqlDate((java.util.Date)deliveryDatePicker.getModel().getValue()), )
+                java.sql.Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
+                java.sql.Date deliveryDate = dateConverter.utilDateToSqlDate((java.util.Date)deliveryDatePicker.getModel().getValue());
+                double deliveryTime = Double.parseDouble(deliveryTimeTextField.getText());
+                String address = addressTextField.getText();
+
+                int zip = Integer.parseInt(zipTextField.getText());
+                boolean takeAway = orderIsTakeAwayCheckBox.isSelected();
+                String otherRequests = otherRequestsTextField.getText();
+
+                System.out.println(manageOrder.addOrder(customerID, false, currentDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, recipes, quantity));
                 manageOrder.stopConnection();
             }
         });
     }
 
+    private void documentListeners() {
+        addNewOrderButton.setEnabled(true);
+        //deliveryTimeTextField.getDocument().addDocumentListener();
+        /*deliveryTimeTextField.addActionListener(textActionListener);
+        addressTextField.addActionListener(textActionListener);
+        zipTextField.addActionListener(textActionListener);*/
+    }
+
     public void setRecipeData(ArrayList<Recipe> recipes, int[] quantity) {
         this.recipes = recipes;
         this.quantity = quantity;
-        String recipeColumns2[] = {"Name", "Type", "Price for each", "Total Price", "Quantity"};
+        String recipeColumns2[] = {"Name", "Recipe Type", "Diet Type", "Quantity", "Price for each", "Total Price"};
         NonEditTableModel tableModel = new NonEditTableModel(recipeColumns2, 0);
         table1.setModel(tableModel);
-        for(int i = 0; i < recipes.size(); i++) {
-            addRowToTable(tableModel, recipes.get(i));
-        }
+        addRowsToTable(tableModel);
     }
 
-    private void addRowToTable(DefaultTableModel defaultTableModel, Recipe recipe) {
+    private void checkEnableButton() {
 
-        String name = recipe.getRecipeName();
-        RecipeType recipeType = recipe.getRecipeType();
-        //double price = recipe.getPrice();
-        Object[] objects = {name, recipeType};//, price};//TODO: FIX
-        defaultTableModel.addRow(objects);
+    }
+
+    private void addRowsToTable(DefaultTableModel defaultTableModel) {
+        for(int i = 0; i < recipes.size(); i++) {
+            String name = recipes.get(i).getRecipeName();
+            RecipeType recipeType = recipes.get(i).getRecipeType();
+            DietType dietType = recipes.get(i).getDietType();
+            double priceEach = recipes.get(i).getPrice();
+            double totalPrice = priceEach * quantity[i];
+            Object[] objects = {name, recipeType, dietType, quantity[i], priceEach, totalPrice};//, price};//TODO: FIX
+            defaultTableModel.addRow(objects);
+        }
     }
 
     private void loadDatePicker() {
