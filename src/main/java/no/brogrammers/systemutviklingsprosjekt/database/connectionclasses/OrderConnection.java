@@ -3,10 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
-import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
+import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,13 +20,22 @@ public abstract class OrderConnection extends DatabaseConnection {
      * @param deliveryTime is the delivery time in the day, and it is correct if it is between 7.0 and 21.0
      * @return true if the delivery date is inbetween the accepted time and a correct date.
      */
-    private boolean checkCorrectOrderDates(java.sql.Date deliveryDate, double deliveryTime) { //TODO: using own class to do this?
+    private boolean checkCorrectOrderDates(java.sql.Date deliveryDate, double deliveryTime, boolean takeAway) { //TODO: using own class to do this?
         if(deliveryTime <= 21 && deliveryTime >= 7) {
             long MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
             int days = (int) ((deliveryDate.getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) / MILLISECONDS_IN_DAY);
-            if(days >= 3) {
-                System.out.println(days);
-                return true;
+            if(days < 0) {
+                return false;
+            } else {
+                if(takeAway) {
+                    if(days == 0) {
+                        return true;
+                    }
+                } else {
+                    if(days >= 3) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -49,7 +55,7 @@ public abstract class OrderConnection extends DatabaseConnection {
      * Otherwise the method return the orderID of the placed order.
      */
     public int addOrder(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, ArrayList<Recipe> recipes, int[] quantity) { // TODO: clean connection properly and do fix this code
-        if(checkCorrectOrderDates(deliveryDate, deliveryTime)) {
+        if(checkCorrectOrderDates(deliveryDate, deliveryTime, takeAway)) {
             if(checkCustomerId(customerID)) {
                 int newNumber = 1; //If there is no other numbers before this number will be set as the id
                 boolean finished = false;
@@ -220,9 +226,10 @@ public abstract class OrderConnection extends DatabaseConnection {
             resultSet = statement.executeQuery(sqlCommand);
             while (resultSet.next()) {
                 String name = resultSet.getString("recipe_name");
-                RecipeType type = RecipeType.valueOf(resultSet.getString("recipe_type"));
+                RecipeType recipeType = RecipeType.valueOf(resultSet.getString("recipe_type"));
+                DietType dietType = DietType.valueOf(resultSet.getString("diet_type"));
                 double price = resultSet.getDouble("price");
-                recipes.add(new Recipe(name, type, getIngredientsToRecipe(name), getInstructionsToRecipe(name), price)); //TODO: FIX
+                recipes.add(new Recipe(name, recipeType, dietType, getIngredientsToRecipe(name), getInstructionsToRecipe(name), price)); //TODO: FIX
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -274,9 +281,9 @@ public abstract class OrderConnection extends DatabaseConnection {
         return checkUpdated(sqlCommand);
     }
 
-    private boolean orderIsSubscription() {
+    /*private boolean orderIsSubscription() {
 
-    }
+    }*///TODO:// FIXME: 25.04.2016 asd
 
     public ArrayList<Order> getOrders(String sqlCommand) {
         ArrayList<Order> orders  = new ArrayList<Order>();

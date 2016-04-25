@@ -19,11 +19,16 @@ public abstract class UserConnection extends DatabaseConnection {
         super();
     }
 
-    /*private boolean regUser(int employeeType) {
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
-                "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
-        return checkUpdated(sqlCommand);
-    }*/
+    private int regUser(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password, int employeeType) {
+        int check = checkExistingDetails(username, phone);
+        if(check == 1) {
+            String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+                    "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + dateOfEmployment + "', " + employeeType + ", '" + username + "', '" + password + "', '" + mail + "');";
+            return checkRegistered(sqlCommand); // 1 if updated -2 if not
+        } else {
+            return check;
+        }
+    }
 
     private int checkRegistered(String command) {
         if(checkUpdated(command)) {
@@ -33,40 +38,57 @@ public abstract class UserConnection extends DatabaseConnection {
         }
     }
 
-    public int regManager(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+    private boolean phoneNumberExist(int phone) {
+        String sqlCommand = "SELECT * FROM Employee WHERE phone = " + phone + ";";
+        return checkExists(sqlCommand);
+    }
+
+    private int checkExistingDetails(String username, int phone) {
         if(usernameExists(username)) {
             return -1;
         }
-        String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
+
+        if(phoneNumberExist(phone)) {
+            return -3;
+        }
+        return 1; //ok
+    }
+
+    public int regManager(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
+        return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 1);
+        /*String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()) + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
-        return checkRegistered(sqlCommand);
+        return checkRegistered(sqlCommand);*/
     }
 
     public int regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
-        if(usernameExists(username)) {
+        return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 2);
+        /*if(usernameExists(username)) {
             return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
-        return checkRegistered(sqlCommand);
+        return checkRegistered(sqlCommand);*/
     }
 
     public int regCook(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
-        if(usernameExists(username)) {
+        return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 3);
+        /*if(usernameExists(username)) {
             return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
-        return checkRegistered(sqlCommand);
+        return checkRegistered(sqlCommand);*/
     }
 
     public int regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
-        if(usernameExists(username)) {
+        return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 4);
+        /*if(usernameExists(username)) {
             return -1;
         }
         String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
-        return checkRegistered(sqlCommand);
+        return checkRegistered(sqlCommand);*/
     }
 
     public int deleteUser(int employeeId) {
@@ -103,9 +125,18 @@ public abstract class UserConnection extends DatabaseConnection {
         return checkRegistered(sqlCommand); //change method name
     }
 
+    /**
+     * Method foor changing the phone name for a user with a given userID.
+     * @param userID
+     * @param phone
+     * @return -1 if not a user exist with the given userID. Return -3 if the phone number already exist. Return -2 if//TODO:FIX
+     */
     public int changePhone(int userID, int phone) {
         if(!(userExists(userID))) {
           return -1;
+        }
+        if(phoneNumberExist(phone)) {
+            return -3;
         }
         String sqlCommand = "UPDATE Employee SET phone = " + phone + " WHERE emp_id = " + userID + ";";
         return checkRegistered(sqlCommand); //change method name

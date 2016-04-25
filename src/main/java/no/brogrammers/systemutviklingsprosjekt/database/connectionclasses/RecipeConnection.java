@@ -120,8 +120,8 @@ public class RecipeConnection extends DatabaseConnection {
     }
 
     public Recipe read(String recipeName) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        List<Instruction> instructions = new ArrayList<>();
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ArrayList<Instruction> instructions = new ArrayList<>();
         RecipeType recipeType = null;
         DietType dietType = null;
         double price = 0;
