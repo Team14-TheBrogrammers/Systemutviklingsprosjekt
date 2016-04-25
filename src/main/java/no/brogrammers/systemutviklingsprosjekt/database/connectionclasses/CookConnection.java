@@ -1,6 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 
 import java.sql.PreparedStatement;
@@ -11,15 +12,18 @@ import java.util.ArrayList;
 /**
  * Created by Ingunn on 25.04.2016.
  */
-public class CookConnection extends DatabaseConnection {
+public class CookConnection extends OrderConnection {
 
+
+
+    /*
     //SELECT Stock.ingredient_name, Order_recipe.order_id, (Stock.quantity - (Recipe_ingredient.quantity*Order_recipe.quantity)) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND delivery_date >= (CURDATE() + INTERVAL 1 DAY) AND delivery_date <= (CURDATE() + INTERVAL 3 DAY) ORDER BY ingredient_name;
     public int removeIngredientsForDeliveriesToday() {
         String sqlCommand = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Stock.quantity - (Recipe_ingredient.quantity*Order_recipe.quantity)) AS sum \" +\n" +
                 "                \"FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) \" +\n" +
                 "                \"JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) \" +\n" +
                 "                \"WHERE take_away = 0 AND delivery_date >= (CURDATE() + INTERVAL 1 DAY) AND delivery_date <= (CURDATE() + INTERVAL 3 DAY) ORDER BY ingredient_name;";
-    }
+    }*/
 
     //SELECT Stock.ingredient_name, Order_recipe.order_id, (Stock.quantity - (Recipe_ingredient.quantity*Order_recipe.quantity)) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND delivery_date >= (CURDATE() + INTERVAL 1 DAY) AND delivery_date <= (CURDATE() + INTERVAL 3 DAY) ORDER BY ingredient_name;
     //CREATE VIEW stock_view AS (SELECT Stock.quantity, Stock.ingredient_name, Order_recipe.order_id FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name));
@@ -90,6 +94,11 @@ public class CookConnection extends DatabaseConnection {
             getCleaner().closeResultSet(resultSet);
         }
         return -1;
+    }
+
+    public ArrayList<Order> deliveriesToday() {//order_id, delivery_date, delivery_time, take_away, other_request
+        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE();";
+        return getOrders(sqlCommand);
     }
 
     /*public makeTakeAway() {

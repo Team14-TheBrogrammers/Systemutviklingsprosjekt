@@ -19,9 +19,10 @@ public class Order {
     private int zipCode;
     private boolean takeAway;
     private String otherRequests;
+    private boolean made;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, ArrayList<Recipe> recipes) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, boolean made, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -32,6 +33,7 @@ public class Order {
         this.zipCode = zipCode;
         this.takeAway = takeAway;
         this.otherRequests = otherRequests;
+        this.made = made;
         this.recipes = recipes;
     }
 
@@ -79,6 +81,10 @@ public class Order {
         return otherRequests;
     }
 
+    public boolean isMade() {
+        return made;
+    }
+
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
@@ -107,6 +113,10 @@ public class Order {
         this.otherRequests = otherRequests;
     }
 
+    public void setMade(boolean made) {
+        this.made = made;
+    }
+
     /*public double convertTime() {
         String time = Double.toString(deliveryTime).substring(2);
         return 2.0;
@@ -119,6 +129,7 @@ public class Order {
         }
         String pay = paymentStatus ? "Paid" : "Not paid";
         String ta = takeAway ? "Take away" : "Delivery";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nOrder: \n" + orderList;
+        String md = made ? "Made" : "Not Made";
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nMade: " + made + "\nOrder: \n" + orderList;
     }
 }
