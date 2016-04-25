@@ -1,6 +1,7 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
+import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 
@@ -12,8 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Ingunn on 25.04.2016.
  */
-public class CookConnection extends OrderConnection {
-
+public class CookConnection extends IngredientConnection {
 
 
     /*
@@ -59,10 +59,10 @@ public class CookConnection extends OrderConnection {
         return ingredients;
     }
 
-    public int buyTakeAwayIngredients() {
+    public int buyTakeAwayIngredientsForYesterday() {
         double quantity = -1;
         String ingredientName = "";
-        String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND delivery_date = CURDATE() ORDER BY ingredient_name;";
+        String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND delivery_date = (CURDATE() - INTERVAL 1 DAY) ORDER BY ingredient_name;";
         String sqlUpdate = "";
         PreparedStatement selectStatement = null;
         PreparedStatement updateStatement = null;
@@ -98,12 +98,56 @@ public class CookConnection extends OrderConnection {
 
     public ArrayList<Order> deliveriesToday() {//order_id, delivery_date, delivery_time, take_away, other_request
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE();";
-        return getOrders(sqlCommand);
+        ManageOrder manageOrder = new ManageOrder();
+        ArrayList<Order> orders = manageOrder.getOrders(sqlCommand);
+        manageOrder.stopConnection();
+        return orders;
     }
 
-    /*public makeTakeAway() {
+    public ArrayList<Order> takeAwayToday() {
+        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND take_away = 1;";
+        ManageOrder manageOrder = new ManageOrder();
+        ArrayList<Order> orders = manageOrder.getOrders(sqlCommand);
+        manageOrder.stopConnection();
+        return orders;
+    }
 
-    }*/
+    public ArrayList<Ingredient> getIngredients(String sqlCommand) {
+        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+        PreparedStatement selectStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            selectStatement = getConnection().prepareStatement(sqlCommand);
+            resultSet = selectStatement.executeQuery();
+            while (resultSet.next()) {
+                String ingredientName = resultSet.getString("ingredient_name");
+                double quantity = resultSet.getDouble("sum");
+
+                ingredients.add(new Ingredient(ingredientName, quantity));
+            }
+            return ingredients;
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closePreparedStatement(selectStatement);
+            getCleaner().closeResultSet(resultSet);
+        }
+        return ingredients;
+    }
+
+
+    public int makeOrder(int orderID) {
+        String sqlCommand = "SELECT Stock.ingredient_name, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
+        return changeStock(getIngredients(sqlCommand));
+    }
+
+    public int buyIngredientsTakeAway(int orderID) { // - before sum to work with changeStock method
+        String sqlCommand = "SELECT Stock.ingredient_name, Order_recipe.order_id, -(Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
+        return changeStock(getIngredients(sqlCommand));
+    }
 
     /*public int buyBunch() {
         String sqlCommandSelect = "SELECT quantity+100 FROM Stock;";

@@ -73,7 +73,7 @@ public class MainForm extends JFrame{
     private JTable recipeTable;
     private JButton addRecipeButton;
     private JTabbedPane tabbedPane4;
-    private JTable table3;
+    private JTable takeAwayTable;
     private JButton addNewIngredientButton;
     private JTable ingredientsTable;
     private JButton deleteSelectedIngredientSButton;
@@ -90,8 +90,10 @@ public class MainForm extends JFrame{
     private JTable table2;
     private JTabbedPane tabbedPane6;
     private JTable ordersTodayTable;
-    private JTable table1;
-    private JButton buyAllTakeAwayButton;
+    private JTable deliveriesIngredientsTable;
+    private JButton buyAllIngredientsForButton;
+    private JButton buyButton;
+    private JTextField buyIngredientsForDeliveriesTextField;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
@@ -185,6 +187,13 @@ public class MainForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm();
+            }
+        });
+        buyAllIngredientsForButton.addActionListener(new ActionListener() {
+            CookConnection cookConnection = new CookConnection();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cookConnection.buyTakeAwayIngredientsForYesterday();
             }
         });
     }
@@ -399,8 +408,32 @@ public class MainForm extends JFrame{
                 ta = "Delivery";
             }
             String otherRequests = orders.get(i).getOtherRequests();
-            Object objects[] = {id, date, time, ta, otherRequests};
+            Object objects[] = {id, date, time, ta, otherRequests, true};
             nonEditTableModel.addRow(objects);
+        }
+
+        String cookColumns2[] = {"Order ID", "Delivery Date", "Delivery Time", "Other Requests", "Buy Ingredients"};
+        NonEditTableModel nonEditTableModel2 = new NonEditTableModel(cookColumns2, 0);
+        takeAwayTable.setModel(nonEditTableModel2);
+        ArrayList<Order> orders2 = cookConnection.takeAwayToday();
+        for(int i = 0; i < orders2.size(); i++) {
+            int id = orders2.get(i).getOrderID();
+            java.sql.Date date = orders2.get(i).getDeliveryDate();
+            double time = orders2.get(i).getDeliveryTime();
+            String otherRequests = orders2.get(i).getOtherRequests();
+            Object objects[] = {id, date, time, otherRequests};
+            nonEditTableModel2.addRow(objects);
+        }
+
+        String cookColumns3[] = {"Ingredient Name", "Quantity missing"};
+        NonEditTableModel nonEditTableModel3 = new NonEditTableModel(cookColumns3, 0);
+        deliveriesIngredientsTable.setModel(nonEditTableModel3);
+        ArrayList<Ingredient> ingredients = cookConnection.missingIngredientsTwoDaysFromTomorrow();
+        for (int i = 0; i < ingredients.size(); i++) {
+            String name = ingredients.get(i).getIngredientName();
+            double quantity = -(ingredients.get(i).getQuantity());
+            Object objects[] = {name, quantity};
+            nonEditTableModel3.addRow(objects);
         }
     }
 
@@ -413,7 +446,9 @@ public class MainForm extends JFrame{
         //loadIngredientsTab();
 
         //loadCustomersTab();
-        //loadCookTab();
+
+        loadCookTab();
+
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         //loadDriverRouteTab();
