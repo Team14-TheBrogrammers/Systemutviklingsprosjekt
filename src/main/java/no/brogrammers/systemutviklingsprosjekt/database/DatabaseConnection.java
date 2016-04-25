@@ -73,6 +73,10 @@ public abstract class DatabaseConnection {
      */
     public boolean writeError(String message) {
         try {
+            if(message == null) {
+                System.out.println("Message was null");
+                return false;
+            }
             FileWriter fileWriter = new FileWriter(errorFile, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(message);

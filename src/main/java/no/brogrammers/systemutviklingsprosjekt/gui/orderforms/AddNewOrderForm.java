@@ -1,5 +1,9 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
+import no.brogrammers.systemutviklingsprosjekt.customer.Company;
+import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
+import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
+import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
@@ -30,18 +34,21 @@ public class AddNewOrderForm extends JFrame {
     private JPanel recipePanel;
     private JPanel customerPanel;
     private JTable table1;
-    private JTextField textField1;
     private JDatePickerImpl deliveryDatePicker;
+    private JLabel customerNameAndIDLabel;
 
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private int[] quantity;
     private int customerID;
+    private Customer customer;
+
     private ManageOrder manageOrder = new ManageOrder();
+    private ManageCustomer manageCustomer = new ManageCustomer();
 
     public AddNewOrderForm() {
         setTitle("Add New Order");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(400, 450);
+        setSize(600, 450);
         setContentPane(mainPanel);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -108,5 +115,15 @@ public class AddNewOrderForm extends JFrame {
 
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
+        String name = "";
+        Customer tmp = manageCustomer.viewCustomer(customerID);
+        if(tmp instanceof Company) {
+            name = ((Company) tmp).getName();
+            //customer = (Company) tmp;
+        } else if(tmp instanceof PrivateCustomer) {
+            name = ((PrivateCustomer) tmp).getFirstName() + " " + ((PrivateCustomer) tmp).getLastName();
+            //customer = (PrivateCustomer) tmp;
+        }
+        customerNameAndIDLabel.setText(name + " , ID: " + tmp.getID());
     }
 }

@@ -1,6 +1,8 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
+import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
@@ -27,7 +29,7 @@ public class SelectRecipeForm extends JFrame {
         addNewOrderForm  = asdf;
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(720, 500);
+        setSize(820, 500);
         setTitle("test");
         setContentPane(panel1);
         setLocationRelativeTo(null);
@@ -39,7 +41,9 @@ public class SelectRecipeForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] tableIndexes = allRecipesTable.getSelectedRows();
                 for(int i = 0; i < tableIndexes.length; i++) {
-                    addRowToTable(defaultTableMode4, recipes.get(tableIndexes[i]));
+                    Recipe recipe = recipes.get(tableIndexes[i]);
+
+                    //addRowToTable(defaultTableMode4, recipes.get(tableIndexes[i]));//bruk annen måte siden det er total pris osv her
                 }
             }
         });
@@ -64,15 +68,11 @@ public class SelectRecipeForm extends JFrame {
     ArrayList<Recipe> recipes;
 
     private void addRowToTable(DefaultTableModel defaultTableModel, Recipe recipe) {
-        /*String name = recipes.get(i).getRecipeName();
-        RecipeType recipeType = recipes.get(i).getRecipeType();
-        double price = recipes.get(i).getPrice();
-        Object[] objects = {name, recipeType, price};
-        defaultTableModel3.addRow(objects);*/
         String name = recipe.getRecipeName();
         RecipeType recipeType = recipe.getRecipeType();
+        DietType dietType = recipe.getDietType();
         double price = recipe.getPrice();
-        Object[] objects = {name, recipeType, price};
+        Object[] objects = {name, recipeType, dietType, price};
         defaultTableModel.addRow(objects);
     }
 
@@ -80,15 +80,15 @@ public class SelectRecipeForm extends JFrame {
         //Load Recipe table:
         RecipeConnection recipeConnection = new RecipeConnection();
         recipes = recipeConnection.viewAllRecipes();
-        String recipeColumns[] = {"Name", "Type", "Price"};
-        DefaultTableModel defaultTableModel3 = new DefaultTableModel(recipeColumns, 0);
-        allRecipesTable.setModel(defaultTableModel3);
+        String recipeColumns[] = {"Name", "Recipe Type", "Diet Type", "Price"};
+        NonEditTableModel allRecipesTableModel = new NonEditTableModel(recipeColumns, 0);
+        allRecipesTable.setModel(allRecipesTableModel);
         for(int i = 0; i < recipes.size(); i++) {
-            addRowToTable(defaultTableModel3, recipes.get(i));
+            addRowToTable(allRecipesTableModel, recipes.get(i));
         }
 
         //Set modeltable for Recipe table:
-        String recipeColumns2[] = {"Name", "Type", "Price for each", "Total Price", "Quantity"};
+        String recipeColumns2[] = {"Name", "Recipe Type", "Diet Type", "Price for each", "Total Price", "Quantity"};
         defaultTableMode4 = new DefaultTableModel(recipeColumns2, 0);
         orderRecipesTable.setModel(defaultTableMode4);
 

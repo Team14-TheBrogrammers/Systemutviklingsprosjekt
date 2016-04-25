@@ -39,7 +39,9 @@ public class SelectCustomerForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(customerTable.getSelectedRowCount() == 1) {
-                    addNewOrderForm.setCustomerID(2);//TODO: FIX
+                    int selectedCustomerID = (int) customerTable.getValueAt(customerTable.getSelectedRow(), 0);
+                    addNewOrderForm.setCustomerID(selectedCustomerID);
+                    dispose();
                 }
             }
         });

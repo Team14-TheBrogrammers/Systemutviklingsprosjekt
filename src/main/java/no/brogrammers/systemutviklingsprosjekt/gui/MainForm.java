@@ -31,9 +31,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.util.ArrayList;
 
+//import static java.awt.event.KeyEvent.VK_ENTER;
 import static javax.swing.JOptionPane.showConfirmDialog;
 
 /**
@@ -44,8 +46,6 @@ public class MainForm extends JFrame{
     private JPanel mainPanel;
     private JPanel orderTab;
     private JButton addNewOrderButton;
-    private JToolBar toolBarTest;
-    private JButton button1;
     private JPanel driverRouteTab;
     private JPanel statisticsTab;
     private JPanel aboutTab;
@@ -96,12 +96,12 @@ public class MainForm extends JFrame{
     private JPanel incomePanel;
     private JTable able4;
 
-    private ManageOrder manageOrder = new ManageOrder();
-    private ManageCustomer manageCustomer = new ManageCustomer(); //TODO: How to use interfaces instead of these?
-    private DriverConnection driverConnection = new DriverConnection();
-    private ManageUser manageUser = new ManageUser();
-    private RecipeConnection recipeConnection = new RecipeConnection();
-    private IngredientConnection ingredientConnection = new IngredientConnection();
+    private ManageOrder manageOrder;// = new ManageOrder();
+    private ManageCustomer manageCustomer;// = new ManageCustomer(); //TODO: How to use interfaces instead of these?
+    private DriverConnection driverConnection;// = new DriverConnection();
+    private ManageUser manageUser;// = new ManageUser();
+    private RecipeConnection recipeConnection;// = new RecipeConnection();
+    private IngredientConnection ingredientConnection;// = new IngredientConnection();
 
     //Current user object
     private final User user;
@@ -125,6 +125,8 @@ public class MainForm extends JFrame{
         setTitle("Healty Catering Ltd.");
         setLocationRelativeTo(null);
         setVisible(true);
+
+        loadTabMenu();
 
         loadTabs();
         addOrderButton.addActionListener(new ActionListener() {
@@ -187,6 +189,15 @@ public class MainForm extends JFrame{
         });
     }
 
+    private void loadTabMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("test123");
+        menu.setMnemonic(KeyEvent.VK_ALT);
+        menuBar.add(menu);
+        //Add subItems etc.
+        setJMenuBar(menuBar);
+    }
+
     public User getUser() {
         return user;
     }
@@ -220,6 +231,9 @@ public class MainForm extends JFrame{
     }
 
     private void loadOrdersTab() {
+        //Start Connection for ManageOrder object
+        manageOrder = new ManageOrder();
+
         //Orders
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
 
@@ -234,9 +248,14 @@ public class MainForm extends JFrame{
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
         addRowsToOrderTab(previousOrdersTableModel, previousOrders);
+
+        manageOrder.stopConnection();
     }
 
     private void loadRecipesTab() {
+        //asd
+        recipeConnection = new RecipeConnection();
+
         //Recipes:
         String recipeColumns[] = {"Name", "Type", "Price"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(recipeColumns, 0);
@@ -249,6 +268,7 @@ public class MainForm extends JFrame{
             Object objects[] = {name, recipeType, price};
             defaultTableModel.addRow(objects);
         }
+        recipeConnection.stopConnection();
     }
 
     private void loadIngredientsTab() {
@@ -390,10 +410,10 @@ public class MainForm extends JFrame{
         loadRecipesTab();//TODO:DOES NOT WORKSSSS
         //loadCustomersTab();
         //loadEmployeesTab();
-        loadIngredientsTab();
+        //loadIngredientsTab();
 
-        loadCustomersTab();
-        loadCookTab();
+        //loadCustomersTab();
+        //loadCookTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         //loadDriverRouteTab();
