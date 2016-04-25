@@ -37,14 +37,22 @@ public class SelectRecipeForm extends JFrame {
         addRecipesToOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(allRecipesTable.getSelectedRowCount());
-                addRowToTable(defaultTableMode4, recipes.get(allRecipesTable.getSelectedRowCount() - 1));
+                int[] tableIndexes = allRecipesTable.getSelectedRows();
+                for(int i = 0; i < tableIndexes.length; i++) {
+                    addRowToTable(defaultTableMode4, recipes.get(tableIndexes[i]));
+                }
             }
         });
         completeChoosingRecipesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                for(int i = 0; i < orderRecipesTable.getRowCount(); i++) {
+                    //recipes.
+                }
+
                 int[] asd = new int[recipes.size()];
+                //System.out.println();
+
                 addNewOrderForm.setRecipeData(recipes, new int[]{1});
                 dispose();
 

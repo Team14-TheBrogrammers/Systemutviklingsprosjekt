@@ -47,7 +47,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="488ce" class="javax.swing.JTable" binding="table2" default-binding="true">
+                  <component id="488ce" class="javax.swing.JTable" binding="newOrderRecipesTable">
                     <constraints/>
                     <properties/>
                   </component>
@@ -60,7 +60,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="39563" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="39563" class="javax.swing.JTable" binding="allRecipesTable">
                     <constraints/>
                     <properties/>
                   </component>

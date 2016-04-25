@@ -1,14 +1,21 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Properties;
 
 
 /**
@@ -24,6 +31,7 @@ public class AddNewOrderForm extends JFrame {
     private JPanel customerPanel;
     private JTable table1;
     private JTextField textField1;
+    private JDatePickerImpl deliveryDatePicker;
 
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     private int[] quantity;
@@ -52,7 +60,8 @@ public class AddNewOrderForm extends JFrame {
         addNewOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //manageOrder.addOrder(customerID, payment)
+                DateConverter dateConverter = new DateConverter();
+                //manageOrder.addOrder(customerID, false, dateConverter.utilDateToSqlDate((java.util.Date)deliveryDatePicker.getModel().getValue()), )
             }
         });
     }
@@ -75,6 +84,26 @@ public class AddNewOrderForm extends JFrame {
         //double price = recipe.getPrice();
         Object[] objects = {name, recipeType};//, price};//TODO: FIX
         defaultTableModel.addRow(objects);
+    }
+
+    private void loadDatePicker() {
+        UtilDateModel utilDateModel = new UtilDateModel();
+        Calendar calendar = Calendar.getInstance();
+        utilDateModel.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+        utilDateModel.setSelected(true);
+
+        Properties properties = new Properties();
+        properties.setProperty("text.today", "Year");
+        properties.setProperty("text.month", "Month");
+        properties.setProperty("text.year", "Year");
+
+        JDatePanelImpl deliveryDatePanel = new JDatePanelImpl(utilDateModel, properties);
+
+        deliveryDatePicker = new JDatePickerImpl(deliveryDatePanel, new DatePickerFormatter());
+    }
+
+    private void createUIComponents() {
+        loadDatePicker();
     }
 
     public void setCustomerID(int customerID) {
