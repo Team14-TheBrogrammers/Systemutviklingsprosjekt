@@ -71,7 +71,6 @@ public class MainForm extends JFrame{
     private JTable recipeTable;
     private JButton addRecipeButton;
     private JTabbedPane tabbedPane4;
-    private JTable privateCustomerTable;
     private JTable table3;
     private JButton addNewIngredientButton;
     private JTable ingredientsTable;
@@ -85,7 +84,7 @@ public class MainForm extends JFrame{
     private ChartPanel chartPanel4;
     private JPanel mapPanel;
     private JTabbedPane tabbedPane5;
-    private JTable table1;
+    private JTable privateCustomersTable;
     private JTable table2;
     private BrowserView testassdasd;
     private JPanel incomePanel;
@@ -266,7 +265,7 @@ public class MainForm extends JFrame{
         //Customer tab:
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        privateCustomerTable.setModel(defaultTableModel);
+        privateCustomersTable.setModel(defaultTableModel);
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
         for(int i = 0; i < customers.size(); i++) {
             int id = customers.get(i).getID();

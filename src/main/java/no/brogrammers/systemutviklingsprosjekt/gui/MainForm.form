@@ -268,7 +268,7 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <component id="947c8" class="javax.swing.JTable" binding="table1" default-binding="true">
+                              <component id="947c8" class="javax.swing.JTable" binding="privateCustomersTable">
                                 <constraints/>
                                 <properties/>
                               </component>
