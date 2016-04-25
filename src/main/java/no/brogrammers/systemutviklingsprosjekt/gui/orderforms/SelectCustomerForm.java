@@ -28,7 +28,7 @@ public class SelectCustomerForm extends JFrame {
         this.addNewOrderForm = addNewOrderForm;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(500, 200);
+        setSize(500, 450);
         setTitle("Choose Customer for the Order");
         setVisible(true);
         setLocationRelativeTo(null);
@@ -49,18 +49,24 @@ public class SelectCustomerForm extends JFrame {
             @Override
             public void focusGained(FocusEvent e) {
                 super.focusGained(e);
-                chooseCustomerButton.setEnabled(true);
+                System.out.println(customerTable.getSelectedRowCount());
+                /*if(customerTable.getSelectedRowCount() == 0) {
+                    chooseCustomerButton.setEnabled(false);
+                } else {
+                    chooseCustomerButton.setEnabled(true);
+                }*/
             }
         });
         customerTable.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if(customerTable.getSelectedRowCount() == 0) {
-                    System.out.println("test");
+                System.out.println(customerTable.getSelectedRowCount());//TODO:FIX THIS SHIT
+                /*if(customerTable.getSelectedRowCount() == 0) {
+                    chooseCustomerButton.setEnabled(false);
                 } else {
-                    System.out.println("test2");
-                }
+                    chooseCustomerButton.setEnabled(true);
+                }*/
             }
         });
     }
@@ -73,11 +79,6 @@ public class SelectCustomerForm extends JFrame {
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
         for(int i = 0; i < customers.size(); i++) {
             int id = customers.get(i).getID();
-            /*if(customers.get(i) instanceof PrivateCustomer) {
-                id = ((PrivateCustomer) customers.get(i)).getID();
-            } else {
-                id = ((Company) customers.get(i)).getID();
-            }*/
             String name = "";
             if(customers.get(i) instanceof PrivateCustomer) {
                 name = ((PrivateCustomer) customers.get(i)).getFirstName() + " " + ((PrivateCustomer) customers.get(i)).getLastName();
