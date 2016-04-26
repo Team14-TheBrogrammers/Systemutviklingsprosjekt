@@ -100,11 +100,11 @@ INSERT INTO Company(company_name, customer_id) VALUES
 ('VG', 5),
 ('Company.no', 7);
 
-INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, address, zip, take_away, other_request, made, customer_id) VALUES
-(1, '2015-03-12', '2015-03-16', 14.5, 'Prinsens gate 6', 7011, 0, 'Warm food.', 1, 3),
-(1, '2015-08-12', '2015-08-16', 11.5, 'Prinsens gate 6', 7011, 0, NULL, 1, 2),
-(1, '2016-04-20', '2016-04-23', 7, 'Olav Tryggvasons gate 33', 7011, 0, NULL, 1, 6),
-(1, '2016-04-21', '2016-04-27', 16, 'Lindemans gate 2', 7052, 0, 'Local food.', 0, 10),
-(1, '2016-04-21', '2016-04-26', 19.5, 'Søndre gate 2', 7011, 0, 'Fast delivery.', 0, 1),
-(1, '2016-04-25', '2016-04-25', 9, 'Sverdrups vei 33', 7020, 1, NULL, 0, 2),
-(1, '2016-04-21', '2016-04-26', 10.5, 'Lindemans gate 5', 7052, 0, NULL, 0, 3);
+INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, address, zip, take_away, other_request, made, ingredients_purchased, delivered, customer_id) VALUES
+(1, '2015-03-12', '2015-03-16', 14.5, 'Prinsens gate 6', 7011, 0, 'Warm food.', 1, 1, 1, 3),
+(1, '2015-08-12', '2015-08-16', 11.5, 'Prinsens gate 6', 7011, 0, NULL, 1, 1, 1, 2),
+(1, '2016-04-20', '2016-04-23', 7, 'Olav Tryggvasons gate 33', 7011, 0, NULL, 1, 1, 1, 6),
+(0, '2016-04-21', '2016-04-27', 16, 'Lindemans gate 2', 7052, 0, 'Local food.', 0, 1, 0, 10),
+(0, '2016-04-21', '2016-04-26', 19.5, 'Søndre gate 2', 7011, 0, 'Fast delivery.', 0, 0, 0, 1),
+(1, '2016-04-25', '2016-04-25', 9, 'Sverdrups vei 33', 7020, 1, NULL, 0, 1, 0, 2),
+(1, '2016-04-21', '2016-04-26', 10.5, 'Lindemans gate 5', 7052, 0, NULL, 0, 0, 0, 3);
