@@ -26,6 +26,10 @@ public class AddNewRecipeForm extends JFrame {
     private JTextArea textArea1;
     private JButton addInstructionButton;
     private JButton deleteInstructionButton;
+    private JTable table1;
+    private JTable table2;
+    private JButton addIngredientButton;
+    private JButton removeIngredientButton;
 
     RecipeConnection recipeConnection = new RecipeConnection();
     private ArrayList<String> instructions = new ArrayList<String>();
@@ -65,7 +69,7 @@ public class AddNewRecipeForm extends JFrame {
 
     private void setUpTable() {
         String columns[] = {"Step Number", "Description"};
-        tableModel = new NonEditTableModel(columns, 0);
+        tableModel = new NonEditTableModel(columns);
         instructionTable.setModel(tableModel);
     }
 
@@ -78,10 +82,16 @@ public class AddNewRecipeForm extends JFrame {
 
     private void reloadTable() {//load table
         String columns[] = {"Step Number", "Description"};
-        tableModel = new NonEditTableModel(columns, 0);
+        tableModel = new NonEditTableModel(columns);
         instructionTable.setModel(tableModel);
         for(int i = 0; i < instructions.size(); i++) {
             addInstructionToTable(i, instructions.get(i));
         }
+    }
+
+    NonEditTableModel ingredientTableModel;
+    private void loadIngredientTable() {
+        String ingredientColumns[] = {"Name", ""};
+        ingredientTableModel = new NonEditTableModel(ingredientColumns);
     }
 }

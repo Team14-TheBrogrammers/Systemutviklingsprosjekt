@@ -265,13 +265,13 @@ public class MainForm extends JFrame{
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
 
         //Active orders:
-        acticeOrdersTableModel = new NonEditTableModel(orderColumns, 0);
+        acticeOrdersTableModel = new NonEditTableModel(orderColumns);
         activeOrdersTable.setModel(acticeOrdersTableModel);
         ArrayList<Order> activeOrders = manageOrder.viewActiveOrders();
         addRowsToOrderTab(acticeOrdersTableModel, activeOrders);
 
         //Previous orders:
-        previousOrdersTableModel = new NonEditTableModel(orderColumns, 0);
+        previousOrdersTableModel = new NonEditTableModel(orderColumns);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
         addRowsToOrderTab(previousOrdersTableModel, previousOrders);
@@ -286,7 +286,7 @@ public class MainForm extends JFrame{
 
         //Recipes:
         String recipeColumns[] = {"Name", "Type", "Price"};
-        recipeTableModel = new NonEditTableModel(recipeColumns, 0);
+        recipeTableModel = new NonEditTableModel(recipeColumns);
         recipeTable.setModel(recipeTableModel);
         ArrayList<Recipe> recipes = recipeConnection.viewAllRecipes();
         for(int i = 0; i < recipes.size(); i++) {
@@ -303,7 +303,7 @@ public class MainForm extends JFrame{
     public void loadIngredientsTab() {
         ingredientConnection = new IngredientConnection();
         String ingredientColumns[] = {"Name", "In Stock"};
-        ingredientTableModel = new NonEditTableModel(ingredientColumns, 0);
+        ingredientTableModel = new NonEditTableModel(ingredientColumns);
         ingredientsTable.setModel(ingredientTableModel);
         ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
         ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
@@ -328,7 +328,7 @@ public class MainForm extends JFrame{
         manageCustomer = new ManageCustomer();
 
         //All customers tab:
-        allCustomersTableModel = new NonEditTableModel(allCustomersColumns, 0);
+        allCustomersTableModel = new NonEditTableModel(allCustomersColumns);
         allCustomersTable.setModel(allCustomersTableModel);
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
         for(int i = 0; i < customers.size(); i++) {
@@ -350,7 +350,7 @@ public class MainForm extends JFrame{
 
 
         //Private Customers tab:
-        privateCustomerTableModel = new NonEditTableModel(privateCustomerColumns, 0);
+        privateCustomerTableModel = new NonEditTableModel(privateCustomerColumns);
         privateCustomersTable.setModel(privateCustomerTableModel);
         ArrayList<PrivateCustomer> privateCustomers = manageCustomer.viewAllPrivateCustomers();
         for(int i = 0; i < privateCustomers.size(); i++) {
@@ -368,7 +368,7 @@ public class MainForm extends JFrame{
         }
 
         //Companies tab:
-        companiesTableModel = new NonEditTableModel(companyColumns, 0);
+        companiesTableModel = new NonEditTableModel(companyColumns);
         allCompaniesTable.setModel(companiesTableModel);
         ArrayList<Company> companies = manageCustomer.viewAllCompanies();
         for(int i = 0; i < companies.size(); i++) {
@@ -535,7 +535,7 @@ public class MainForm extends JFrame{
         }
 
         String cookColumns3[] = {"Ingredient Name", "Quantity missing"};
-        NonEditTableModel nonEditTableModel3 = new NonEditTableModel(cookColumns3, 0);
+        NonEditTableModel nonEditTableModel3 = new NonEditTableModel(cookColumns3);
         deliveriesIngredientsTable.setModel(nonEditTableModel3);
         ArrayList<Ingredient> ingredients = cookConnection.missingIngredientsTwoDaysFromTomorrow();
         for (int i = 0; i < ingredients.size(); i++) {

@@ -92,7 +92,7 @@ public class SelectRecipeForm extends JFrame {
         RecipeConnection recipeConnection = new RecipeConnection();
         recipes = recipeConnection.viewAllRecipes();
         String recipeColumns[] = {"Name", "Recipe Type", "Diet Type", "Price"};
-        allRecipesTableModel = new NonEditTableModel(recipeColumns, 0);
+        allRecipesTableModel = new NonEditTableModel(recipeColumns);
         allRecipesTable.setModel(allRecipesTableModel);
         for(int i = 0; i < recipes.size(); i++) {
             addRowToTable(allRecipesTableModel, recipes.get(i));

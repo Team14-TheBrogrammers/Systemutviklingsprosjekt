@@ -73,7 +73,7 @@ public class SelectCustomerForm extends JFrame {
 
     private void loadTable() {
         String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
-        NonEditTableModel tableModel = new NonEditTableModel(customerColumns, 0);
+        NonEditTableModel tableModel = new NonEditTableModel(customerColumns);
         customerTable.setModel(tableModel);
         manageCustomer = new ManageCustomer();
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
