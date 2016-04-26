@@ -1,7 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.gui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserContext;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
@@ -17,7 +16,7 @@ import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredi
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
-import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.*;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
@@ -28,6 +27,7 @@ import no.brogrammers.systemutviklingsprosjekt.statistics.MonthlyIncomeDiagram;
 import no.brogrammers.systemutviklingsprosjekt.statistics.MostPopularRecipesDiagram;
 import no.brogrammers.systemutviklingsprosjekt.statistics.PopularWeekdayDiagram;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
+
 import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
@@ -98,6 +98,10 @@ public class MainForm extends JFrame{
     private JButton buyButton;
     private JTextField buyIngredientsForDeliveriesTextField;
     private JTable allCustomersTable;
+    private JButton buyIngredientsButton;
+    private JTextField buyAllIngredientsForTextField;
+    private BrowserView browserView1;
+    private BrowserView test12345;
     private BrowserView testassdasd;
     private JPanel incomePanel;
     private JTable able4;
@@ -108,6 +112,8 @@ public class MainForm extends JFrame{
     private ManageUser manageUser;// = new ManageUser();
     private RecipeConnection recipeConnection;// = new RecipeConnection();
     private IngredientConnection ingredientConnection;// = new IngredientConnection();
+    private CookConnection cookConnection;//= new CookConnection();
+
 
     //Current user object
     private final User user;
@@ -197,7 +203,14 @@ public class MainForm extends JFrame{
             CookConnection cookConnection = new CookConnection();
             @Override
             public void actionPerformed(ActionEvent e) {
-                cookConnection.buyTakeAwayIngredientsForYesterday();
+                cookConnection.buyAllTakeAwayIngredientsForToday();
+            }
+        });
+        buyIngredientsButton.addActionListener(new ActionListener() {
+            CookConnection cookConnection = new CookConnection();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cookConnection.buyIngredientsTwoDaysFromTomorrow();
             }
         });
     }
@@ -421,10 +434,11 @@ public class MainForm extends JFrame{
     }
 
     private void createUIComponents() {
-        //Browser browser = new Browser();
-        //test123 = new BrowserView(browser);
-        //browser.loadURL("http://www.google.com");
+        Browser browser = new Browser();
+        browserView1 = new BrowserView(browser);
+        browser.loadURL(getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
+        //browser.j
 
         loadStatisticsTab();
 
@@ -462,11 +476,20 @@ public class MainForm extends JFrame{
         //ordersTodayTable
         //deliveriesToday() {//order_id, delivery_date, delivery_time, take_away, other_request
         String ta = "";
-        CookConnection cookConnection = new CookConnection();
-        String cookColumns[] = {"Order ID", "Delivery Date", "Delivery Time", "Delivery/Take Away", "Other Requests", "Make Order"};
-        NonEditTableModel nonEditTableModel = new NonEditTableModel(cookColumns, 0);
+        cookConnection = new CookConnection();
+        final String cookColumns[] = {"Order ID", "Delivery Date", "Delivery Time", "Delivery/Take Away", "Other Requests", "Make Order"};
+        //NonEditTableModel nonEditTableModel = new NonEditTableModel(cookColumns, 0);
+        DefaultTableModel nonEditTableModel = new DefaultTableModel(cookColumns, 0);
         ordersTodayTable.setModel(nonEditTableModel);
         ArrayList<Order> orders = cookConnection.deliveriesToday();
+
+        /*ActionListener actionListener123 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("test");
+            }
+        };*/
+
         for(int i = 0; i < orders.size(); i++) {
             int id = orders.get(i).getOrderID();
             java.sql.Date date = orders.get(i).getDeliveryDate();
@@ -476,22 +499,31 @@ public class MainForm extends JFrame{
             } else {
                 ta = "Delivery";
             }
+            ButtonRenderer buttonRenderer = new ButtonRenderer();
+            //buttonRenderer.addActionListener(actionListener123);
+            ordersTodayTable.getColumn("Make Order").setCellRenderer(buttonRenderer);//new ButtonRenderer());
+            ordersTodayTable.getColumn("Make Order").setCellEditor(
+                    new ButtonEditor(new JCheckBox()){
+                        @Override
+                        public Object getCellEditorValue() {
+                            if (isPushed()) {
+                                cookConnection = new CookConnection();
+                                int make = cookConnection.makeOrder(Integer.parseInt(ordersTodayTable.getValueAt(ordersTodayTable.getSelectedRow(), 0).toString()));
+                                if(make == 1) {
+                                    System.out.println("order made");
+                                }
+                                cookConnection.stopConnection();
+                                button.setEnabled(false);
+                            }
+                            //setPushed(false);
+                            return new String(getLabel());
+                        }
+                    });
+            //TODO: set all made = button.setEnabled(false)
             String otherRequests = orders.get(i).getOtherRequests();
-            Object objects[] = {id, date, time, ta, otherRequests, true};
+            Object objects[] = {id, date, time, ta, otherRequests, "Make Order"};
             nonEditTableModel.addRow(objects);
-        }
-
-        String cookColumns2[] = {"Order ID", "Delivery Date", "Delivery Time", "Other Requests", "Buy Ingredients"};
-        NonEditTableModel nonEditTableModel2 = new NonEditTableModel(cookColumns2, 0);
-        takeAwayTable.setModel(nonEditTableModel2);
-        ArrayList<Order> orders2 = cookConnection.takeAwayToday();
-        for(int i = 0; i < orders2.size(); i++) {
-            int id = orders2.get(i).getOrderID();
-            java.sql.Date date = orders2.get(i).getDeliveryDate();
-            double time = orders2.get(i).getDeliveryTime();
-            String otherRequests = orders2.get(i).getOtherRequests();
-            Object objects[] = {id, date, time, otherRequests};
-            nonEditTableModel2.addRow(objects);
+            cookConnection.stopConnection();
         }
 
         String cookColumns3[] = {"Ingredient Name", "Quantity missing"};
@@ -503,6 +535,37 @@ public class MainForm extends JFrame{
             double quantity = -(ingredients.get(i).getQuantity());
             Object objects[] = {name, quantity};
             nonEditTableModel3.addRow(objects);
+        }
+
+        String cookColumns2[] = {"Order ID", "Delivery Date", "Delivery Time", "Other Requests", "Buy Ingredients"};
+        DefaultTableModel nonEditTableModel2 = new DefaultTableModel(cookColumns2, 0);
+        takeAwayTable.setModel(nonEditTableModel2);
+        ArrayList<Order> orders2 = cookConnection.takeAwayToday();
+        for(int i = 0; i < orders2.size(); i++) {
+            int id = orders2.get(i).getOrderID();
+            java.sql.Date date = orders2.get(i).getDeliveryDate();
+            double time = orders2.get(i).getDeliveryTime();
+            String otherRequests = orders2.get(i).getOtherRequests();
+            Object objects[] = {id, date, time, otherRequests, "Buy Ingredients"};
+            takeAwayTable.getColumn("Buy Ingredients").setCellRenderer(new ButtonRenderer());
+            takeAwayTable.getColumn("Buy Ingredients").setCellEditor(
+                    new ButtonEditor(new JCheckBox()){
+                        @Override
+                        public Object getCellEditorValue() {
+                            if (isPushed()) {
+                                cookConnection = new CookConnection();
+                                int purchase = cookConnection.buyIngredientsTakeAway(Integer.parseInt(takeAwayTable.getValueAt(takeAwayTable.getSelectedRow(), 0).toString()));
+                                if(purchase == 1) {
+                                    System.out.println("ingredients purchased");
+                                }
+                                cookConnection.stopConnection();
+                                button.setEnabled(false);
+                            }
+                            setPushed(false);
+                            return new String(getLabel());
+                        }
+                    });
+            nonEditTableModel2.addRow(objects);
         }
     }
 
