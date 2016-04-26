@@ -322,6 +322,66 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return customers;
     }
 
+    public ArrayList<Company> viewAllCompanies() {
+        ArrayList<Company> companies = new ArrayList<Company>();
+        String sqlCommand = "SELECT * FROM Customer NATURAL JOIN Company;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+
+            while(resultSet.next()) {
+                int id = resultSet.getInt("customer_id");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+                String emailAddress = resultSet.getString("email_address");
+                int phone = resultSet.getInt("phone");
+                int companyID = resultSet.getInt("company_id");
+                String companyName = resultSet.getString("company_name");
+                companies.add(new Company(id, address, zip, emailAddress, phone, companyID, companyName));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return companies;
+    }
+
+    public ArrayList<PrivateCustomer> viewAllPrivateCustomers() {
+        ArrayList<PrivateCustomer> privateCustomers = new ArrayList<PrivateCustomer>();
+        String sqlCommand = "SELECT * FROM Customer NATURAL JOIN Private_customer;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                int customerID = resultSet.getInt("customer_id");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+                String emailAddress = resultSet.getString("email_address");
+                int phone = resultSet.getInt("phone");
+                int privateCustomerID = resultSet.getInt("private_id");
+                String lastName = resultSet.getString("last_name");
+                String firstName = resultSet.getString("first_name");
+                privateCustomers.add(new PrivateCustomer(customerID, address, zip, emailAddress, phone, privateCustomerID, lastName, firstName));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return privateCustomers;
+    }
+
     private boolean isCompany(int customerID) {
         String sqlCompany = "SELECT * FROM Company WHERE customer_id = " + customerID + ";";
         return checkExists(sqlCompany);

@@ -291,7 +291,7 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <component id="92d5b" class="javax.swing.JTable" binding="table2" default-binding="true">
+                              <component id="92d5b" class="javax.swing.JTable" binding="allCompaniesTable">
                                 <constraints/>
                                 <properties/>
                               </component>
