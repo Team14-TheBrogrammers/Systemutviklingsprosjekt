@@ -1,11 +1,10 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.recipeforms;
 
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
+import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
-import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
-import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
+import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,23 +25,29 @@ public class AddNewRecipeForm extends JFrame {
     private JTextArea textArea1;
     private JButton addInstructionButton;
     private JButton deleteInstructionButton;
-    private JTable table1;
-    private JTable table2;
+    private JTable recipeIngredientsTable;
+    private JTable allIngredientsTable;
     private JButton addIngredientButton;
     private JButton removeIngredientButton;
+    private JTextField priceTextField;
 
     RecipeConnection recipeConnection = new RecipeConnection();
     private ArrayList<String> instructions = new ArrayList<String>();
+    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private IngredientConnection ingredientConnection = new IngredientConnection();
+    private MainForm parentForm;
 
-    public AddNewRecipeForm() {
+    public AddNewRecipeForm(MainForm mainForm) {
+        parentForm = mainForm;
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(400, 550);
+        setSize(600, 550);
         setVisible(true);
         setLocationRelativeTo(null);
 
         //loadAllRecipes();
         setUpTable();
+        loadIngredientTable();
 
         addInstructionButton.addActionListener(new ActionListener() {
             @Override
@@ -61,6 +66,22 @@ public class AddNewRecipeForm extends JFrame {
                 }
                 //instructions.remove(selectedRows);
                 reloadTable();
+            }
+        });
+        addNewRecipeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = recipeNameTextField.getText();
+                RecipeType recipeType = RecipeType.valueOf(recipeTypeComboBox.getSelectedItem().toString());
+                DietType dietType = DietType.valueOf(dietTypeComboBox.getSelectedItem().toString());
+                ArrayList<Instruction> instructionsTmp = new ArrayList<Instruction>();
+                for(int i = 0; i < instructions.size(); i++) {
+                    instructionsTmp.add(new Instruction(i, instructions.get(i)));
+                }
+                double price = Double.parseDouble(priceTextField.getText());
+                recipeConnection.create(new Recipe(name, recipeType, dietType, ingredients, instructionsTmp, price));
+                parentForm.loadRecipesTab();
+                dispose();
             }
         });
     }
@@ -91,7 +112,16 @@ public class AddNewRecipeForm extends JFrame {
 
     NonEditTableModel ingredientTableModel;
     private void loadIngredientTable() {
-        String ingredientColumns[] = {"Name", ""};
+        String ingredientColumns[] = {"Name"};
         ingredientTableModel = new NonEditTableModel(ingredientColumns);
+        allIngredientsTable.setModel(ingredientTableModel);
+        ingredientConnection = new IngredientConnection();
+        ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
+        for(int i = 0; i < ingredients.size(); i++) {
+            String name = ingredients.get(i).getIngredientName();
+            Object objects[] = {name};
+            ingredientTableModel.addRow(objects);
+        }
+        ingredientConnection.stopConnection();
     }
 }

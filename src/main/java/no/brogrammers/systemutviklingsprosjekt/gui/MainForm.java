@@ -191,7 +191,7 @@ public class MainForm extends JFrame{
         addRecipeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewRecipeForm addNewRecipeForm = new AddNewRecipeForm();
+                AddNewRecipeForm addNewRecipeForm = new AddNewRecipeForm(MainForm.this);
             }
         });
         addNewIngredientButton.addActionListener(new ActionListener() {
@@ -218,7 +218,7 @@ public class MainForm extends JFrame{
 
     private void loadTabMenu() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("test123");
+        JMenu menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_ALT);
         menuBar.add(menu);
         //Add subItems etc.
@@ -280,7 +280,7 @@ public class MainForm extends JFrame{
     }
 
     NonEditTableModel recipeTableModel;
-    private void loadRecipesTab() {
+    public void loadRecipesTab() {
         //asd
         recipeConnection = new RecipeConnection();
 
