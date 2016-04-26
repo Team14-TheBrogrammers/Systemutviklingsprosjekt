@@ -134,7 +134,7 @@ public class CookConnection extends IngredientConnection {
     }
 
     public ArrayList<Order> deliveriesToday() {//order_id, delivery_date, delivery_time, take_away, other_request
-        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE();";
+        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND made = 0;";
         ManageOrder manageOrder = new ManageOrder();
         ArrayList<Order> orders = manageOrder.getOrders(sqlCommand);
         manageOrder.stopConnection();
@@ -142,7 +142,7 @@ public class CookConnection extends IngredientConnection {
     }
 
     public ArrayList<Order> takeAwayToday() {
-        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND take_away = 1;";
+        String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND take_away = 1 AND ingredients_purchased = 0;";
         ManageOrder manageOrder = new ManageOrder();
         ArrayList<Order> orders = manageOrder.getOrders(sqlCommand);
         manageOrder.stopConnection();
@@ -175,15 +175,42 @@ public class CookConnection extends IngredientConnection {
         return ingredients;
     }
 
+    public int makeOrderOrPurchaseIngredients(String sqlSelect, String sqlUpdate) {
+        PreparedStatement updateStatement = null;
+
+        try {
+            int test = changeStock(getIngredients(sqlSelect));
+            if(test == 1) {
+                updateStatement = getConnection().prepareStatement(sqlUpdate);
+                updateStatement.executeUpdate();
+                if (!(checkUpdated(sqlUpdate))) {
+                    return -1;
+                }
+            }
+            return 1;
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closePreparedStatement(updateStatement);
+        }
+        return -2;
+
+    }
 
     public int makeOrder(int orderID) {
-        String sqlCommand = "SELECT Stock.ingredient_name, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
-        return changeStock(getIngredients(sqlCommand));
+        String sqlSelect = "SELECT Stock.ingredient_name, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
+        String sqlUpdate = "UPDATE Orders SET made = 1 WHERE order_id = " + orderID + ";";
+
+        return makeOrderOrPurchaseIngredients(sqlSelect, sqlUpdate);
     }
 
     public int buyIngredientsTakeAway(int orderID) { // - before sum to work with changeStock method
-        String sqlCommand = "SELECT Stock.ingredient_name, Order_recipe.order_id, -(Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
-        return changeStock(getIngredients(sqlCommand));
+        String sqlSelect = "SELECT Stock.ingredient_name, -(Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
+        String sqlUpdate = "UPDATE Orders SET ingredients_purchased = 1 WHERE order_id = " + orderID + ";";
+
+        return makeOrderOrPurchaseIngredients(sqlSelect, sqlUpdate);
     }
 
 
