@@ -63,6 +63,7 @@ CREATE TABLE Orders(
   other_request VARCHAR(30),
   made BOOLEAN NOT NULL,
   ingredients_purchased BOOLEAN NOT NULL,
+  delivered BOOLEAN NOT NULL,
   customer_id INTEGER NOT NULL,
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)
 );

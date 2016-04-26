@@ -144,7 +144,7 @@ public class MainForm extends JFrame{
         addOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
+                AddNewOrderForm addNewOrderForm = new AddNewOrderForm(MainForm.this);
             }
         });
         addCustomerButton.addActionListener(new ActionListener() {
@@ -256,7 +256,7 @@ public class MainForm extends JFrame{
         }
     }
 
-    private void loadOrdersTab() {
+    public void loadOrdersTab() {
         //Start Connection for ManageOrder object
         manageOrder = new ManageOrder();
 

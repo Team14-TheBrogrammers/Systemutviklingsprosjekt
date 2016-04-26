@@ -3,6 +3,8 @@ package no.brogrammers.systemutviklingsprosjekt;
 
 import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 
 import javax.swing.*;
@@ -21,8 +23,10 @@ public class MainClient {
 
         //test();
         setJFrameLookAndFeel();
-        Route route = new Route();
-        //LoginForm loginForm = new LoginForm();
+        //Route route = new Route();
+
+        LoginForm loginForm = new LoginForm();
+
         //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
         //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
         //System.out.println(new Date(Calendar.getInstance().getTimeInMillis()));
