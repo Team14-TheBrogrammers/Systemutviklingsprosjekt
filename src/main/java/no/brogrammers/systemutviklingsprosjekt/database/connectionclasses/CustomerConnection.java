@@ -53,7 +53,7 @@ public abstract class CustomerConnection extends DatabaseConnection {
         String privateCSelect = "SELECT COUNT(private_id) AS c FROM Private_customer";
         String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
         String privateCInsert = "INSERT INTO Private_customer(last_name, first_name, customer_id)\n" +
-                " VALUES(?, ?, ?, ?, ?);";
+                " VALUES(?, ?, ?);";
 
         while(!customerFinished) {
             try {
