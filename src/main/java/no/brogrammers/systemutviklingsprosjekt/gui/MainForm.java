@@ -95,6 +95,11 @@ public class MainForm extends JFrame{
     private JButton buyIngredientsButton;
     private JTextField buyAllIngredientsForTextField;
     private BrowserView browserView1;
+    private JTable table1;
+    private JTable table3;
+    private JTable table5;
+    private JTable table6;
+    private JScrollPane DeliveriesTodayTable;
     private BrowserView test12345;
     private BrowserView testassdasd;
     private JPanel incomePanel;
@@ -102,7 +107,7 @@ public class MainForm extends JFrame{
 
     private ManageOrder manageOrder;// = new ManageOrder();
     private ManageCustomer manageCustomer;// = new ManageCustomer(); //TODO: How to use interfaces instead of these?
-    private DriverConnection driverConnection;// = new DriverConnection();
+    private DriverConnection driverConnection;
     private ManageUser manageUser;// = new ManageUser();
     private RecipeConnection recipeConnection;// = new RecipeConnection();
     private IngredientConnection ingredientConnection;// = new IngredientConnection();
@@ -194,17 +199,22 @@ public class MainForm extends JFrame{
             }
         });
         buyAllIngredientsForButton.addActionListener(new ActionListener() {
-            CookConnection cookConnection = new CookConnection();
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("TAKE AWAY");
+                cookConnection = new CookConnection();
                 cookConnection.buyAllTakeAwayIngredientsForToday();
+                loadCookTab();
+                cookConnection.stopConnection();
             }
         });
         buyIngredientsButton.addActionListener(new ActionListener() {
-            CookConnection cookConnection = new CookConnection();
             @Override
             public void actionPerformed(ActionEvent e) {
+                cookConnection = new CookConnection();
                 cookConnection.buyIngredientsTwoDaysFromTomorrow();
+                loadCookTab();
+                cookConnection.stopConnection();
             }
         });
     }
@@ -361,6 +371,42 @@ public class MainForm extends JFrame{
         //view = new BrowserView(browser);
 
         //mapPanel.add(test123);
+        driverConnection = new DriverConnection();
+        String deliveriesColumns1[] = {"Route", "Time", "Show Route", "Drive"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(deliveriesColumns1, 0);
+        deliveriesTodayTable.setModel(defaultTableModel);
+        ArrayList<ArrayList<Order>> orders = driverConnection.splitDeliveriesToday();
+
+        ArrayList<ArrayList<String>> addresses = new ArrayList<ArrayList<String>>();
+        ArrayList<String> addressList;// = new ArrayList<String>();
+
+        for(ArrayList<Order> innerList : orders) {
+            //addressList = new ArrayList<String>();
+
+            String time = String.valueOf(innerList.get(0).getDeliveryTime());
+            for(int i = 1; i < innerList.size(); i++) {//(Order order : innerList) {
+                //Make address list for mapmethod: uses button as listner
+
+                double time2 = innerList.get(i).getDeliveryTime();
+
+                if(!(time2 == (innerList.get(i-1).getDeliveryTime()))) {//TODO: fix format osv
+                    time += " - " + time2;
+                }
+            }
+
+
+
+
+            System.out.println(time);
+            Object objects[] = {"Route", time, "Show Route", "Drive"};
+            defaultTableModel.addRow(objects);
+            //addresses.add(addressList);
+            driverConnection.stopConnection();
+        }
+
+
+
+
 
     }
 
@@ -442,6 +488,7 @@ public class MainForm extends JFrame{
                                     System.out.println("order made");
                                 }
                                 cookConnection.stopConnection();
+                                loadCookTab();
                                 button.setEnabled(false);
                             }
                             //setPushed(false);
@@ -488,6 +535,7 @@ public class MainForm extends JFrame{
                                     System.out.println("ingredients purchased");
                                 }
                                 cookConnection.stopConnection();
+                                loadCookTab();
                                 button.setEnabled(false);
                             }
                             setPushed(false);
@@ -497,6 +545,7 @@ public class MainForm extends JFrame{
             nonEditTableModel2.addRow(objects);
         }
     }
+
 
     private void loadTabs() {
         loadOrdersTab();
@@ -512,7 +561,7 @@ public class MainForm extends JFrame{
 
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
-        //loadDriverRouteTab();
+        loadDriverRouteTab();
 
         //Subscription:
 

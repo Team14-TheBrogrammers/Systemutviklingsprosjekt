@@ -99,23 +99,40 @@ public class CookConnection extends IngredientConnection {
     public int buyAllTakeAwayIngredientsForToday() {
         double quantity = -1;
         String ingredientName = "";
-        String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND delivery_date = CURDATE() ORDER BY ingredient_name;";
-        String sqlUpdate = "";
+        String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND delivery_date = CURDATE() AND ingredients_purchased = 0 ORDER BY ingredient_name;";
+        String sqlUpdate = "UPDATE Stock SET quantity = (quantity + ?) WHERE ingredient_name = ?;";
+        String sqlUpdate2 = "UPDATE Orders SET ingredients_purchased = 1 WHERE order_id = ?";
         PreparedStatement selectStatement = null;
-        PreparedStatement updateStatement = null;
+        //PreparedStatement updateStatement = null;
+        //PreparedStatement updateStatement2 = null;
         ResultSet resultSet = null;
         //ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
         try {
+            getConnection().setAutoCommit(false);
             selectStatement = getConnection().prepareStatement(sqlSelect);
             resultSet = selectStatement.executeQuery();
+
             while (resultSet.next()) {
                 String name = resultSet.getString("ingredient_name");
                 double sum = resultSet.getDouble("sum");
+                int id = resultSet.getInt("order_id");
 
-                sqlUpdate = "UPDATE Stock SET quantity = (quantity + " + sum + ") WHERE ingredient_name = " + name + ";";
-                updateStatement = getConnection().prepareStatement(sqlUpdate);
-                if(!(checkUpdated(sqlUpdate))) {
+                PreparedStatement updateStatement = getConnection().prepareStatement(sqlUpdate);
+                updateStatement.setDouble(1, sum);
+                updateStatement.setString(2, name);
+
+                if(updateStatement.executeUpdate() != 0) {
+                    PreparedStatement updateStatement2 = getConnection().prepareStatement(sqlUpdate2);
+                    updateStatement2.setInt(1, id);
+
+                    if(updateStatement2.executeUpdate() == 0) {
+                        getCleaner().doRollback(getConnection());
+                        return -3;
+                    }
+                    getCleaner().closePreparedStatement(updateStatement2);
+                } else {
+                    getCleaner().doRollback(getConnection());
                     return -1;
                 }
                 getCleaner().closePreparedStatement(updateStatement);
@@ -124,9 +141,13 @@ public class CookConnection extends IngredientConnection {
 
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
+            getCleaner().doRollback(getConnection());
         } catch (Exception e) {
             writeError(e.getMessage());
+            getCleaner().doRollback(getConnection());
         } finally {
+            //getCleaner().closePreparedStatement(updateStatement2);
+            //getCleaner().closePreparedStatement(updateStatement);
             getCleaner().closePreparedStatement(selectStatement);
             getCleaner().closeResultSet(resultSet);
         }
