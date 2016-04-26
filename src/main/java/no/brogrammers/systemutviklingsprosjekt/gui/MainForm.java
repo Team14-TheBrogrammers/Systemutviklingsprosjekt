@@ -427,6 +427,8 @@ public class MainForm extends JFrame{
         //test123.getBrowser().loadURL("google.com");
 
         loadStatisticsTab();
+
+
     }
 
     private void loadStatisticsTab() {
