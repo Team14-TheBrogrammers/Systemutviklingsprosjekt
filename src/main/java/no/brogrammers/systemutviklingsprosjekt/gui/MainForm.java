@@ -10,6 +10,7 @@ import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.CookCo
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
+import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
 import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredientForm;
@@ -436,7 +437,14 @@ public class MainForm extends JFrame{
     private void createUIComponents() {
         Browser browser = new Browser();
         browserView1 = new BrowserView(browser);
-        browser.loadURL(getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
+        ArrayList<String> strings = new ArrayList<String>();
+        strings.add("olav tryggvasons gate 24, 7011");
+        strings.add("sverdrupsvei 33, 7020");
+        //strings.add("olav tryggvasons gate 40, 7011");
+        //strings.add("munkegata 34, 7011");
+
+        Route route = new Route(strings);
+        browser.loadURL("C:\\SystemutviklingsProsjekt\\Driver map\\Map.html");//getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
         //browser.j
 
@@ -580,7 +588,7 @@ public class MainForm extends JFrame{
         loadCustomersTab();
 
         loadCookTab();
-
+        loadMyProfileTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         //loadDriverRouteTab();
