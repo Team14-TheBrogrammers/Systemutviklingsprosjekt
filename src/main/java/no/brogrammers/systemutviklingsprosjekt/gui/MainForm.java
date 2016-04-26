@@ -386,7 +386,7 @@ public class MainForm extends JFrame{
         manageCustomer.stopConnection();
     }
 
-    private void loadEmployeesTab() {
+    public void loadEmployeesTab() {
         //Employee (user):
         manageUser = new ManageUser();
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};

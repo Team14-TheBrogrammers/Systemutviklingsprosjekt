@@ -47,12 +47,14 @@ public class AddNewEmployeeForm extends JFrame{
         addNewEmployeeToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                performLogin();
+                performRegister();
             }
         });
     }
 
-    private void performLogin() {
+    private void performRegister() {
+        manageUser = new ManageUser();
+
         String lastName = lastNameTextField.getText();
         String firstName = firstNameTextField.getText();
         int phone = Integer.parseInt(phoneTextField.getText());
@@ -67,15 +69,21 @@ public class AddNewEmployeeForm extends JFrame{
                 System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 break;
             case 1:
+                System.out.println(manageUser.registerCashier(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 //manageUser.registerCashier()//TODO:FIX more code
                 break;
             case 2:
+                System.out.println(manageUser.registerCook(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 //manageUser.registerCook()
                 break;
             case 3:
+                System.out.println(manageUser.registerDriver(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 //manageUser.registerDriver()
                 break;
         }
+        mainForm.loadEmployeesTab();
+        manageUser.stopConnection();
+        dispose();
     }
 
     private void loadDatePicker() {
