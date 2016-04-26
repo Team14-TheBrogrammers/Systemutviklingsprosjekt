@@ -265,8 +265,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
                 boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
+                boolean delivered = resultSet.getBoolean("delivered");
 
-                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID));
+                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, ingredientsPurchased, delivered, getRecipesToOrder(orderID));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -310,7 +311,8 @@ public abstract class OrderConnection extends DatabaseConnection {
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
                 boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID)));
+                boolean delivered = resultSet.getBoolean("delivered");
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, delivered, getRecipesToOrder(orderID)));
             }
 
         } catch (SQLException sqle) {
@@ -349,8 +351,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
                 boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
+                boolean delivered = resultSet.getBoolean("delivered");
 
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID)));
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, delivered, getRecipesToOrder(orderID)));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -385,6 +388,7 @@ public abstract class OrderConnection extends DatabaseConnection {
                     double deliveryTime = resultSet.getDouble("delivery_time");
                     String address = resultSet.getString("address");
                     int zip = resultSet.getInt("zip");
+                    //TODO ingredient_purchased/made/delivered
 
                     orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
                 }
@@ -404,11 +408,7 @@ public abstract class OrderConnection extends DatabaseConnection {
         }
         return orders;
     }*/
-
-    public ArrayList<Ingredient> listMissingIngredients() {
-        return null;
-    }
-
+    
 
     //Legge alle metodene for ManageOrder her ??
 }
