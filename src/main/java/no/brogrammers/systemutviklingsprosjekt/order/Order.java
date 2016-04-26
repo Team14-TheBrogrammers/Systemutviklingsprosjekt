@@ -20,9 +20,10 @@ public class Order {
     private boolean takeAway;
     private String otherRequests;
     private boolean made;
+    private boolean ingredientsPurchased;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, boolean made, ArrayList<Recipe> recipes) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, boolean made, boolean ingredientsPurchased, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -34,6 +35,7 @@ public class Order {
         this.takeAway = takeAway;
         this.otherRequests = otherRequests;
         this.made = made;
+        this.ingredientsPurchased = ingredientsPurchased;
         this.recipes = recipes;
     }
 
@@ -85,6 +87,10 @@ public class Order {
         return made;
     }
 
+    public boolean isIngredientsPurchased() {
+        return ingredientsPurchased;
+    }
+
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
@@ -117,6 +123,10 @@ public class Order {
         this.made = made;
     }
 
+    public void setIngredientsPurchased(boolean ingredientsPurchased) {
+        this.ingredientsPurchased = ingredientsPurchased;
+    }
+
     /*public double convertTime() {
         String time = Double.toString(deliveryTime).substring(2);
         return 2.0;
@@ -130,6 +140,7 @@ public class Order {
         String pay = paymentStatus ? "Paid" : "Not paid";
         String ta = takeAway ? "Take away" : "Delivery";
         String md = made ? "Made" : "Not Made";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nMade: " + made + "\nOrder: \n" + orderList;
+        String ip = ingredientsPurchased ? "Purchased" : "Not Purchased";
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nMade: " + made + "\nIngredients Purchased: " + ip + "\nOrder: \n" + orderList;
     }
 }

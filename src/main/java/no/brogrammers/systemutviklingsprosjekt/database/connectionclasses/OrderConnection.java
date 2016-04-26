@@ -264,8 +264,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                 boolean takeAway = resultSet.getBoolean("takeaway");
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
+                boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
 
-                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, getRecipesToOrder(orderID));
+                return new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -308,7 +309,8 @@ public abstract class OrderConnection extends DatabaseConnection {
                 boolean isTakeaway = resultSet.getBoolean("take_away");
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, getRecipesToOrder(orderID)));
+                boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID)));
             }
 
         } catch (SQLException sqle) {
@@ -346,8 +348,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                 boolean isTakeaway = resultSet.getBoolean("takeaway");
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
+                boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
 
-                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, getRecipesToOrder(orderID)));
+                orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID)));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
