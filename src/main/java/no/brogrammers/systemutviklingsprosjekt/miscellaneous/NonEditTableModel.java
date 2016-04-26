@@ -8,8 +8,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class NonEditTableModel extends DefaultTableModel {
 
-    public NonEditTableModel(Object[] columnNames, int rowCount) {
-        super(columnNames, rowCount);
+    public NonEditTableModel(Object[] columnNames) {
+        super(columnNames, 0);
     }//TODO:remove constructor
 
     @Override

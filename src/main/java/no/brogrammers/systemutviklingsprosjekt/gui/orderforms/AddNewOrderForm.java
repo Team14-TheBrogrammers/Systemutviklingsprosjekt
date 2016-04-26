@@ -121,7 +121,7 @@ public class AddNewOrderForm extends JFrame {
         this.recipes = recipes;
         this.quantity = quantity;
         String recipeColumns2[] = {"Name", "Recipe Type", "Diet Type", "Quantity", "Price for each", "Total Price"};
-        NonEditTableModel tableModel = new NonEditTableModel(recipeColumns2, 0);
+        NonEditTableModel tableModel = new NonEditTableModel(recipeColumns2);
         table1.setModel(tableModel);
         addRowsToTable(tableModel);
     }
