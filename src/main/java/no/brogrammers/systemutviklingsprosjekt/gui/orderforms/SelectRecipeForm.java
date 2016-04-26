@@ -50,8 +50,9 @@ public class SelectRecipeForm extends JFrame {
                     RecipeType recipeType = recipe.getRecipeType();
                     DietType dietType = recipe.getDietType();
                     double price = recipe.getPrice();
+
                     //add objects
-                    Object[] objects = {name, recipeType, dietType, price};
+                    Object[] objects = {name, recipeType, dietType, 1, price, price};
                     orderTableModel.addRow(objects);
                     //addRowToTable(defaultTableMode4, recipes.get(tableIndexes[i]));//bruk annen måte siden det er total pris osv her
                 }
@@ -62,9 +63,10 @@ public class SelectRecipeForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] quantity = new int[orderRecipes.size()];
                 for(int i = 0; i < quantity.length; i++) {
-                    quantity[i] = Integer.parseInt((String)orderRecipesTable.getValueAt(i, 5));
+                    //int quantityTmp = Integer.parseInt((String)orderRecipesTable.getValueAt(i, 4));
+                    int quantityTmp = Integer.parseInt(orderRecipesTable.getValueAt(i, 3).toString());//Integer.parseInt();
+                    quantity[i] = quantityTmp;
                 }
-
                 parentForm.setRecipeData(orderRecipes, quantity);
                 dispose();
 
