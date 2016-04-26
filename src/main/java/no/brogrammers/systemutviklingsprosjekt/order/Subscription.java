@@ -13,8 +13,8 @@ public class Subscription extends Order {
     private int subscriptionID;
     private int frequency;          // Frequency is frequencyID in the database
 
-    public Subscription(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeaway, String otherRequests, boolean made, boolean ingredientsPurchased, ArrayList<Recipe> recipes, int subscriptionID, int frequency) {
-        super(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zipCode, takeaway, otherRequests, made, ingredientsPurchased, recipes);
+    public Subscription(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeaway, String otherRequests, boolean made, boolean ingredientsPurchased, boolean delivered, ArrayList<Recipe> recipes, int subscriptionID, int frequency) {
+        super(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zipCode, takeaway, otherRequests, made, ingredientsPurchased, delivered, recipes);
         this.subscriptionID = subscriptionID;
         this.frequency = frequency;
     }

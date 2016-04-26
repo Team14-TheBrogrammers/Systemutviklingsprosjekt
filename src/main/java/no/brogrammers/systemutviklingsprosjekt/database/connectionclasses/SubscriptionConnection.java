@@ -153,9 +153,10 @@ public class SubscriptionConnection extends OrderConnection {
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
                 boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
+                boolean delivered = resultSet.getBoolean("delivered");
                 int subscriptionID = resultSet.getInt("subs_id");
                 int frequency = resultSet.getInt("frequency_id");
-                subscriptions.add(new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID), subscriptionID, frequency));
+                subscriptions.add(new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, made, ingredientsPurchased, delivered, getRecipesToOrder(orderID), subscriptionID, frequency));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -216,9 +217,10 @@ public class SubscriptionConnection extends OrderConnection {
                 String otherRequests = resultSet.getString("other_request");
                 boolean made = resultSet.getBoolean("made");
                 boolean ingredientsPurchased = resultSet.getBoolean("ingredients_purchased");
+                boolean delivered = resultSet.getBoolean("delivered");
                 int frequency = resultSet.getInt("frequency_id");
 
-                return new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, getRecipesToOrder(orderID), subscriptionID, frequency);
+                return new Subscription(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, isTakeaway, otherRequests, made, ingredientsPurchased, delivered, getRecipesToOrder(orderID), subscriptionID, frequency);
             }
 
         } catch (SQLException sqle) {

@@ -21,9 +21,10 @@ public class Order {
     private String otherRequests;
     private boolean made;
     private boolean ingredientsPurchased;
+    private boolean delivered;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, boolean made, boolean ingredientsPurchased, ArrayList<Recipe> recipes) {
+    public Order(int orderID, int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, boolean made, boolean ingredientsPurchased, boolean delivered, ArrayList<Recipe> recipes) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.paymentStatus = paymentStatus;
@@ -36,6 +37,7 @@ public class Order {
         this.otherRequests = otherRequests;
         this.made = made;
         this.ingredientsPurchased = ingredientsPurchased;
+        this.delivered = delivered;
         this.recipes = recipes;
     }
 
@@ -91,6 +93,10 @@ public class Order {
         return ingredientsPurchased;
     }
 
+    public boolean isDelivered() {
+        return delivered;
+    }
+
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
@@ -127,10 +133,9 @@ public class Order {
         this.ingredientsPurchased = ingredientsPurchased;
     }
 
-    /*public double convertTime() {
-        String time = Double.toString(deliveryTime).substring(2);
-        return 2.0;
-    }*/
+    public void setDelivered(boolean delivered) {
+        this.delivered = delivered;
+    }
 
     public String toString() {
         String orderList = "";
@@ -141,6 +146,7 @@ public class Order {
         String ta = takeAway ? "Take away" : "Delivery";
         String md = made ? "Made" : "Not Made";
         String ip = ingredientsPurchased ? "Purchased" : "Not Purchased";
-        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nMade: " + made + "\nIngredients Purchased: " + ip + "\nOrder: \n" + orderList;
+        String del = delivered ? "Delivered" : "Not delivered";
+        return "Order ID: " + orderID + "\nCustomer ID: " + customerID + "\nPayment status: " + pay + "\nOrder date: " + orderDate + "\nDelivery date: " + deliveryDate + "\nDelivery time: " + deliveryTime + "\nAddress, zip: " + address + ", " + zipCode + "\n" + ta + "\nOther requests: " + otherRequests + "\nMade: " + made + "\nIngredients Purchased: " + ip + "\nDelivered: " + del + "\nOrder: \n" + orderList;
     }
 }
