@@ -58,17 +58,19 @@ public abstract class OrderConnection extends DatabaseConnection {
         if(checkCorrectOrderDates(deliveryDate, deliveryTime, takeAway)) {
             if(checkCustomerId(customerID)) {
                 int newNumber = 1; //If there is no other numbers before this number will be set as the id
-                boolean finished = false;
+                //boolean finished = false;
                 ResultSet resultSet = null;
                 PreparedStatement selectStatement = null;
                 PreparedStatement insertStatement = null;
 
                 String selectCommand = "SELECT MAX(order_id) AS c FROM Orders;";
-                String insertCommand = "INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, address, zip, take_away, other_request, customer_id)\n" +
-                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                String insertCommand = "INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, address, zip, take_away, other_request, made, ingredients_purchased, delivered, customer_id)\n" +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-                while(!finished) {
+                //while(!finished) {//TODO:not while loop
                     try {
+                        getConnection().setAutoCommit(false);
+
                         selectStatement = getConnection().prepareStatement(selectCommand);
                         resultSet = selectStatement.executeQuery();
 
@@ -83,15 +85,34 @@ public abstract class OrderConnection extends DatabaseConnection {
                         insertStatement.setInt(6, zipCode);
                         insertStatement.setBoolean(7, takeAway);
                         insertStatement.setString(8, otherRequests);
-                        insertStatement.setInt(9, customerID);
+                        insertStatement.setBoolean(9, false);
+                        insertStatement.setBoolean(10, false);
+                        insertStatement.setBoolean(11, false);
+                        insertStatement.setInt(12, customerID);
 
-                        for(int i = 0; i < recipes.size(); i++) {
-                            String sqlCommand = "INSERT INTO Order_recipe(order_id, recipe_name, quantity) VALUES(" + newNumber + ", " + recipes.get(i).getRecipeName() + ", " + quantity[i] + ");";
-                            checkUpdated(sqlCommand);
+                        if(insertStatement.executeUpdate() != 0) {
+                            for(int i = 0; i < recipes.size(); i++) {
+                                //String sqlCommand = "INSERT INTO Order_recipe(order_id, recipe_name, quantity) VALUES(" + newNumber + ", '" + recipes.get(i).getRecipeName() + "', " + quantity[i] + ");";
+                                String sqlCommand = "INSERT INTO Order_recipe(order_id, recipe_name, quantity) VALUES(?, ?, ?);";
+
+                                PreparedStatement recipeInsertStatement = getConnection().prepareStatement(sqlCommand);
+                                recipeInsertStatement.setInt(1, newNumber);
+                                recipeInsertStatement.setString(2, recipes.get(i).getRecipeName());
+                                recipeInsertStatement.setInt(3, quantity[i]);
+
+                                if(recipeInsertStatement.executeUpdate() == 0) {
+                                    getCleaner().doRollback(getConnection());
+                                }
+                                //checkUpdated(sqlCommand);
+                            }
+                            getConnection().commit();
                         }
 
-                        insertStatement.executeUpdate();
-                        finished = true;
+
+
+                        //insertStatement.executeUpdate();
+
+                        //finished = true;
                     } catch (SQLException sqle) {
                         writeError(sqle.getMessage());
                     } catch (Exception e) {
@@ -100,8 +121,9 @@ public abstract class OrderConnection extends DatabaseConnection {
                         getCleaner().closePreparedStatement(insertStatement);
                         getCleaner().closePreparedStatement(selectStatement);
                         getCleaner().closeResultSet(resultSet);
+                        getCleaner().setAutoCommit(getConnection());
                     }
-                }
+                //}
                 return newNumber;
             } else {
                 return -1;

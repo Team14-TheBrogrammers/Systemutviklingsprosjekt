@@ -2,12 +2,16 @@ package no.brogrammers.systemutviklingsprosjekt.gui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
+import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.CookConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
+import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
+import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredientForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
@@ -87,11 +91,14 @@ public class MainForm extends JFrame{
     private JPanel mapPanel;
     private JTabbedPane tabbedPane5;
     private JTable privateCustomersTable;
-    private JTable table2;
+    private JTable allCompaniesTable;
     private JTabbedPane tabbedPane6;
     private JTable ordersTodayTable;
     private JTable deliveriesIngredientsTable;
     private JButton buyAllIngredientsForButton;
+    private JButton buyButton;
+    private JTextField buyIngredientsForDeliveriesTextField;
+    private JTable allCustomersTable;
     private JButton buyIngredientsButton;
     private JTextField buyAllIngredientsForTextField;
     private BrowserView browserView1;
@@ -143,19 +150,19 @@ public class MainForm extends JFrame{
         addOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
+                AddNewOrderForm addNewOrderForm = new AddNewOrderForm(MainForm.this);
             }
         });
         addCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                AddNewCustomerForm addNewCustomerForm = new AddNewCustomerForm(MainForm.this, true);
             }
         });
         addEmployeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
+                AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm(MainForm.this);
             }
         });
         changeMyProfileDataButton.addActionListener(new ActionListener() {
@@ -195,7 +202,7 @@ public class MainForm extends JFrame{
         addNewIngredientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm();
+                AddNewIngredientForm addNewIngredientForm = new AddNewIngredientForm(MainForm.this);
             }
         });
         buyAllIngredientsForButton.addActionListener(new ActionListener() {
@@ -260,7 +267,7 @@ public class MainForm extends JFrame{
         }
     }
 
-    private void loadOrdersTab() {
+    public void loadOrdersTab() {
         //Start Connection for ManageOrder object
         manageOrder = new ManageOrder();
 
@@ -268,13 +275,13 @@ public class MainForm extends JFrame{
         String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
 
         //Active orders:
-        acticeOrdersTableModel = new NonEditTableModel(orderColumns, 0);
+        acticeOrdersTableModel = new NonEditTableModel(orderColumns);
         activeOrdersTable.setModel(acticeOrdersTableModel);
         ArrayList<Order> activeOrders = manageOrder.viewActiveOrders();
         addRowsToOrderTab(acticeOrdersTableModel, activeOrders);
 
         //Previous orders:
-        previousOrdersTableModel = new NonEditTableModel(orderColumns, 0);
+        previousOrdersTableModel = new NonEditTableModel(orderColumns);
         previousOrdersTable.setModel(previousOrdersTableModel);
         ArrayList<Order> previousOrders = manageOrder.viewPreviousOrders();
         addRowsToOrderTab(previousOrdersTableModel, previousOrders);
@@ -282,54 +289,116 @@ public class MainForm extends JFrame{
         manageOrder.stopConnection();
     }
 
+    NonEditTableModel recipeTableModel;
     private void loadRecipesTab() {
         //asd
         recipeConnection = new RecipeConnection();
 
         //Recipes:
         String recipeColumns[] = {"Name", "Type", "Price"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(recipeColumns, 0);
-        recipeTable.setModel(defaultTableModel);
+        recipeTableModel = new NonEditTableModel(recipeColumns);
+        recipeTable.setModel(recipeTableModel);
         ArrayList<Recipe> recipes = recipeConnection.viewAllRecipes();
         for(int i = 0; i < recipes.size(); i++) {
             String name = recipes.get(i).getRecipeName();
             RecipeType recipeType = recipes.get(i).getRecipeType();
             double price = recipes.get(i).getPrice();
             Object objects[] = {name, recipeType, price};
-            defaultTableModel.addRow(objects);
+            recipeTableModel.addRow(objects);
         }
         recipeConnection.stopConnection();
     }
 
-    private void loadIngredientsTab() {
+    NonEditTableModel ingredientTableModel;
+    public void loadIngredientsTab() {
+        ingredientConnection = new IngredientConnection();
         String ingredientColumns[] = {"Name", "In Stock"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(ingredientColumns, 0);
-        ingredientsTable.setModel(defaultTableModel);
+        ingredientTableModel = new NonEditTableModel(ingredientColumns);
+        ingredientsTable.setModel(ingredientTableModel);
         ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
         ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
         for(int i = 0; i < ingredients.size(); i++) {
+            System.out.println("asd");
             String name = ingredients.get(i).getIngredientName();
             String measurement = ingredients.get(i).getQuantity() + " " + measurements.get(i);
             Object objects[] = {name, measurement};
-            defaultTableModel.addRow(objects);
+            ingredientTableModel.addRow(objects);
         }
     }
 
-    private void loadCustomersTab() {
+    private NonEditTableModel allCustomersTableModel;
+    private NonEditTableModel privateCustomerTableModel;
+    private NonEditTableModel companiesTableModel;
+
+    public void loadCustomersTab() {
         //Customer tab:
-        String customerColumns[] = {"ID", "Name", "Address", "Zip Address", "Email Address", "Phone"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(customerColumns, 0);
-        privateCustomersTable.setModel(defaultTableModel);
+        String allCustomersColumns[] = {"ID", "Name", "Address", "Zip", "Email Address", "Phone"};
+        String privateCustomerColumns[] = {"Customer ID", "Private Customer ID", "First Name", "Last Name", "Address", "Zip", "Email Address", "Phone"};
+        String companyColumns[] = {"Customer ID", "Company ID", "Name", "Address", "Zip", "Email Address", "Phone"};
+        manageCustomer = new ManageCustomer();
+
+        //All customers tab:
+        allCustomersTableModel = new NonEditTableModel(allCustomersColumns);
+        allCustomersTable.setModel(allCustomersTableModel);
         ArrayList<Customer> customers = manageCustomer.viewAllCustomers();
         for(int i = 0; i < customers.size(); i++) {
-            int id = customers.get(i).getID();
-            //String name = customers.get(i).get
+            int customerID = customers.get(i).getID();
+            String name = "";
+            if(customers.get(i) instanceof Company) {
+                name = ((Company) customers.get(i)).getName();
+            } else if(customers.get(i) instanceof PrivateCustomer) {
+                name = ((PrivateCustomer) customers.get(i)).getFirstName() + " " + ((PrivateCustomer) customers.get(i)).getLastName();
+            }
+            String address = customers.get(i).getAddress();
+            int zip = customers.get(i).getZip();
+            String emailAddress = customers.get(i).getEmail();
+            int phone = customers.get(i).getPhone();
 
+            Object objects[] = {customerID, name, address, zip, emailAddress, phone};
+            allCustomersTableModel.addRow(objects);
         }
+
+
+        //Private Customers tab:
+        privateCustomerTableModel = new NonEditTableModel(privateCustomerColumns);
+        privateCustomersTable.setModel(privateCustomerTableModel);
+        ArrayList<PrivateCustomer> privateCustomers = manageCustomer.viewAllPrivateCustomers();
+        for(int i = 0; i < privateCustomers.size(); i++) {
+            int customerID = privateCustomers.get(i).getID();
+            int privateCustomerID = privateCustomers.get(i).getPrivateID();
+            String firstName = privateCustomers.get(i).getFirstName();
+            String lastName = privateCustomers.get(i).getLastName();
+            String address = privateCustomers.get(i).getAddress();
+            int zipAddress = privateCustomers.get(i).getZip();
+            String emailAddress = privateCustomers.get(i).getEmail();
+            int phone = privateCustomers.get(i).getPhone();
+
+            Object objects[] = {customerID, privateCustomerID, firstName, lastName, address, zipAddress, emailAddress, phone};
+            privateCustomerTableModel.addRow(objects);
+        }
+
+        //Companies tab:
+        companiesTableModel = new NonEditTableModel(companyColumns);
+        allCompaniesTable.setModel(companiesTableModel);
+        ArrayList<Company> companies = manageCustomer.viewAllCompanies();
+        for(int i = 0; i < companies.size(); i++) {
+            int customerID = companies.get(i).getID();
+            int companyID = companies.get(i).getCompanyID();
+            String companyName = companies.get(i).getName();
+            String address = companies.get(i).getAddress();
+            int zip = companies.get(i).getZip();
+            String emailAddress = companies.get(i).getEmail();
+            int phone = companies.get(i).getPhone();
+
+            Object objects[] = {customerID, companyID, companyName, address, zip, emailAddress, phone};
+            companiesTableModel.addRow(objects);
+        }
+        manageCustomer.stopConnection();
     }
 
     private void loadEmployeesTab() {
         //Employee (user):
+        manageUser = new ManageUser();
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};
         DefaultTableModel employeesTableModel = new DefaultTableModel(employeeColumns, 0);
         employeesTable.setModel(employeesTableModel);
@@ -356,6 +425,7 @@ public class MainForm extends JFrame{
             Object objects[] = {id, lastName, firstName, phone, dateOfEmployment, pos, username, password, emailAddress};
             employeesTableModel.addRow(objects);
         }
+        manageUser.stopConnection();
     }
 
     private void loadDriverRouteTab() {
@@ -413,11 +483,20 @@ public class MainForm extends JFrame{
     private void createUIComponents() {
         Browser browser = new Browser();
         browserView1 = new BrowserView(browser);
-        browser.loadURL(getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
+        ArrayList<String> strings = new ArrayList<String>();
+        strings.add("olav tryggvasons gate 24, 7011");
+        strings.add("sverdrupsvei 33, 7020");
+        //strings.add("olav tryggvasons gate 40, 7011");
+        //strings.add("munkegata 34, 7011");
+
+        Route route = new Route(strings);
+        browser.loadURL("C:\\SystemutviklingsProsjekt\\Driver map\\Map.html");//getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
         //browser.j
 
         loadStatisticsTab();
+
+
     }
 
     private void loadStatisticsTab() {
@@ -503,7 +582,7 @@ public class MainForm extends JFrame{
         }
 
         String cookColumns3[] = {"Ingredient Name", "Quantity missing"};
-        NonEditTableModel nonEditTableModel3 = new NonEditTableModel(cookColumns3, 0);
+        NonEditTableModel nonEditTableModel3 = new NonEditTableModel(cookColumns3);
         deliveriesIngredientsTable.setModel(nonEditTableModel3);
         ArrayList<Ingredient> ingredients = cookConnection.missingIngredientsTwoDaysFromTomorrow();
         for (int i = 0; i < ingredients.size(); i++) {
@@ -552,13 +631,13 @@ public class MainForm extends JFrame{
         //subscriptions
         loadRecipesTab();//TODO:DOES NOT WORKSSSS
         //loadCustomersTab();
-        //loadEmployeesTab();
-        //loadIngredientsTab();
+        loadEmployeesTab();
+        loadIngredientsTab();
 
-        //loadCustomersTab();
+        loadCustomersTab();
 
         loadCookTab();
-
+        loadMyProfileTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
         loadDriverRouteTab();

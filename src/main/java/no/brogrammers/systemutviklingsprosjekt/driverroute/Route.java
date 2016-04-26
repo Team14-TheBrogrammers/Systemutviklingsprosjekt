@@ -49,21 +49,26 @@ public class Route {
 
     private ArrayList<String> deliveries = new ArrayList<String>();
 
-    public Route() { //ArrayList<String> deliveries) {
+    public Route(ArrayList<String> deliveries) {
+        this.deliveries = deliveries;
         generateJs();
+        //System.out.println(getClass().getResource("/login_background.png").getFile());
     }
 
     private void generateJs() {
-        String output = "var trheim = new Array();\n" +
+        String output = "var trheim = new Array();\n";
+        for(int i = 0; i < deliveries.size(); i++) {
+            output += "trheim[" + i + "] = \"" + deliveries.get(i) + "\";\n";
+        }
+        /*+
                 "trheim[0] = \"olav tryggvasons gate 24, 7011\";\n" +
                 "trheim[1] = \"sverdrupsvei 33, 7020\";\n" +
                 "trheim[2] = \"olav tryggvasons gate 40, 7011\";\n" +
-                "trheim[3] = \"munkegata 34, 7011\";";
+                "trheim[3] = \"munkegata 34, 7011\";";*/
 
         output += "\n" + endJavascript;
-        //System.out.println(getClass().getResource("/login_background.png"));
         try {
-            FileWriter fileWriter = new FileWriter("/Driver map/DriverRoute.js");
+            FileWriter fileWriter = new FileWriter("C:\\SystemutviklingsProsjekt\\Driver map\\DriverRoute.js");//"C:\\Users\\Knut\\Documents\\GitHub\\Systemutviklingsprosjekt\\src\\main\\resources\\Driver map\\DriverRoute.js");
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(output);
             bufferedWriter.close();

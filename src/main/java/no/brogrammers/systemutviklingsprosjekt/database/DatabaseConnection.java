@@ -2,6 +2,7 @@ package no.brogrammers.systemutviklingsprosjekt.database;
 
 import java.io.*;
 import java.sql.*;
+import java.util.Calendar;
 
 /**
  * Created by The Brogrammers on 09.03.2016.
@@ -79,7 +80,7 @@ public abstract class DatabaseConnection {
             }
             FileWriter fileWriter = new FileWriter(errorFile, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(message);
+            bufferedWriter.write("[" + Calendar.getInstance().getTime() + "] " + message);
             bufferedWriter.newLine();
             bufferedWriter.close();
             return true;

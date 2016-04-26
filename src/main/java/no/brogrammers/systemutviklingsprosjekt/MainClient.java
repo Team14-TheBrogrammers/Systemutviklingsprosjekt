@@ -3,6 +3,8 @@ package no.brogrammers.systemutviklingsprosjekt;
 
 import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 
 import javax.swing.*;

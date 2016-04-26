@@ -3,10 +3,13 @@ package no.brogrammers.systemutviklingsprosjekt.gui.recipeforms;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Instruction;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -15,12 +18,21 @@ import java.util.ArrayList;
 public class AddNewRecipeForm extends JFrame {
     private JPanel mainPanel;
     private JButton addNewRecipeButton;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField recipeNameTextField;
     private JTable allRecipesTable;
-    private JTable newOrderRecipesTable;
+    private JTable instructionTable;
+    private JComboBox recipeTypeComboBox;
+    private JComboBox dietTypeComboBox;
+    private JTextArea textArea1;
+    private JButton addInstructionButton;
+    private JButton deleteInstructionButton;
+    private JTable table1;
+    private JTable table2;
+    private JButton addIngredientButton;
+    private JButton removeIngredientButton;
 
     RecipeConnection recipeConnection = new RecipeConnection();
+    private ArrayList<String> instructions = new ArrayList<String>();
 
     public AddNewRecipeForm() {
         setContentPane(mainPanel);
@@ -29,21 +41,57 @@ public class AddNewRecipeForm extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
 
-        loadAllRecipes();
+        //loadAllRecipes();
+        setUpTable();
+
+        addInstructionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addInstructionToTable(instructions.size(), textArea1.getText());
+            }
+        });
+
+        deleteInstructionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = instructionTable.getSelectedRows();
+                for(int i = 0; i < selectedRows.length; i++) {
+                    instructions.remove(selectedRows[i]);
+                    tableModel.removeRow(selectedRows[i]);
+                }
+                //instructions.remove(selectedRows);
+                reloadTable();
+            }
+        });
     }
 
-    private void loadAllRecipes() {//load table
-        String[] columnNames = {"Name", "Recipe Type", "Diet Type", "Price"};
-        NonEditTableModel tableModel = new NonEditTableModel(columnNames, 0);
-        allRecipesTable.setModel(tableModel);
-        ArrayList<Recipe> recipes = recipeConnection.viewAllRecipes();
-        for(int i = 0; i < recipes.size(); i++) {
-            String name = recipes.get(i).getRecipeName();
-            RecipeType recipeType = recipes.get(i).getRecipeType();
-            DietType dietType = recipes.get(i).getDietType();
-            double price = recipes.get(i).getPrice();
-            Object objects[] = {name, recipeType, dietType, price};
-            tableModel.addRow(objects);
+    private NonEditTableModel tableModel;
+
+    private void setUpTable() {
+        String columns[] = {"Step Number", "Description"};
+        tableModel = new NonEditTableModel(columns);
+        instructionTable.setModel(tableModel);
+    }
+
+    private void addInstructionToTable(int stepNumber, String instruction) {
+        instructions.add(instruction);
+        Object objects[] = {stepNumber + 1, instruction};
+        tableModel.addRow(objects);
+        textArea1.setText("");
+    }
+
+    private void reloadTable() {//load table
+        String columns[] = {"Step Number", "Description"};
+        tableModel = new NonEditTableModel(columns);
+        instructionTable.setModel(tableModel);
+        for(int i = 0; i < instructions.size(); i++) {
+            addInstructionToTable(i, instructions.get(i));
         }
+    }
+
+    NonEditTableModel ingredientTableModel;
+    private void loadIngredientTable() {
+        String ingredientColumns[] = {"Name", ""};
+        ingredientTableModel = new NonEditTableModel(ingredientColumns);
     }
 }

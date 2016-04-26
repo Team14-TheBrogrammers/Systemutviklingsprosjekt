@@ -43,64 +43,76 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
 
         int customerID = 1;
-        boolean customerFinished = false;
+        //boolean customerFinished = false;
         ResultSet resultSet = null;
         PreparedStatement selectStatement = null;
         PreparedStatement insertStatement = null;
 
 
-        String customerSelect = "SELECT COUNT(customer_id) AS c FROM Customer;";
-        String privateCSelect = "SELECT COUNT(private_id) AS c FROM Private_customer";
+        String customerSelect = "SELECT MAX(customer_id) AS m FROM Customer;";
         String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
-        String privateCInsert = "INSERT INTO Private_customer(last_name, first_name, customer_id)\n" +
-                " VALUES(?, ?, ?, ?, ?);";
 
-        while(!customerFinished) {
+        String privateCSelect = "SELECT MAX(private_id) AS m FROM Private_customer;";
+        String privateCInsert = "INSERT INTO Private_customer(last_name, first_name, customer_id) VALUES(?, ?, ?);";
+
+        //while(!customerFinished) {
             try {
+                getConnection().setAutoCommit(false);
+
                 selectStatement = getConnection().prepareStatement(customerSelect);
                 resultSet = selectStatement.executeQuery();
                 resultSet.next();
+                customerID = resultSet.getInt("m") + 1;
 
-                customerID = resultSet.getInt("c") + 1;
                 insertStatement = getConnection().prepareStatement(customerInsert);
                 insertStatement.setString(1, address);
                 insertStatement.setInt(2, zip);
                 insertStatement.setInt(3, phone);
                 insertStatement.setString(4, email);
 
-                int privateID = 1;
-                boolean privateFinished = false;
-                ResultSet resultSet1 = null;
-                PreparedStatement privateSelect = null;
-                PreparedStatement privateInsert = null;
+                if(insertStatement.executeUpdate() != 0) {
+                    int privateID = 1;
+                    boolean privateFinished = false;
+                    ResultSet resultSet1 = null;
+                    PreparedStatement privateSelect = null;
+                    PreparedStatement privateInsert = null;
 
-                while(!privateFinished) {
-                    try {
-                        privateSelect = getConnection().prepareStatement(privateCSelect);
-                        resultSet1 = privateSelect.executeQuery();
-                        resultSet1.next();
+                    while(!privateFinished) {
+                        try {
+                            privateSelect = getConnection().prepareStatement(privateCSelect);
+                            resultSet1 = privateSelect.executeQuery();
+                            resultSet1.next();
 
-                        privateID = resultSet1.getInt("c") + 1;
-                        privateInsert = getConnection().prepareStatement(privateCInsert);
-                        privateInsert.setString(1, lastName);
-                        privateInsert.setString(2, firstName);
-                        privateInsert.setInt(3, customerID);
+                            privateID = resultSet1.getInt("m") + 1;
+                            privateInsert = getConnection().prepareStatement(privateCInsert);
+                            privateInsert.setString(1, lastName);
+                            privateInsert.setString(2, firstName);
+                            privateInsert.setInt(3, customerID);
 
-                        privateInsert.executeUpdate();
-                        privateFinished = true;
-                    } catch (SQLException sqle) {
-                        writeError(sqle.getMessage()); //// FIXME: 14.04.2016
-                    } catch (Exception e) {
-                        writeError(e.getMessage()); // TODO : SHIT
-                    } finally {
-                        getCleaner().closePreparedStatement(privateInsert);
-                        getCleaner().closeResultSet(resultSet1);
-                        getCleaner().closePreparedStatement(privateSelect);
+                            if(privateInsert.executeUpdate() != 0) {
+                                System.out.println(privateID);
+                                getConnection().commit();
+                                return customerID;
+                            } else {
+                                return -1;
+                            }
+                            //privateFinished = true;
+                        } catch (SQLException sqle) {
+                            writeError(sqle.getMessage());
+                        } catch (Exception e) {
+                            writeError(e.getMessage());
+                        } finally {
+                            getCleaner().closePreparedStatement(privateInsert);
+                            getCleaner().closeResultSet(resultSet1);
+                            getCleaner().closePreparedStatement(privateSelect);
+                            getCleaner().setAutoCommit(getConnection());
+                        }
                     }
+                } else {
+                    return -1;
                 }
 
-                insertStatement.executeUpdate();
-                customerFinished = true;
+                //customerFinished = true;
 
             } catch (SQLException sqle) {
                 writeError(sqle.getMessage());
@@ -110,8 +122,9 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 getCleaner().closePreparedStatement(insertStatement);
                 getCleaner().closeResultSet(resultSet);
                 getCleaner().closePreparedStatement(selectStatement);
+                getCleaner().setAutoCommit(getConnection());
             }
-        }
+        //}
         return customerID;
     }
 
@@ -121,60 +134,76 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
 
         int customerID = 1;
-        boolean customerFinished = false;
+        //boolean customerFinished = false;
         ResultSet resultSet = null;
         PreparedStatement selectStatement = null;
         PreparedStatement insertStatement = null;
 
 
-        String customerSelect = "SELECT COUNT(customer_id) AS c FROM Customer;";
-        String privateCSelect = "SELECT COUNT(private_id) AS c FROM Company";
+        String customerSelect = "SELECT MAX(customer_id) AS m FROM Customer;";
         String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
-        String privateCInsert = "INSERT INTO Company(company_name, customer_id) VALUES(?, ?);";
 
-        while(!customerFinished) {
+        String companyCSelect = "SELECT MAX(company_id) AS m FROM Company;";
+        String companyCInsert = "INSERT INTO Company(company_name, customer_id) VALUES(?, ?);";
+
+        //while(!customerFinished) {
             try {
+                getConnection().setAutoCommit(false);
+
                 selectStatement = getConnection().prepareStatement(customerSelect);
                 resultSet = selectStatement.executeQuery();
                 resultSet.next();
+                customerID = resultSet.getInt("m") + 1;
 
-                customerID = resultSet.getInt("c") + 1;
                 insertStatement = getConnection().prepareStatement(customerInsert);
                 insertStatement.setString(1, address);
                 insertStatement.setInt(2, zip);
+                insertStatement.setInt(3, phone);
+                insertStatement.setString(4, email);
+                if(insertStatement.executeUpdate() != 0){
+                    int companyID = 1;
+                    boolean companyFinished = false;
+                    ResultSet resultSet1 = null;
+                    PreparedStatement companySelect = null;
+                    PreparedStatement companyInsert = null;
 
-                int privateID = 1;
-                boolean privateFinished = false;
-                ResultSet resultSet1 = null;
-                PreparedStatement privateSelect = null;
-                PreparedStatement privateInsert = null;
+                    while(!companyFinished) {
+                        try {
+                            companySelect = getConnection().prepareStatement(companyCSelect);
+                            resultSet1 = companySelect.executeQuery();
+                            resultSet1.next();
 
-                while(!privateFinished) {
-                    try {
-                        privateSelect = getConnection().prepareStatement(privateCSelect);
-                        resultSet1 = privateSelect.executeQuery();
-                        resultSet1.next();
+                            companyID = resultSet1.getInt("m") + 1;
+                            companyInsert = getConnection().prepareStatement(companyCInsert);
+                            companyInsert.setString(1, name);
+                            companyInsert.setInt(2, customerID);
 
-                        privateID = resultSet1.getInt("c") + 1;
-                        privateInsert = getConnection().prepareStatement(privateCInsert);
-                        privateInsert.setString(1, name);
-                        privateInsert.setInt(2, customerID);
+                            if(companyInsert.executeUpdate() != 0) {
+                                System.out.println(companyID);
+                                getConnection().commit();
+                                return customerID;
+                            } else {
+                                return -1;
+                            }
 
-                        privateInsert.executeUpdate();
-                        privateFinished = true;
-                    } catch (SQLException sqle) {
-                        writeError(sqle.getMessage()); //// FIXME: 14.04.2016
-                    } catch (Exception e) {
-                        writeError(e.getMessage()); // TODO : SHIT : Transaksjonshåndtering??
-                    } finally {
-                        getCleaner().closePreparedStatement(privateInsert);
-                        getCleaner().closeResultSet(resultSet1);
-                        getCleaner().closePreparedStatement(privateSelect);
+                            //privateFinished = true;
+                        } catch (SQLException sqle) {
+                            writeError(sqle.getMessage());
+                        } catch (Exception e) {
+                            writeError(e.getMessage());
+                        } finally {
+                            getCleaner().closePreparedStatement(companyInsert);
+                            getCleaner().closeResultSet(resultSet1);
+                            getCleaner().closePreparedStatement(companySelect);
+                            getCleaner().setAutoCommit(getConnection());
+                        }
                     }
+                } else {
+                    return -2;
                 }
 
-                insertStatement.executeUpdate();
-                customerFinished = true;
+                //insertStatement.executeUpdate();
+                //customerFinished = true;
 
             } catch (SQLException sqle) {
                 writeError(sqle.getMessage());
@@ -184,8 +213,9 @@ public abstract class CustomerConnection extends DatabaseConnection {
                 getCleaner().closePreparedStatement(insertStatement);
                 getCleaner().closeResultSet(resultSet);
                 getCleaner().closePreparedStatement(selectStatement);
+                getCleaner().setAutoCommit(getConnection());
             }
-        }
+        //}
         return customerID;
     }
 
@@ -320,6 +350,66 @@ public abstract class CustomerConnection extends DatabaseConnection {
             getCleaner().closeStatement(statement);
         }
         return customers;
+    }
+
+    public ArrayList<Company> viewAllCompanies() {
+        ArrayList<Company> companies = new ArrayList<Company>();
+        String sqlCommand = "SELECT * FROM Customer NATURAL JOIN Company;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+
+            while(resultSet.next()) {
+                int id = resultSet.getInt("customer_id");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+                String emailAddress = resultSet.getString("email_address");
+                int phone = resultSet.getInt("phone");
+                int companyID = resultSet.getInt("company_id");
+                String companyName = resultSet.getString("company_name");
+                companies.add(new Company(id, address, zip, emailAddress, phone, companyID, companyName));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return companies;
+    }
+
+    public ArrayList<PrivateCustomer> viewAllPrivateCustomers() {
+        ArrayList<PrivateCustomer> privateCustomers = new ArrayList<PrivateCustomer>();
+        String sqlCommand = "SELECT * FROM Customer NATURAL JOIN Private_customer;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(sqlCommand);
+            while(resultSet.next()) {
+                int customerID = resultSet.getInt("customer_id");
+                String address = resultSet.getString("address");
+                int zip = resultSet.getInt("zip");
+                String emailAddress = resultSet.getString("email_address");
+                int phone = resultSet.getInt("phone");
+                int privateCustomerID = resultSet.getInt("private_id");
+                String lastName = resultSet.getString("last_name");
+                String firstName = resultSet.getString("first_name");
+                privateCustomers.add(new PrivateCustomer(customerID, address, zip, emailAddress, phone, privateCustomerID, lastName, firstName));
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closeStatement(statement);
+        }
+        return privateCustomers;
     }
 
     private boolean isCompany(int customerID) {

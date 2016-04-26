@@ -4,6 +4,7 @@ import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
+import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DateConverter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.DatePickerFormatter;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
@@ -25,6 +26,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 
 /**
@@ -54,8 +57,10 @@ public class AddNewOrderForm extends JFrame {
 
     private ManageOrder manageOrder;// = new ManageOrder();
     private ManageCustomer manageCustomer;// = new ManageCustomer();
+    private MainForm mainForm1;
 
-    public AddNewOrderForm() {
+    public AddNewOrderForm(final MainForm mainForm) {
+        this.mainForm1 = mainForm;
         setTitle("Add New Order");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(600, 450);
@@ -96,8 +101,10 @@ public class AddNewOrderForm extends JFrame {
                 boolean takeAway = orderIsTakeAwayCheckBox.isSelected();
                 String otherRequests = otherRequestsTextField.getText();
 
-                System.out.println(manageOrder.addOrder(customerID, false, currentDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, recipes, quantity));
+                showMessageDialog(null, manageOrder.addOrder(customerID, false, currentDate, deliveryDate, deliveryTime, address, zip, takeAway, otherRequests, recipes, quantity));
                 manageOrder.stopConnection();
+                mainForm1.loadOrdersTab();
+                dispose();
             }
         });
     }
@@ -114,7 +121,7 @@ public class AddNewOrderForm extends JFrame {
         this.recipes = recipes;
         this.quantity = quantity;
         String recipeColumns2[] = {"Name", "Recipe Type", "Diet Type", "Quantity", "Price for each", "Total Price"};
-        NonEditTableModel tableModel = new NonEditTableModel(recipeColumns2, 0);
+        NonEditTableModel tableModel = new NonEditTableModel(recipeColumns2);
         table1.setModel(tableModel);
         addRowsToTable(tableModel);
     }
