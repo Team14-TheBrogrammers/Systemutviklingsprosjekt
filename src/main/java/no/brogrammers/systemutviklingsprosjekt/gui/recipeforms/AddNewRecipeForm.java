@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  * Created by Knut on 22.04.2016.
  */
@@ -81,7 +83,10 @@ public class AddNewRecipeForm extends JFrame {
                     instructionsTmp.add(new Instruction(i, instructions.get(i)));
                 }
                 double price = Double.parseDouble(priceTextField.getText());
-                recipeConnection.create(new Recipe(name, recipeType, dietType, currentIngredients, instructionsTmp, price));
+                if(recipeConnection.create(new Recipe(name, recipeType, dietType, currentIngredients, instructionsTmp, price))) {
+                    showMessageDialog(null, "A New Recipe Was Created");
+                }
+
                 parentForm.loadRecipesTab();
                 dispose();
             }
