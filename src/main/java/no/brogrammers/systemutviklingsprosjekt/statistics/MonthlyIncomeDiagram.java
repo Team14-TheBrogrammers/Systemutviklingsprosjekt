@@ -16,7 +16,7 @@ import java.util.Calendar;
  */
 
 public class MonthlyIncomeDiagram {
-    StatisticsConnection statisticsConnection = new StatisticsConnection();
+    StatisticsConnection statisticsConnection;
 
     /**
      * The method creates a DefaultCategoryDataset. It gets information from a double array from the monthlyIncome() method.
@@ -24,6 +24,7 @@ public class MonthlyIncomeDiagram {
      */
 
     private DefaultCategoryDataset createDataset() {
+        statisticsConnection = new StatisticsConnection();
         double[] monthlyIncome = statisticsConnection.monthlyIncome();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String income = "Income";
@@ -46,17 +47,18 @@ public class MonthlyIncomeDiagram {
             }
         }
         dataset.addValue(monthlyIncome[currentMonth-1], income, months[currentMonth-1] + " -" + curYear2);
-
+        statisticsConnection.stopConnection();
         return dataset;
     }
 
     public ChartPanel createChartPanel() {
+        statisticsConnection = new StatisticsConnection();
         JFreeChart chart = ChartFactory.createLineChart("Monthly Income Last 12 Months", "Month", "Income", createDataset(), PlotOrientation.VERTICAL, true,true,false);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(Color.WHITE);
         LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
         renderer.setSeriesPaint(0, Color.BLUE);
-
+        statisticsConnection.stopConnection();
         return new ChartPanel(chart);
     }
 
