@@ -272,7 +272,7 @@ public class MainForm extends JFrame{
 
     private void checkUserType() {
         if(user instanceof Manager) {
-            System.out.println("manager");
+            //System.out.println("manager");
             loadOrdersTab();
             //tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
             loadSubscriptionTab();
@@ -286,7 +286,7 @@ public class MainForm extends JFrame{
             //*loadStatisticsTab();
             loadDriverRouteTab();
         } else if (user instanceof Cashier) {
-            System.out.println("cashier");
+            //System.out.println("cashier");
             loadOrdersTab();
             loadSubscriptionTab();
             //tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
