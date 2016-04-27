@@ -48,7 +48,6 @@ public abstract class CustomerConnection extends DatabaseConnection {
         PreparedStatement selectStatement = null;
         PreparedStatement insertStatement = null;
 
-
         String customerSelect = "SELECT MAX(customer_id) AS m FROM Customer;";
         String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
 
