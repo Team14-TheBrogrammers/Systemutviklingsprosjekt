@@ -2,6 +2,7 @@ package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.ChooseEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
@@ -77,7 +78,7 @@ public class SelectRecipeForm extends JFrame {
     }
 
     private NonEditTableModel allRecipesTableModel;
-    private DefaultTableModel orderTableModel;
+    private ChooseEditTableModel orderTableModel;
     ArrayList<Recipe> recipes;
 
     private void addRowToTable(DefaultTableModel defaultTableModel, Recipe recipe) {
@@ -102,7 +103,7 @@ public class SelectRecipeForm extends JFrame {
 
         //Set modeltable for Recipe table:
         String recipeColumns2[] = {"Name", "Recipe Type", "Diet Type", "Quantity", "Price for each", "Total Price"};
-        orderTableModel = new DefaultTableModel(recipeColumns2, 0);
+        orderTableModel = new ChooseEditTableModel(recipeColumns2, 3);
         orderRecipesTable.setModel(orderTableModel);
         //TODO: more code
 

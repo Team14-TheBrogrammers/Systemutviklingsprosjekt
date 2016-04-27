@@ -38,7 +38,6 @@ public class DriverConnection extends OrderConnection {
      * List orders where the delivery date is this week and where take_away is false
      * @return ArrayList<Order>
      */
-
     public ArrayList<Order> deliveriesThisWeek() {
         String sqlCommand = "SELECT * FROM Orders WHERE WEEK(delivery_date) = WEEK(CURDATE()) AND YEAR(delivery_date) = YEAR(CURDATE()) AND delivery_date >= CURDATE() AND take_away = 0;";
         return getOrders(sqlCommand);

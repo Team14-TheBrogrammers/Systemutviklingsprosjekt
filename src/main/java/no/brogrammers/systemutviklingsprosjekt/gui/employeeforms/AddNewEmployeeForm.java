@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Properties;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  * Created by Knut on 21.04.2016.
  */
@@ -30,7 +32,7 @@ public class AddNewEmployeeForm extends JFrame{
     private JPasswordField passwordField1;
     private JTextField emailTextField;
 
-    private ManageUser manageUser; // = new ManageUser();//TODO: FIX this
+    private ManageUser manageUser;
     private MainForm mainForm;
 
     public AddNewEmployeeForm(MainForm mainForm) {
@@ -66,19 +68,16 @@ public class AddNewEmployeeForm extends JFrame{
 
         switch (userTypeComboBox.getSelectedIndex()) {
             case 0:
-                System.out.println(manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
+                showMessageDialog(null, manageUser.registerManager(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 break;
             case 1:
-                System.out.println(manageUser.registerCashier(lastName, firstName, phone, email, dateOfEmployment, username, password));
-                //manageUser.registerCashier()//TODO:FIX more code
+                showMessageDialog(null, manageUser.registerCashier(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 break;
             case 2:
-                System.out.println(manageUser.registerCook(lastName, firstName, phone, email, dateOfEmployment, username, password));
-                //manageUser.registerCook()
+                showMessageDialog(null, manageUser.registerCook(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 break;
             case 3:
-                System.out.println(manageUser.registerDriver(lastName, firstName, phone, email, dateOfEmployment, username, password));
-                //manageUser.registerDriver()
+                showMessageDialog(null, manageUser.registerDriver(lastName, firstName, phone, email, dateOfEmployment, username, password));
                 break;
         }
         mainForm.loadEmployeesTab();

@@ -54,7 +54,7 @@ public abstract class OrderConnection extends DatabaseConnection {
      * @return -1 if the customer with the given customerID is not in the database. Return -2 if the orderDate and time is not accepted.
      * Otherwise the method return the orderID of the placed order.
      */
-    public int addOrder(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, ArrayList<Recipe> recipes, int[] quantity) { // TODO: clean connection properly and do fix this code
+    public int addOrder(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, ArrayList<Recipe> recipes, int[] quantity) {
         if(checkCorrectOrderDates(deliveryDate, deliveryTime, takeAway)) {
             if(checkCustomerId(customerID)) {
                 int newNumber = 1; //If there is no other numbers before this number will be set as the id
@@ -253,7 +253,7 @@ public abstract class OrderConnection extends DatabaseConnection {
                 RecipeType recipeType = RecipeType.valueOf(resultSet.getString("recipe_type"));
                 DietType dietType = DietType.valueOf(resultSet.getString("diet_type"));
                 double price = resultSet.getDouble("price");
-                recipes.add(new Recipe(name, recipeType, dietType, getIngredientsToRecipe(name), getInstructionsToRecipe(name), price)); //TODO: FIX
+                recipes.add(new Recipe(name, recipeType, dietType, getIngredientsToRecipe(name), getInstructionsToRecipe(name), price));
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
@@ -266,7 +266,7 @@ public abstract class OrderConnection extends DatabaseConnection {
         return recipes;
     }
 
-    public Order viewOrderByID(int orderID) {//TODO: DOES NOT NEED test subscription
+    public Order viewOrderByID(int orderID) {
         //String sqlCommand = "SELECT payment_status, delivery_date, delivery_time, address, total_price FROM orders WHERE order_id = " + orderID + ";";
 
         String sqlCommand = "SELECT * FROM Orders WHERE order_id = " + orderID + ";";
@@ -389,49 +389,8 @@ public abstract class OrderConnection extends DatabaseConnection {
         return orders;
     }
 
-    //TODO: FIX THIS METHOD SOON
     public ArrayList<Order> viewActiveOrders() {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date >= CURDATE();";
         return getOrders(sqlCommand);
     }
-        /*ArrayList<Order> orders  = new ArrayList<Order>();
-        String sqlCommand = "SELECT * FROM Orders;";
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = getConnection().createStatement();
-            resultSet = statement.executeQuery(sqlCommand);
-            while(resultSet.next()) {
-                if(resultSet.getDate("delivery_date").getTime() - new Date(Calendar.getInstance().getTimeInMillis()).getTime()) {
-                    int orderID = resultSet.getInt("order_id");
-                    int customerID = resultSet.getInt("customer_id");
-                    boolean paymentStatus = resultSet.getBoolean("payment_status");
-                    java.sql.Date orderDate = resultSet.getDate("order_date");
-                    java.sql.Date deliveryDate = resultSet.getDate("delivery_date");
-                    double deliveryTime = resultSet.getDouble("delivery_time");
-                    String address = resultSet.getString("address");
-                    int zip = resultSet.getInt("zip");
-                    //TODO ingredient_purchased/made/delivered
-
-                    orders.add(new Order(orderID, customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, getRecipesToOrder(orderID)));
-                }
-
-                if(resultSet.getInt("delivery_date") - new Date(Calendar.getInstance().getTimeInMillis())) {
-
-                }
-
-            }
-        } catch (SQLException sqle) {
-            writeError(sqle.getMessage());
-        } catch (Exception e) {
-            writeError(e.getMessage());
-        } finally {
-            getCleaner().closeResultSet(resultSet);
-            getCleaner().closeStatement(statement);
-        }
-        return orders;
-    }*/
-    
-
-    //Legge alle metodene for ManageOrder her ??
 }

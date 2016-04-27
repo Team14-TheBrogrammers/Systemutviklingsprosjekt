@@ -34,7 +34,7 @@ public class LoginConnectionTest {
     public void checkLoginDetails() throws Exception {
         User user = loginConnection.checkLoginDetails(username, password);
         DateConverter dateConverter = new DateConverter();
-        Manager expectedResult = new Manager(1, "Sund", "Ingunn", 98765432, "ingunnsu@yahoo.no", dateConverter.stringToSqlDate("2015-03-04"), username, password);
+        Manager expectedResult = new Manager(1, "Sund", "Ingunn", 98765432, "ingunnsu@yahoo.no", dateConverter.stringToSqlDate("2015-03-04"), "ingunnsu", "ingunnIzc00l");
         assertEquals(user, expectedResult);
     }
 
