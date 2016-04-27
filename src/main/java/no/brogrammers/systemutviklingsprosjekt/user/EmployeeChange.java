@@ -1,5 +1,6 @@
 /**
  * Created by Ingunn on 10.03.2016.
+ * Employees that can change information in the database (Manager, cashier)
  */
 
 package no.brogrammers.systemutviklingsprosjekt.user;
