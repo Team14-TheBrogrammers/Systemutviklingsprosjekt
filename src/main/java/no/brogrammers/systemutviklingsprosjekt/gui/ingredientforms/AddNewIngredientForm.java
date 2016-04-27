@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  * Created by Knut on 24.04.2016.
  */
@@ -39,7 +41,9 @@ public class AddNewIngredientForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 ingredientConnection = new IngredientConnection();
-                ingredientConnection.addIngredient(ingredientNameTextField.getText(), Double.parseDouble(quantityTextField.getText()), measurementTextField.getText());
+                if(ingredientConnection.addIngredient(ingredientNameTextField.getText(), Double.parseDouble(quantityTextField.getText()), measurementTextField.getText()) == 1) {
+                    showMessageDialog(null, "A New Ingerdient Was Added To The Database");
+                }
                 ingredientConnection.stopConnection();
                 mainForm.loadIngredientsTab();
                 dispose();

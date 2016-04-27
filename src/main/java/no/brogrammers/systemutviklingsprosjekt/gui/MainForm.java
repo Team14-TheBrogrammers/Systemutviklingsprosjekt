@@ -79,9 +79,6 @@ public class MainForm extends JFrame{
     private JButton addNewIngredientButton;
     private JTable ingredientsTable;
     private JButton deleteSelectedIngredientSButton;
-    private JTable table4;
-    private JButton button5;
-    private JButton button6;
     private ChartPanel chartPanel1;
     private ChartPanel chartPanel2;
     private ChartPanel chartPanel3;
@@ -104,7 +101,6 @@ public class MainForm extends JFrame{
     private JTable table3;
     private JTable table5;
     private JTable table6;
-    private JScrollPane DeliveriesTodayTable;
     private JTable subscrptionsTab;
     private JButton signOutButton;
     private BrowserView test12345;
@@ -147,8 +143,8 @@ public class MainForm extends JFrame{
         setTitle("Healty Catering Ltd.");
         setLocationRelativeTo(null);
 
-
         loadTabMenu();
+        setUpListeners();
 
         checkUserType();
         /*String deliveriesColumns1[] = {"Route", "Time", "Show Route", "Drive"};
@@ -279,8 +275,8 @@ public class MainForm extends JFrame{
             loadEmployeesTab();
             loadMyProfileTab();
             loadCookTab();
-            /*loadStatisticsTab();
-            loadDriverRouteTab();*/
+            //*loadStatisticsTab();
+            loadDriverRouteTab();
         } else if (user instanceof Cashier) {
             System.out.println("cashier");
             loadOrdersTab();
@@ -634,6 +630,7 @@ public class MainForm extends JFrame{
         subscriptionTableModel = new NonEditTableModel(subscriptionolumns);
         subscrptionsTab.setModel(subscriptionTableModel);
         ArrayList<Subscription> subscriptions = subscriptionConnection.viewAllSubscriptions();
+        System.out.println(subscriptions.size());
         for(int i = 0; i < subscriptions.size(); i++) {
             int orderID = subscriptions.get(i).getOrderID();
             int subsID = subscriptions.get(i).getSubscriptionID();
