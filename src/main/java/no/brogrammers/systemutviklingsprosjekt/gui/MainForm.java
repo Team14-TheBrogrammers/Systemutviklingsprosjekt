@@ -128,7 +128,6 @@ public class MainForm extends JFrame{
     private ArrayList<Order> orders = new ArrayList<Order>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
     private ArrayList<User> users = new ArrayList<User>();
-    //private ArrayList<> //TODO: driverroute:?
 
     //DefaultListModels for using in tables
     NonEditTableModel acticeOrdersTableModel;
@@ -146,7 +145,7 @@ public class MainForm extends JFrame{
 
         loadTabMenu();
 
-        loadTabs();
+        //loadTabs();
         addOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -239,8 +238,26 @@ public class MainForm extends JFrame{
         return user;
     }
 
-    private void checkUserType() { //TODO: // FIXME: 22.04.2016
+    private void checkUserType() {
         if(user instanceof Manager) {
+            loadOrdersTab();
+            tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
+            //subscriptions
+            loadRecipesTab();
+            loadCustomersTab();
+            loadEmployeesTab();
+            loadIngredientsTab();
+            loadCustomersTab();
+            loadCookTab();
+            loadMyProfileTab();
+            loadStatisticsTab();
+            //scrollPane1.setViewportView(customersTable);
+            loadDriverRouteTab();
+        } else if (user instanceof Cashier) {
+
+        } else if (user instanceof Cook) {
+
+        } else if (user instanceof Driver) {
 
         }
     }
@@ -640,7 +657,7 @@ public class MainForm extends JFrame{
         loadMyProfileTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
-        loadDriverRouteTab();
+        //loadDriverRouteTab();
 
         //Subscription:
 
