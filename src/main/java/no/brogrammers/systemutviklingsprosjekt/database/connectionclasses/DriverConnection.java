@@ -71,31 +71,37 @@ public class DriverConnection extends OrderConnection {//TODO: abstract?
 
     public ArrayList<ArrayList<Order>> splitDeliveriesToday() {
         ArrayList<ArrayList<Order>> allDeliveries = new ArrayList<ArrayList<Order>>();
-        ArrayList<Order> orders = deliveriesToday();
-
-        ArrayList<Order> deliveriesInterval = new ArrayList<Order>();
-        deliveriesInterval.add(orders.get(0));
-        if (orders.size() == 1) {
-            allDeliveries.add(deliveriesInterval);
+        ArrayList<Order> orders = new ArrayList<Order>();
+        ArrayList<Order> tmp = new ArrayList<Order>();
+        tmp = deliveriesToday();
+        for(int i = 0; i < tmp.size(); i++) {
+            orders.add(tmp.get(i));
         }
 
-        double count = orders.get(0).getDeliveryTime();
-
-        for (int i = 1; i < orders.size(); i++) {
-            if ((orders.get(i).getDeliveryTime() - count) < 1.0) {
-                deliveriesInterval.add(orders.get(i));
-            } else {
-                count = orders.get(i).getDeliveryTime();
+        ArrayList<Order> deliveriesInterval = new ArrayList<Order>();
+        if(orders.get(0) != null) {
+            deliveriesInterval.add(orders.get(0));
+            if (orders.size() == 1) {
                 allDeliveries.add(deliveriesInterval);
-                deliveriesInterval = new ArrayList<Order>();
-                deliveriesInterval.add(orders.get(i));
-                if(i == orders.size()-1) {
+            }
+
+            double count = orders.get(0).getDeliveryTime();
+
+            for (int i = 1; i < orders.size(); i++) {
+                if ((orders.get(i).getDeliveryTime() - count) < 1.0) {
+                    deliveriesInterval.add(orders.get(i));
+                } else {
+                    count = orders.get(i).getDeliveryTime();
                     allDeliveries.add(deliveriesInterval);
+                    deliveriesInterval = new ArrayList<Order>();
+                    deliveriesInterval.add(orders.get(i));
+                    if(i == orders.size()-1) {
+                        allDeliveries.add(deliveriesInterval);
+                    }
                 }
             }
         }
         return allDeliveries;
-
     }
 
 
