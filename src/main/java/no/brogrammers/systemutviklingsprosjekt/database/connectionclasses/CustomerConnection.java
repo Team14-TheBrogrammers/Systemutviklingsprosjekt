@@ -10,14 +10,26 @@ import java.util.ArrayList;
 
 /**
  * Created by Knut on 06.04.2016.
+ * This class is made for setting up a connection to the database and read and write data about customers in the database.
+ * The CustomerConnection class Extends DatabaseConnection class and for easier conneciton and coding to the database.
  */
 public abstract class CustomerConnection extends DatabaseConnection {
 
+    /**
+     * Method for checking if a given customer with customerID allready is registered in the database.
+     * @param customerID is the ID that will be checked in the database.
+     * @return true if the customer allready exists, if not the method returns false.
+     */
     private boolean customerExists(int customerID) {
         String sqlCommand = "SELECT * FROM Customer WHERE customer_id = " + customerID + ";";
         return checkExists(sqlCommand);
     }
 
+    /**
+     * Method for checking whether a customer is a Private Customer or a Company.
+     * @param customerID is the customer ID that will be checked in the database.
+     * @return true if the Customer is either Private Customer or Company. It returns false if none of these matches.
+     */
     private boolean isPrivateCustomerOrCompany(int customerID) { //customer exists as a private customer or a company
         String sqlPrivateCustomer = "SELECT * FROM Private_customer WHERE customer_id = " + customerID + ";";
         if(checkExists(sqlPrivateCustomer)) {
@@ -32,11 +44,27 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
     }
 
+    /**
+     * Method for checking if a phone number is allready in use by an other customer.
+     * @param phone is the phone number that is checked in the databse.
+     * @return true if the phone number is is use. It return false if not.
+     */
     private boolean phoneNumberIsUsed(int phone) {
         String sqlCommand = "SELECT phone FROM Customer WHERE phone = " + phone + ";";
         return checkExists(sqlCommand);
     }
 
+    /**
+     * Method for registering a Private Customer to the database.
+     * @param address is the address to the customer.
+     * @param zip is the zip code for the address to the customer.
+     * @param email is the email for the customer.
+     * @param phone is the phone address to the customer.
+     * @param lastName is the last name to the customer
+     * @param firstName is the first name to the customer.
+     * @return -1 if the phone number is allready in use by someone else, or something else happened.
+     * Otherwise the registeredcustomer ID is returned.
+     */
     public int regPrivateCustomer(String address, int zip, String email, int phone, String lastName, String firstName) {
         if(phoneNumberIsUsed(phone)) {
             return -1;
@@ -47,7 +75,6 @@ public abstract class CustomerConnection extends DatabaseConnection {
         ResultSet resultSet = null;
         PreparedStatement selectStatement = null;
         PreparedStatement insertStatement = null;
-
 
         String customerSelect = "SELECT MAX(customer_id) AS m FROM Customer;";
         String customerInsert = "INSERT INTO Customer(address, zip, phone, email_address) VALUES(?, ?, ?, ?);";
@@ -128,6 +155,17 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return customerID;
     }
 
+    /**
+     * Method for registering a new Company in the customer database.
+     * @param address is the address to the customer.
+     * @param zip is the zip code for the address to the customer.
+     * @param email is the email to the customer.
+     * @param phone is the phone address to the customer.
+     * @param name is the name for the Company that will be registered in the database.
+     * @return -1 if phone number is allready in use by another customer or something else wrong happened.
+     * Otherwise it returs -2 if the customer was not registered in the database.
+     * The method returns the customer ID for the new Company if everything went great.
+     */
     public int regCompany(String address, int zip, String email, int phone, String name) {
         if(phoneNumberIsUsed(phone)) {
             return -1;
@@ -223,6 +261,13 @@ public abstract class CustomerConnection extends DatabaseConnection {
 
     }*/
 
+    /**
+     *
+     * @param customerID
+     * @param newAddress
+     * @param newZip
+     * @return
+     */
     public int updateCustomerAddressAndZip(int customerID, String newAddress, int newZip) {
         if(customerExists(customerID)) {
             if(checkZipExists(newZip)) {

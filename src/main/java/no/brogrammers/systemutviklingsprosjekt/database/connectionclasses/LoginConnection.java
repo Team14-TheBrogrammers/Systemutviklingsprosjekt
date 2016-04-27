@@ -3,6 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.user.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,12 +18,14 @@ public class LoginConnection extends DatabaseConnection{
 
     public User checkLoginDetails(String username, String password) {
 
-        String sqlCommand = "SELECT * FROM Employee WHERE username = '" + username + "' AND password = '" + password + "';";
-        Statement statement = null;
+        String sqlCommand = "SELECT * FROM Employee WHERE username = ? AND password = ?;";
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            statement = getConnection().createStatement();
-            resultSet = statement.executeQuery(sqlCommand);
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int employeeID = resultSet.getInt("emp_id");
                 String lastName = resultSet.getString("last_name");
@@ -52,7 +55,7 @@ public class LoginConnection extends DatabaseConnection{
             writeError(e.getMessage());
         } finally {
             getCleaner().closeResultSet(resultSet);
-            getCleaner().closeStatement(statement);
+            getCleaner().closePreparedStatement(preparedStatement);
         }
         return null;
     }

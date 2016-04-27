@@ -6,11 +6,13 @@ import java.util.Calendar;
 
 /**
  * Created by The Brogrammers on 09.03.2016.
+ * This class is used for setting up a connection to the database. It locates local variables with database driver,
+ * information and error log file and database inforamtion file.
+ * This class is used to make more conneciton classes by extending it into sub classes.
  */
 public abstract class DatabaseConnection {
 
     private Connection connection;
-    //private Statement statement; //skal vi bruke PreparedStatement her isteden og heller legge det inn i hver enkelt metode.
 
     private final String databaseDriver = "com.mysql.jdbc.Driver";
     private String databaseName; // = readInformation();
@@ -150,10 +152,18 @@ public abstract class DatabaseConnection {
         return false;
     }
 
+    /**
+     * Method for returning the Connection object so one can easily access the connection in sub-classes.
+     * @return the Connetiojn object.
+     */
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Method for returning the ConnectionCleaner object so one can easily access the cleaner object in sub-classes.
+     * @return the Connection Cleaner object.
+     */
     public ConnectionCleaner getCleaner() {
         return cleaner;
     }

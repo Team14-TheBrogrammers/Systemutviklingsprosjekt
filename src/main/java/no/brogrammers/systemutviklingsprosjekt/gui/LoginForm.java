@@ -71,7 +71,9 @@ public class LoginForm extends JFrame {
         User user = loginConnection.checkLoginDetails(usernameTextField.getText(), passwordPasswordField.getText());
         if (user != null) {//usernameTextField.getText(), passwordPasswordField.getText()) != null) { //TODO: Change .getText()
             //dispose();
-            MainForm mainForm = new MainForm(user);
+            setVisible(false);
+            SplashScreenForm splashScreenForm = new SplashScreenForm();
+            MainForm mainForm = new MainForm(LoginForm.this, splashScreenForm, user);
             dispose();
         } else {
             showMessageDialog(null, "Invalid login details.");
