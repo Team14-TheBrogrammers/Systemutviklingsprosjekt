@@ -1,8 +1,10 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
+import com.teamdev.jxbrowser.chromium.internal.ipc.message.EvaluateXPathMessage;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,6 +49,31 @@ public class IngredientConnection extends DatabaseConnection {
             getCleaner().closeStatement(statement);
         }
         return ingredients;
+    }
+
+    public String viewMeasurement(String ingredientName) {
+        String sqlCommand = "SELECT measurement FROM Stock WHERE ingredient_name = ?;";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setString(1, ingredientName);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                String measurement = resultSet.getString("measurement");
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closePreparedStatement(preparedStatement);
+        }
+        return null;
     }
 
     /**
