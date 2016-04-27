@@ -1,0 +1,28 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Systemutviklingsprosjekt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Systemutviklingsprosjekt_jar</output-path>
+    <root id="archive" name="Systemutviklingsprosjekt.jar">
+      <element id="module-output" name="Systemutviklingsprosjekt" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/maps/google-maps-services/0.1.12/google-maps-services-0.1.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/guava/guava/19.0/guava-19.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/teamdev/jxbrowser/jxbrowser-mac/6.0/jxbrowser-mac-6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/license.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/joda-time/joda-time/2.4/joda-time-2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jdatepicker/jdatepicker/1.3.4/jdatepicker-1.3.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/squareup/okhttp/okhttp/2.0.0/okhttp-2.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/teamdev/jxbrowser/jxbrowser-linux32/6.0/jxbrowser-linux32-6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/teamdev/jxbrowser/jxbrowser-win/6.0/jxbrowser-win-6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/teamdev/jxbrowser/jxbrowser/6.0/jxbrowser-6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/teamdev/jxbrowser/jxbrowser-linux64/6.0/jxbrowser-linux64-6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.16.8/lombok-1.16.8.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: com.teamdev.jxbrowser:jxbrowser-cross-platform:6.0" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/squareup/okio/okio/1.0.0/okio-1.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jfree/jfreechart/1.0.13/jfreechart-1.0.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jfree/jcommon/1.0.16/jcommon-1.0.16.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

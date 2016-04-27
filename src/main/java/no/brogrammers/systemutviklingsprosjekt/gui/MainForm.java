@@ -6,10 +6,7 @@ import no.brogrammers.systemutviklingsprosjekt.customer.Company;
 import no.brogrammers.systemutviklingsprosjekt.customer.Customer;
 import no.brogrammers.systemutviklingsprosjekt.customer.ManageCustomer;
 import no.brogrammers.systemutviklingsprosjekt.customer.PrivateCustomer;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.CookConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.DriverConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
-import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.*;
 import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
 import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
@@ -20,6 +17,7 @@ import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsFo
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.*;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
+import no.brogrammers.systemutviklingsprosjekt.order.Subscription;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
@@ -107,6 +105,7 @@ public class MainForm extends JFrame{
     private JTable table5;
     private JTable table6;
     private JScrollPane DeliveriesTodayTable;
+    private JTable subscrptionsTab;
     private BrowserView test12345;
     private BrowserView testassdasd;
     private JPanel incomePanel;
@@ -119,6 +118,7 @@ public class MainForm extends JFrame{
     private RecipeConnection recipeConnection;// = new RecipeConnection();
     private IngredientConnection ingredientConnection;// = new IngredientConnection();
     private CookConnection cookConnection;//= new CookConnection();
+    private SubscriptionConnection subscriptionConnection;
 
 
     //Current user object
@@ -144,6 +144,8 @@ public class MainForm extends JFrame{
         setVisible(true);
 
         loadTabMenu();
+
+        checkUserType();
 
         //loadTabs();
         addOrderButton.addActionListener(new ActionListener() {
@@ -210,7 +212,7 @@ public class MainForm extends JFrame{
                 System.out.println("TAKE AWAY");
                 cookConnection = new CookConnection();
                 System.out.println(cookConnection.buyAllTakeAwayIngredientsForToday());
-                //cookConnection.stopConnection();
+                cookConnection.stopConnection();
                 loadCookTab();
             }
         });
@@ -219,8 +221,8 @@ public class MainForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 cookConnection = new CookConnection();
                 cookConnection.buyIngredientsTwoDaysFromTomorrow();
-                loadCookTab();
                 cookConnection.stopConnection();
+                loadCookTab();
             }
         });
     }
@@ -241,24 +243,35 @@ public class MainForm extends JFrame{
     private void checkUserType() {
         if(user instanceof Manager) {
             loadOrdersTab();
-            tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
-            //subscriptions
+            //tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
+            loadSubscriptionTab();
             loadRecipesTab();
-            loadCustomersTab();
             loadEmployeesTab();
             loadIngredientsTab();
             loadCustomersTab();
             loadCookTab();
             loadMyProfileTab();
             loadStatisticsTab();
-            //scrollPane1.setViewportView(customersTable);
             loadDriverRouteTab();
         } else if (user instanceof Cashier) {
-
+            loadOrdersTab();
+            //tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
+            loadStatisticsTab();
+            loadRecipesTab();
+            loadCustomersTab();
+            loadCookTab();
+            loadMyProfileTab();
+            loadStatisticsTab();
         } else if (user instanceof Cook) {
-
+            loadOrdersTab();
+            //tabbedPane1.removeTabAt(2);
+            loadRecipesTab();
+            loadIngredientsTab();
+            loadCookTab();
+            loadMyProfileTab();
         } else if (user instanceof Driver) {
-
+            loadMyProfileTab();
+            loadDriverRouteTab();
         }
     }
 
@@ -539,8 +552,31 @@ public class MainForm extends JFrame{
         passwordLabel.setText("Password: " + user.getPassword());
     }
 
-    private void subssscriptionssstuffhere() {
+    private NonEditTableModel subscriptionTableModel;
+    private void loadSubscriptionTab() {
+        subscriptionConnection = new SubscriptionConnection();
+        String subscriptionolumns[] = {"Order ID", "Subscription ID", "Customer ID", "Payment Status", "Order Date", "Delivery Date", "Delivery Time", "Address", "Zip", "Other Requests", "Frequency"};
+        subscriptionTableModel = new NonEditTableModel(subscriptionolumns);
+        subscrptionsTab.setModel(subscriptionTableModel);
+        ArrayList<Subscription> subscriptions = subscriptionConnection.viewAllSubscriptions();
+        for(int i = 0; i < subscriptions.size(); i++) {
+            int orderID = subscriptions.get(i).getOrderID();
+            int subsID = subscriptions.get(i).getSubscriptionID();
+            int custID = subscriptions.get(i).getCustomerID();
+            boolean paymentStatus = subscriptions.get(i).isPaymentStatus();
+            java.sql.Date orderDate = subscriptions.get(i).getOrderDate();
+            java.sql.Date deliveryDate = subscriptions.get(i).getDeliveryDate();
+            double deliveryTime = subscriptions.get(i).getDeliveryTime();
+            String address = subscriptions.get(i).getAddress();
+            int zip = subscriptions.get(i).getZipCode();
+            //boolean takeAway = subscriptions.get(i).isTakeAway()
+            String otherRequests = subscriptions.get(i).getOtherRequests();
+            int frequency = subscriptions.get(i).getFrequency();
 
+            Object objects[] = {orderID, subsID, custID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zip, otherRequests, frequency};
+            subscriptionTableModel.addRow(objects);
+        }
+        subscriptionConnection.stopConnection();
     }
 
     private void loadCookTab() {
@@ -651,7 +687,7 @@ public class MainForm extends JFrame{
         //loadCustomersTab();
         loadEmployeesTab();
         loadIngredientsTab();
-
+        loadSubscriptionTab();
         loadCustomersTab();
 
         loadCookTab();

@@ -18,6 +18,7 @@ public class LoginForm extends JFrame {
     private JPasswordField passwordPasswordField;
     private JPanel mainPanel;
     private JLabel backgroundLabel;
+    private JCheckBox saveLoginDetailsCheckBox;
 
     private LoginConnection loginConnection = new LoginConnection();
 
@@ -67,11 +68,11 @@ public class LoginForm extends JFrame {
     private void logIn() {
         logInButton.setEnabled(false);
         loginConnection = new LoginConnection();
-        User user = loginConnection.checkLoginDetails("ingunnsu", "ingunnIzc00l");
+        User user = loginConnection.checkLoginDetails(usernameTextField.getText(), passwordPasswordField.getText());
         if (user != null) {//usernameTextField.getText(), passwordPasswordField.getText()) != null) { //TODO: Change .getText()
             //dispose();
             MainForm mainForm = new MainForm(user);
-            dispose();//TODO: gjøre noe når man lukker main: åpne dette vinduet igjen?
+            dispose();
         } else {
             showMessageDialog(null, "Invalid login details.");
         }
