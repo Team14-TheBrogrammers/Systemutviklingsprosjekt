@@ -465,8 +465,6 @@ public class MainForm extends JFrame{
 
 
                 for (int i = 1; i < innerList.size(); i++) {//(Order order : innerList) {
-                    //Make address list for mapmethod: uses button as listner
-
                     double time2 = innerList.get(i).getDeliveryTime();
 
                     if (!(time2 == (innerList.get(i - 1).getDeliveryTime()))) {
