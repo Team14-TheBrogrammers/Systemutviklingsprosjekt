@@ -63,7 +63,7 @@ public class IngredientConnection extends DatabaseConnection {
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
-                String measurement = resultSet.getString("measurement");
+                return resultSet.getString("measurement");
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
