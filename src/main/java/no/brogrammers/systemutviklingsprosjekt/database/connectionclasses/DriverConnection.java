@@ -1,8 +1,6 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
-import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
-import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
