@@ -3,6 +3,7 @@ package no.brogrammers.systemutviklingsprosjekt.gui.recipeforms;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
+import no.brogrammers.systemutviklingsprosjekt.miscellaneous.ChooseEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
@@ -10,6 +11,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by Knut on 22.04.2016.
@@ -33,7 +36,8 @@ public class AddNewRecipeForm extends JFrame {
 
     RecipeConnection recipeConnection = new RecipeConnection();
     private ArrayList<String> instructions = new ArrayList<String>();
-    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
+    private ArrayList<Ingredient> currentIngredients = new ArrayList<Ingredient>();
     private IngredientConnection ingredientConnection = new IngredientConnection();
     private MainForm parentForm;
 
@@ -47,7 +51,7 @@ public class AddNewRecipeForm extends JFrame {
 
         //loadAllRecipes();
         setUpTable();
-        loadIngredientTable();
+        loadIngredientTables();
 
         addInstructionButton.addActionListener(new ActionListener() {
             @Override
@@ -65,7 +69,7 @@ public class AddNewRecipeForm extends JFrame {
                     tableModel.removeRow(selectedRows[i]);
                 }
                 //instructions.remove(selectedRows);
-                reloadTable();
+                reloadInstructionTable();
             }
         });
         addNewRecipeButton.addActionListener(new ActionListener() {
@@ -79,9 +83,27 @@ public class AddNewRecipeForm extends JFrame {
                     instructionsTmp.add(new Instruction(i, instructions.get(i)));
                 }
                 double price = Double.parseDouble(priceTextField.getText());
-                recipeConnection.create(new Recipe(name, recipeType, dietType, ingredients, instructionsTmp, price));
+                if(recipeConnection.create(new Recipe(name, recipeType, dietType, currentIngredients, instructionsTmp, price))) {
+                    showMessageDialog(null, "A New Recipe Was Created");
+                }
+
                 parentForm.loadRecipesTab();
                 dispose();
+            }
+        });
+        addIngredientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] seletedRows = allIngredientsTable.getSelectedRows();
+                for(int i = 0; i < seletedRows.length; i++) {
+                    currentIngredients.add(allIngredients.get(seletedRows[i]));
+                    Object objects[] = {allIngredients.get(seletedRows[i]).getIngredientName(), 1.0};
+                    recipeIngredientsTableModel.addRow(objects);
+                    allIngredients.remove(seletedRows[i]);
+                    //allIngredientsTable.remove(seletedRows[i]);
+                    allIngredientTableModel.removeRow(seletedRows[i]);
+
+                }
             }
         });
     }
@@ -101,7 +123,7 @@ public class AddNewRecipeForm extends JFrame {
         textArea1.setText("");
     }
 
-    private void reloadTable() {//load table
+    private void reloadInstructionTable() {//load table
         String columns[] = {"Step Number", "Description"};
         tableModel = new NonEditTableModel(columns);
         instructionTable.setModel(tableModel);
@@ -110,18 +132,30 @@ public class AddNewRecipeForm extends JFrame {
         }
     }
 
-    NonEditTableModel ingredientTableModel;
-    private void loadIngredientTable() {
+    private void reloadIngredientTable() {
+
+    }
+
+    NonEditTableModel allIngredientTableModel;
+    ChooseEditTableModel recipeIngredientsTableModel;
+    private void loadIngredientTables() {
+        //Setup all ingredients in the database:
         String ingredientColumns[] = {"Name"};
-        ingredientTableModel = new NonEditTableModel(ingredientColumns);
-        allIngredientsTable.setModel(ingredientTableModel);
+        allIngredientTableModel = new NonEditTableModel(ingredientColumns);
+        allIngredientsTable.setModel(allIngredientTableModel);
         ingredientConnection = new IngredientConnection();
-        ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
-        for(int i = 0; i < ingredients.size(); i++) {
-            String name = ingredients.get(i).getIngredientName();
+        allIngredients = ingredientConnection.viewAllIngredients();
+        for(int i = 0; i < allIngredients.size(); i++) {
+            String name = allIngredients.get(i).getIngredientName();
             Object objects[] = {name};
-            ingredientTableModel.addRow(objects);
+            allIngredientTableModel.addRow(objects);
         }
         ingredientConnection.stopConnection();
+
+        //Set up current ingredients for this recipe
+        String ingredientColumns2[] = {"Name", "Quantity"};
+        recipeIngredientsTableModel = new ChooseEditTableModel(ingredientColumns2, 1);
+        recipeIngredientsTable.setModel(recipeIngredientsTableModel);
+
     }
 }

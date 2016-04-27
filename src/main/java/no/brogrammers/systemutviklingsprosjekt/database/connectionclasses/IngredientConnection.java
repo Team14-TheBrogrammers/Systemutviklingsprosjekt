@@ -84,7 +84,7 @@ public class IngredientConnection extends DatabaseConnection {
      * @param ingredientName is the name of the ingredient.
      * @param quantity is the quantity of the ingredient in stock.
      * @param measurement is the measurement of the ingredient.
-     * @return
+     * @return 1 if a ingredient is added to the database. -1 or -2 if something wrong happened.
      */
     public int addIngredient(String ingredientName, double quantity, String measurement) {
         String sqlIngredientsCommand = "INSERT INTO Ingredient(ingredient_name) VALUES ('" + ingredientName + "');";

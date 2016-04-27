@@ -51,7 +51,7 @@ public class RecipeConnection extends DatabaseConnection {
         if (!addRecipe(recipeName, recipeType, dietType, price)) {
             return false;
         }
-        if (!addIngredients(recipeName, ingredients)) {
+        if (!addIngredientRecipeConnection(recipeName, ingredients)) {
             return false;
         }
         return addInstructions(recipeName, instructions);
@@ -59,9 +59,7 @@ public class RecipeConnection extends DatabaseConnection {
 
     private boolean addRecipe(String recipeName, RecipeType recipeType, DietType dietType, double price) {
         try {
-            PreparedStatement pStatement = getConnection().prepareStatement(
-                    "INSERT INTO Recipe(recipe_name, recipe_type, diet_type, price) VALUES (?,?,?,?)"
-            );
+            PreparedStatement pStatement = getConnection().prepareStatement("INSERT INTO Recipe(recipe_name, recipe_type, diet_type, price) VALUES (?,?,?,?);");
             pStatement.setString(1, recipeName);
             pStatement.setString(2, recipeType.name());
             pStatement.setString(3, dietType.name());
@@ -74,12 +72,33 @@ public class RecipeConnection extends DatabaseConnection {
         }
     }
 
-    private boolean addIngredients(String recipeName, List<Ingredient> ingredients) {
+    private boolean addIngredientRecipeConnection(String recipeName, ArrayList<Ingredient> ingredients) {
+        for(int i = 0; i < ingredients.size(); i++) {
+            String sqlCommand = "INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES (?,?,?);";
+            PreparedStatement preparedStatement = null;
+            try {
+                preparedStatement = getConnection().prepareStatement(sqlCommand);
+                preparedStatement.setString(1, recipeName);
+                preparedStatement.setString(2, ingredients.get(i).getIngredientName());
+                preparedStatement.setDouble(3, ingredients.get(i).getQuantity());
+                if(preparedStatement.executeUpdate() == 0) {
+                    return false;
+                }
+            } catch (SQLException sqle) {
+                writeError(sqle.getMessage());
+            } catch (Exception e) {
+                writeError(e.getMessage());
+            } finally {
+                getCleaner().closePreparedStatement(preparedStatement);
+            }
+        }
+        return true;
+    }
+
+    private boolean addIngredients(String recipeName, ArrayList<Ingredient> ingredients) {
         for (Ingredient ingredient : ingredients) {
             try {
-                PreparedStatement pStatement = getConnection().prepareStatement(
-                        "INSERT INTO Ingredient(ingredient_name) VALUES (?)"
-                );
+                PreparedStatement pStatement = getConnection().prepareStatement("INSERT INTO Ingredient(ingredient_name) VALUES (?);");
                 pStatement.setString(1, ingredient.getIngredientName());
                 pStatement.execute();
             } catch (SQLException e) {
@@ -87,9 +106,7 @@ public class RecipeConnection extends DatabaseConnection {
             }
 
             try {
-                PreparedStatement pStatement = getConnection().prepareStatement(
-                        "INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES (?,?,?)"
-                );
+                PreparedStatement pStatement = getConnection().prepareStatement("INSERT INTO Recipe_ingredient(recipe_name, ingredient_name, quantity) VALUES (?,?,?);");
                 pStatement.setString(1, recipeName);
                 pStatement.setString(2, ingredient.getIngredientName());
                 pStatement.setDouble(3, ingredient.getQuantity());
@@ -102,7 +119,7 @@ public class RecipeConnection extends DatabaseConnection {
         return true;
     }
 
-    private boolean addInstructions(String recipeName, List<Instruction> instructions) {
+    private boolean addInstructions(String recipeName, ArrayList<Instruction> instructions) {
         for (Instruction instruction : instructions) {
             try {
                 PreparedStatement pStatement = getConnection().prepareStatement(
