@@ -452,19 +452,34 @@ public class MainForm extends JFrame{
 
         for(ArrayList<Order> innerList : orders) {
             //addressList = new ArrayList<String>();
+            String time = "";
+            if(innerList.size() > 0 ) {
+                time = String.valueOf(innerList.get(0).getDeliveryTime());
+                if(time.contains(".5")) {
+                    time = time.substring(0, time.indexOf("."));
+                    time = time + ":30";
+                } else {
+                    time = time.substring(0, time.indexOf("."));
+                    time = time + ":00";
+                }
 
-            String time = String.valueOf(innerList.get(0).getDeliveryTime());
-            for(int i = 1; i < innerList.size(); i++) {//(Order order : innerList) {
-                //Make address list for mapmethod: uses button as listner
 
-                double time2 = innerList.get(i).getDeliveryTime();
+                for (int i = 1; i < innerList.size(); i++) {//(Order order : innerList) {
+                    //Make address list for mapmethod: uses button as listner
 
-                if(!(time2 == (innerList.get(i-1).getDeliveryTime()))) {//TODO: fix format osv
-                    time += " - " + time2;
+                    double time2 = innerList.get(i).getDeliveryTime();
+
+                    if (!(time2 == (innerList.get(i - 1).getDeliveryTime()))) {
+                        String time3 = String.valueOf(time2);
+                        if(time3.contains(".5")) {
+                            time3 = time3.substring(0, time3.indexOf(".")) + ":30";
+                        } else {
+                            time3 = time3.substring(0, time3.indexOf(".")) + ":00";
+                        }
+                        time += " - " + time3;
+                    }
                 }
             }
-
-
 
 
             System.out.println(time);
@@ -641,7 +656,7 @@ public class MainForm extends JFrame{
         loadMyProfileTab();
         //loadStatisticsTab();
         //scrollPane1.setViewportView(customersTable);
-        //loadDriverRouteTab();
+        loadDriverRouteTab();
 
         //Subscription:
 
