@@ -1,8 +1,10 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
+import com.teamdev.jxbrowser.chromium.internal.ipc.message.EvaluateXPathMessage;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,6 +49,31 @@ public class IngredientConnection extends DatabaseConnection {
             getCleaner().closeStatement(statement);
         }
         return ingredients;
+    }
+
+    public String viewMeasurement(String ingredientName) {
+        String sqlCommand = "SELECT measurement FROM Stock WHERE ingredient_name = ?;";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setString(1, ingredientName);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                return resultSet.getString("measurement");
+            }
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closeResultSet(resultSet);
+            getCleaner().closePreparedStatement(preparedStatement);
+        }
+        return null;
     }
 
     /**
@@ -148,9 +175,46 @@ public class IngredientConnection extends DatabaseConnection {
     }
 
     public int changeQuantity(String ingredientName, double newQuantity) {
-        String sqlCommand = "UPDATE Stock SET quantity = " + newQuantity + " WHERE ingredient_name = '" + ingredientName + "';";
-        if(checkUpdated(sqlCommand)) {
-            return 1;
+        String sqlCommand = "UPDATE Stock SET quantity = ? WHERE ingredient_name = ?;";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setDouble(1, newQuantity);
+            preparedStatement.setString(2, ingredientName);
+            if(preparedStatement.executeUpdate() != 0) {
+                return 1;
+            }
+
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closePreparedStatement(preparedStatement);
+        }
+        return -1;
+    }
+
+    public int changeMeasurement(String ingredientName, String newMeasurement) {
+        String sqlCommand = "UPDATE Stock SET measurement = ? WHERE ingredient_name = ?;";
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setString(1, newMeasurement);
+            preparedStatement.setString(2, ingredientName);
+            if(preparedStatement.executeUpdate() != 0) {
+                return 1;
+            }
+
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closePreparedStatement(preparedStatement);
         }
         return -1;
     }

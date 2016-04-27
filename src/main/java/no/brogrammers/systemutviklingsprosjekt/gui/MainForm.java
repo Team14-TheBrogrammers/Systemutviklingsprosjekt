@@ -11,6 +11,7 @@ import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
 import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.employeeforms.AddNewEmployeeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.AddNewIngredientForm;
+import no.brogrammers.systemutviklingsprosjekt.gui.ingredientforms.ChangeIngredientForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.recipeforms.AddNewRecipeForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.userforms.ChangeUserDetailsForm;
@@ -31,9 +32,7 @@ import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -247,6 +246,15 @@ public class MainForm extends JFrame{
                 loadCookTab();
             }
         });
+
+        ingredientsTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    ChangeIngredientForm changeIngredientForm = new ChangeIngredientForm(MainForm.this, ingredients.get(ingredientsTable.getSelectedRow()));
+                }
+            }
+        });
     }
 
     private void loadTabMenu() {
@@ -368,13 +376,16 @@ public class MainForm extends JFrame{
     }
 
     NonEditTableModel ingredientTableModel;
+    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    ArrayList<String> measurements = new ArrayList<String>();
+
     public void loadIngredientsTab() {
         ingredientConnection = new IngredientConnection();
         String ingredientColumns[] = {"Name", "In Stock"};
         ingredientTableModel = new NonEditTableModel(ingredientColumns);
         ingredientsTable.setModel(ingredientTableModel);
-        ArrayList<Ingredient> ingredients = ingredientConnection.viewAllIngredients();
-        ArrayList<String> measurements = ingredientConnection.viewAllMeasurements();
+        ingredients = ingredientConnection.viewAllIngredients();
+        measurements = ingredientConnection.viewAllMeasurements();
         for(int i = 0; i < ingredients.size(); i++) {
             System.out.println("asd");
             String name = ingredients.get(i).getIngredientName();
