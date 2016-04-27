@@ -696,7 +696,7 @@ public class MainForm extends JFrame{
     private void loadTabs() {
         loadOrdersTab();
         //subscriptions
-        loadRecipesTab();//TODO:DOES NOT WORKSSSS
+        loadRecipesTab();
         //loadCustomersTab();
         loadEmployeesTab();
         loadIngredientsTab();

@@ -37,7 +37,7 @@ public class ChangeUserDetailsForm extends JFrame {
 
     public ChangeUserDetailsForm(MainForm mainForm) {
         this.mainForm = mainForm;
-        user = mainForm.getUser();//TODO:FIX
+        user = mainForm.getUser();
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Change User Data");
