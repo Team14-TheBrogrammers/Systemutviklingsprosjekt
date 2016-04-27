@@ -104,6 +104,10 @@ public class DriverConnection extends OrderConnection {//TODO: abstract?
         return allDeliveries;
     }
 
+    public int setDeliveriesAsDelivered(ArrayList<Order> orders) {
+        return 1;
+    }
+
 
     //did this in gui
     public ArrayList<ArrayList<String>> splittedAddressesAndTimeToday() {

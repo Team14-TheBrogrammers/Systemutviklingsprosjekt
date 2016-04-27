@@ -458,6 +458,7 @@ public class MainForm extends JFrame{
         manageUser.stopConnection();
     }
 
+    private ArrayList<String> addressList = new ArrayList<String>();
     private void loadDriverRouteTab() {
         //Driver tab:
         /*String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
@@ -477,22 +478,21 @@ public class MainForm extends JFrame{
         deliveriesTodayTable.setModel(defaultTableModel);
         ArrayList<ArrayList<Order>> orders = driverConnection.splitDeliveriesToday();
 
-        ArrayList<ArrayList<String>> addresses = new ArrayList<ArrayList<String>>();
-        ArrayList<String> addressList;// = new ArrayList<String>();
+        //ArrayList<ArrayList<String>> addresses = new ArrayList<ArrayList<String>>();
+        addressList = new ArrayList<String>();
 
         for(ArrayList<Order> innerList : orders) {
-            //addressList = new ArrayList<String>();
             String time = "";
             if(innerList.size() > 0 ) {
                 time = String.valueOf(innerList.get(0).getDeliveryTime());
-                if(time.contains(".5")) {
+                if(time.contains(".5")) { // Converting time from .5 or .0 to :30 or :00
                     time = time.substring(0, time.indexOf("."));
                     time = time + ":30";
                 } else {
                     time = time.substring(0, time.indexOf("."));
                     time = time + ":00";
                 }
-
+                addressList.add(innerList.get(0).getAddress() + ", " + innerList.get(0).getAddress());
 
                 for (int i = 1; i < innerList.size(); i++) {//(Order order : innerList) {
                     double time2 = innerList.get(i).getDeliveryTime();
@@ -506,21 +506,53 @@ public class MainForm extends JFrame{
                         }
                         time += " - " + time3;
                     }
+
+                    addressList.add(innerList.get(i).getAddress() + ", " + innerList.get(i).getAddress());
                 }
             }
-
-
+/*
+            deliveriesTodayTable.getColumn("Show Route").setCellRenderer(new ButtonRenderer());//new ButtonRenderer());
+            deliveriesTodayTable.getColumn("Show Route").setCellEditor(
+                    new ButtonEditor(new JCheckBox()){
+                        @Override
+                        public Object getCellEditorValue() {
+                            if (isPushed()) {
+                                //driverConnection = new DriverConnection();
+                                Route route = new Route(addressList);
+                                //route.stopConnection();
+                                loadDriverRouteTab();
+                                button.setEnabled(false);
+                            }
+                            //setPushed(false);
+                            return new String(getLabel());
+                        }
+                    });*/
+            /*
+            deliveriesTodayTable.getColumn("Drive").setCellRenderer(new ButtonRenderer());//new ButtonRenderer());
+            deliveriesTodayTable.getColumn("Drive").setCellEditor(
+                    new ButtonEditor(new JCheckBox()){
+                        @Override
+                        public Object getCellEditorValue() {
+                            if (isPushed()) {
+                                driverConnection = new CookConnection();
+                                int route = driverConnection.(Integer.parseInt(ordersTodayTable.getValueAt(ordersTodayTable.getSelectedRow(), 0).toString()));
+                                if(make == 1) {
+                                    System.out.println("order made");
+                                }
+                                cookConnection.stopConnection();
+                                loadCookTab();
+                                button.setEnabled(false);
+                            }
+                            //setPushed(false);
+                            return new String(getLabel());
+                        }
+                    });*/
             System.out.println(time);
             Object objects[] = {"Route", time, "Show Route", "Drive"};
             defaultTableModel.addRow(objects);
             //addresses.add(addressList);
             driverConnection.stopConnection();
         }
-
-
-
-
-
     }
 
     private void createUIComponents() {
