@@ -57,10 +57,23 @@ public abstract class UserConnection extends DatabaseConnection {
         }
     }
 
+    /**
+     * Method that finds out if the phone number already exists in the database
+     * @param phone is the phone number
+     * @return true if it exists, false if not
+     */
+
     private boolean phoneNumberExist(int phone) {
         String sqlCommand = "SELECT * FROM Employee WHERE phone = " + phone + ";";
         return checkExists(sqlCommand);
     }
+
+    /**
+     * Method that checks if the username or phone number already exists in the database. The method uses the methods usernameExists(username) and phoneNumberExists(phone)
+     * @param username is the usenatme
+     * @param phone is the phone number
+     * @return 1 if neither exists, -1 if username exists, -3 if phone number exists
+     */
 
     private int checkExistingDetails(String username, int phone) {
         if(usernameExists(username)) {
@@ -73,12 +86,36 @@ public abstract class UserConnection extends DatabaseConnection {
         return 1; //ok
     }
 
+    /**
+     * Method for registering a manager
+     * @param lastName
+     * @param firstName
+     * @param phone
+     * @param mail
+     * @param dateOfEmployment
+     * @param username
+     * @param password
+     * @return int 1 if the user was registered, -2 if not
+     */
+
     public int regManager(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 1);
         /*String sqlCommand = "INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) \n" +
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()) + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkRegistered(sqlCommand);*/
     }
+
+    /**
+     * Method for registering a cashier
+     * @param lastName
+     * @param firstName
+     * @param phone
+     * @param mail
+     * @param dateOfEmployment
+     * @param username
+     * @param password
+     * @return int 1 if the user was registered, -2 if not
+     */
 
     public int regCashier(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 2);
@@ -90,6 +127,18 @@ public abstract class UserConnection extends DatabaseConnection {
         return checkRegistered(sqlCommand);*/
     }
 
+    /**
+     * Method for registering a cook
+     * @param lastName
+     * @param firstName
+     * @param phone
+     * @param mail
+     * @param dateOfEmployment
+     * @param username
+     * @param password
+     * @return int 1 if the user was registered, -2 if not
+     */
+
     public int regCook(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 3);
         /*if(usernameExists(username)) {
@@ -99,6 +148,18 @@ public abstract class UserConnection extends DatabaseConnection {
                 "  VALUES('" + lastName + "', '" + firstName + "', " + phone + ", '" + new Date(Calendar.getInstance().getTimeInMillis()).getTime() + "', 1, '" + username + "', '" + password + "', '" + mail + "');";
         return checkRegistered(sqlCommand);*/
     }
+
+    /**
+     * Method for registering a driver
+     * @param lastName
+     * @param firstName
+     * @param phone
+     * @param mail
+     * @param dateOfEmployment
+     * @param username
+     * @param password
+     * @return int 1 if the user was registered, -2 if not
+     */
 
     public int regDriver(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password) {
         return regUser(lastName, firstName, phone, mail, dateOfEmployment, username, password, 4);
@@ -110,6 +171,12 @@ public abstract class UserConnection extends DatabaseConnection {
         return checkRegistered(sqlCommand);*/
     }
 
+    /**
+     * Method for deleting a user
+     * @param employeeId is the employee id of the user about to be deleted
+     * @return int -1 if the user does not exist, 1 if the user vas deleted
+     */
+
     public int deleteUser(int employeeId) {
         if(!(userExists(employeeId))) {
             return -1;
@@ -118,15 +185,34 @@ public abstract class UserConnection extends DatabaseConnection {
         return checkRegistered(sqlCommand); //Method name may be changed
     }
 
+    /**
+     * Method for checking if a username exists
+     * @param username
+     * @return true if it exists, false if not
+     */
+
     private boolean usernameExists(String username) {
         String sqlCommand = "SELECT username FROM Employee WHERE username = '" + username + "';";
         return checkExists(sqlCommand);
     }
 
+    /**
+     * Method for checking if a user exists
+     * @param userID is the user id
+     * @return true if it exists, false if not
+     */
+
     private boolean userExists(int userID) {
         String sqlCommand = "SELECT emp_id FROM Employee WHERE emp_id = " + userID + ";";
         return checkExists(sqlCommand);
     }
+
+    /**
+     * Method for changing last name of a user
+     * @param userID is the id
+     * @param lastName is the last name
+     * @return 1 if it was changed, -1 if the user does not exist
+     */
 
     public int changeLastName(int userID, String lastName) {
         if(!(userExists(userID))) {
@@ -135,6 +221,13 @@ public abstract class UserConnection extends DatabaseConnection {
         String sqlCommand = "UPDATE Employee SET last_name = '" + lastName + "' WHERE emp_id = " + userID + ";";
         return checkRegistered(sqlCommand); //Change method name
     }
+
+    /**
+     * Method for changing first name of a user
+     * @param userID is the id
+     * @param firstName is the first name
+     * @return 1 if it was changed, -1 if the user does not exist
+     */
 
     public int changeFirstName(int userID, String firstName) {
         if(!(userExists(userID))) {
@@ -148,7 +241,7 @@ public abstract class UserConnection extends DatabaseConnection {
      * Method foor changing the phone name for a user with a given userID.
      * @param userID
      * @param phone
-     * @return -1 if not a user exist with the given userID. Return -3 if the phone number already exist. Return -2 if//TODO:FIX
+     * @return 1 if phone number was changed, -1 if not a user exist with the given userID. Return -3 if the phone number already exist.
      */
     public int changePhone(int userID, int phone) {
         if(!(userExists(userID))) {
@@ -161,6 +254,13 @@ public abstract class UserConnection extends DatabaseConnection {
         return checkRegistered(sqlCommand); //change method name
     }
 
+    /**
+     * Method for changing email address for a spesific user
+     * @param userID
+     * @param email
+     * @return 1 if the email was changed, -1 if not
+     */
+
     public int changeMail(int userID, String email) {
         if(!(userExists(userID))) {
             return -1;
@@ -168,6 +268,13 @@ public abstract class UserConnection extends DatabaseConnection {
         String sqlCommand = "UPDATE Employee SET email_address = '" + email + "' WHERE emp_id = " + userID + ";";
         return checkRegistered(sqlCommand); //change method name
     }
+
+    /**
+     * Method for changing the username of a user
+     * @param userID
+     * @param username
+     * @return 1 if it was changed, -1 if the user does not exist, -3 if the new username is already in user, -2 other error
+     */
 
     public int changeUsername(int userID, String username) {
         if(!(userExists(userID))) {
@@ -178,12 +285,14 @@ public abstract class UserConnection extends DatabaseConnection {
             String sqlCommand = "UPDATE Employee SET username = '" + username + "' WHERE emp_id = " + userID + ";";
             return checkRegistered(sqlCommand); //change method name
         }
-
-        //1: ok (brukernavn endret)
-        //-1: user id eksiterer ikke
-        //-2: vanlig feil
-        //-3: det nye brukernavnet er allerede i bruk
     }
+
+    /**
+     * Method for changing password for a user
+     * @param userID
+     * @param password
+     * @return 1 if it was changed, -1 if the user does not exist
+     */
 
     public int changePassword(int userID, String password) {
         if(userExists(userID)) {
@@ -194,10 +303,16 @@ public abstract class UserConnection extends DatabaseConnection {
         }
     }
 
+    /**
+     * Method for returning a user with a given user id
+     * @param userID
+     * @return User if the method was successful, null if not
+     */
+
     public User viewUser(int userID) {
         if(userExists(userID)) {
             String sqlCommand = "SELECT * FROM Employee WHERE emp_id = " + userID + ";";
-            Statement statement = null;
+            Statement statement = null; //TODO: use preparedStatement
             ResultSet resultSet = null;
 
             try {
@@ -236,10 +351,16 @@ public abstract class UserConnection extends DatabaseConnection {
         return null;
     }
 
+    /**
+     * Method for returning a user with a given username
+     * @param username
+     * @return User if the method was successful, null if not
+     */
+
     public User viewUser(String username) {
         if(usernameExists(username)) {
             String sqlCommand = "SELECT * FROM Employee WHERE username = '" + username + "';";
-            Statement statement = null;
+            Statement statement = null; //TODO: use preparedStatement
             ResultSet resultSet = null;
 
             try {
@@ -278,11 +399,16 @@ public abstract class UserConnection extends DatabaseConnection {
         return null;
     }
 
+    /**
+     * Method for returning an arraylist of all users
+     * @return ArrayList<User>
+     */
+
     public ArrayList<User> viewAllUsers() {
         ArrayList<User> users = new ArrayList<User>();
 
         String sqlCommand = "SELECT * FROM Employee;";
-        Statement statement = null;
+        Statement statement = null; //TODO: use preparedStatement
         ResultSet resultSet = null;
 
         try {
@@ -321,7 +447,6 @@ public abstract class UserConnection extends DatabaseConnection {
             getCleaner().closeResultSet(resultSet);
             getCleaner().closeStatement(statement);
         }
-        //get information from database here
 
         return users;
     }

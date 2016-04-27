@@ -9,7 +9,13 @@ import java.util.Calendar;
  */
 public class DateConverter {//TODO:static??
 
-    public java.sql.Date stringToSqlDate(String date) { //Striormang ft: yyyy-MM-dd
+    /**
+     * Method for turning a String written like yyyy-MM-dd into a java.sql.Date
+     * @param date is the String
+     * @return java.sql.Date
+     */
+
+    public java.sql.Date stringToSqlDate(String date) { //String format: yyyy-MM-dd
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//TODO: does not work?
         java.util.Date utilDate = null;
         try {
@@ -29,6 +35,12 @@ public class DateConverter {//TODO:static??
 
         return sqlDate;
     }
+
+    /**
+     * Method for converting a java.util.Date to a java.sql.Date
+     * @param date is the util.Date
+     * @return java.sql.Date
+     */
 
     public java.sql.Date utilDateToSqlDate(java.util.Date date) {
         java.util.Calendar cal = Calendar.getInstance();

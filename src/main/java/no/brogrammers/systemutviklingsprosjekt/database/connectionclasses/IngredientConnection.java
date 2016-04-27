@@ -1,6 +1,5 @@
 package no.brogrammers.systemutviklingsprosjekt.database.connectionclasses;
 
-import com.teamdev.jxbrowser.chromium.internal.ipc.message.EvaluateXPathMessage;
 import no.brogrammers.systemutviklingsprosjekt.database.DatabaseConnection;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 
@@ -12,14 +11,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Knut on 24.04.2016.
+ * IngredientConnection class
  */
 public class IngredientConnection extends DatabaseConnection {
-    //viewAllIngredients()
-    //add
-    //delete
-    //++ og -- quantity
-    //set quantity(int quantity)
-    //makeOrder (cook remove ingredient(s))
 
     /**
      * Method for view all ingredients in an ArrayList with Ingredients objects.
@@ -126,6 +120,12 @@ public class IngredientConnection extends DatabaseConnection {
         return -2;
     }
 
+    /**
+     * Method that uses an arraylist of Ingredients and uses the quantity in Ingredients to change the stock quantity for the ingredient in the database
+     * @param ingredients is an arraylist of ingredients
+     * @return int 1 if the stock was changed, -1 if an error occured
+     */
+
     public int changeStock(ArrayList<Ingredient> ingredients) {
         for(int i = 0; i < ingredients.size(); i++) {
             String quantityTmp = getIngredientQuantity(ingredients.get(i).getIngredientName());
@@ -153,7 +153,13 @@ public class IngredientConnection extends DatabaseConnection {
         return 1;
     }
 
-    private String getIngredientQuantity(String ingredientName) {//TODO:fix later
+    /**
+     * Method for getting the quantity for an ingredient from the database
+     * @param ingredientName
+     * @return the quantity if successful, "error" if not
+     */
+
+    private String getIngredientQuantity(String ingredientName) {
         String sqlCommand = "SELECT quantity FROM Stock WHERE ingredient_name = '" + ingredientName + "';";
         Statement statement = null;
         ResultSet resultSet = null;
@@ -173,6 +179,13 @@ public class IngredientConnection extends DatabaseConnection {
         }
         return "Error";
     }
+
+    /**
+     * Method for setting the quantity for an ingredient to a new quantity
+     * @param ingredientName
+     * @param newQuantity
+     * @return 1 if the quantity was changed, -1 if not
+     */
 
     public int changeQuantity(String ingredientName, double newQuantity) {
         String sqlCommand = "UPDATE Stock SET quantity = ? WHERE ingredient_name = ?;";
@@ -195,6 +208,13 @@ public class IngredientConnection extends DatabaseConnection {
         }
         return -1;
     }
+
+    /**
+     * Method for changing the measurement of an ingredient
+     * @param ingredientName
+     * @param newMeasurement
+     * @return 1 if the measurement was changed, -1 if not
+     */
 
     public int changeMeasurement(String ingredientName, String newMeasurement) {
         String sqlCommand = "UPDATE Stock SET measurement = ? WHERE ingredient_name = ?;";

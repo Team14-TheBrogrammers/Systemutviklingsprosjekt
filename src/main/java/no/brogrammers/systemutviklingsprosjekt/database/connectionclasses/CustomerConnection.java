@@ -257,16 +257,12 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return customerID;
     }
 
-    /*public boolean UpdateCompany() {
-
-    }*/
-
     /**
-     *
-     * @param customerID
-     * @param newAddress
-     * @param newZip
-     * @return
+     * Method for changing address and zip for a customer in the database
+     * @param customerID is the customer id
+     * @param newAddress is the new address
+     * @param newZip is the zip code (in Trondheim)
+     * @return int 1 if successful, -2 if the information was not updated, -3 if the zip address does not exist in the database, -1 if customer id is invalid
      */
     public int updateCustomerAddressAndZip(int customerID, String newAddress, int newZip) {
         if(customerExists(customerID)) {
@@ -287,6 +283,13 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
     }
 
+    /**
+     * Update address for a customer in the database
+     * @param customerID is the customer id
+     * @param newAddress is the new address
+     * @return int 1 if the database was updated, -2 if not, -1 if the customer does not exist in the database
+     */
+
     public int updateCustomerAddress(int customerID, String newAddress) {
         if(customerExists(customerID)) {
             String sqlCommand = "UPDATE Customer SET address = " + newAddress + " WHERE customer_id = " + customerID + ";";
@@ -300,17 +303,22 @@ public abstract class CustomerConnection extends DatabaseConnection {
         }
     }
 
-    //TODO: LEGGE TIL NY METODE: addNewZip(int zip)
-
+    /**
+     * Method for checking if the zip code exist in the database (all zip codes for Trondheim should exist in the database).
+     * @param zip is the zip code
+     * @return true if it exists, false if not
+     */
 
     private boolean checkZipExists(int zip) {
         String sqlCommand = "SELECT * FROM Postal WHERE zip = " + zip + ";";
         return checkExists(sqlCommand);
     }
 
-    /*public boolean UpdatePrivateCustomer() {
-
-    }*/
+    /**
+     * Method for returning a customer object from the database with customer id.
+     * @param customerID is the customer id
+     * @return Company object if the customer is a company, private customer object if the customer is a private customer, null if the customer id does not exist
+     */
 
     public Customer viewCustomer(int customerID) {
         if(customerExists(customerID)) {
@@ -370,6 +378,11 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return null;
     }
 
+    /**
+     * Method that returns an arraylist of all customers
+     * @return ArrayList<Customer>
+     */
+
     public ArrayList<Customer> viewAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<Customer>();
         String sqlAllCustomers = "SELECT * FROM Customer";
@@ -386,16 +399,21 @@ public abstract class CustomerConnection extends DatabaseConnection {
             }
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
-            System.out.println("viewCust2omer");
+            System.out.println("viewCustomer sql error");
         } catch (Exception e) {
             writeError(e.getMessage());
-            System.out.println("viewCu2stomer");
+            System.out.println("viewCustomer error");
         } finally {
             getCleaner().closeResultSet(resultSet);
             getCleaner().closeStatement(statement);
         }
         return customers;
     }
+
+    /**
+     * Method that returns an arraylist of all companies in the database.
+     * @return ArrayList<Company>
+     */
 
     public ArrayList<Company> viewAllCompanies() {
         ArrayList<Company> companies = new ArrayList<Company>();
@@ -427,6 +445,11 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return companies;
     }
 
+    /**
+     * Method that returns an arraylist of all private customers in the database.
+     * @return ArrayList<PrivateCustomer>
+     */
+
     public ArrayList<PrivateCustomer> viewAllPrivateCustomers() {
         ArrayList<PrivateCustomer> privateCustomers = new ArrayList<PrivateCustomer>();
         String sqlCommand = "SELECT * FROM Customer NATURAL JOIN Private_customer;";
@@ -457,10 +480,22 @@ public abstract class CustomerConnection extends DatabaseConnection {
         return privateCustomers;
     }
 
+    /**
+     * Method that checks if the customer belonging to the customer id is a company, the method uses the method checkExists(sqlCommand)
+     * @param customerID is the customer id
+     * @return true if it is a company, false if not
+     */
+
     private boolean isCompany(int customerID) {
         String sqlCompany = "SELECT * FROM Company WHERE customer_id = " + customerID + ";";
         return checkExists(sqlCompany);
     }
+
+    /**
+     * Method that deletes a customer from the database, using a customer id
+     * @param customerID is the customer id
+     * @return true if the customer was deleted from both the company/private customer- and the customer-table, false if not
+     */
 
     public boolean deleteCustomer(int customerID) {
         if(customerExists(customerID)) {
