@@ -24,9 +24,7 @@ public class MainClient {
         //test();
         setJFrameLookAndFeel();
         //Route route = new Route();
-
         LoginForm loginForm = new LoginForm();
-
         //AddNewOrderForm addNewOrderForm = new AddNewOrderForm();
         //AddNewEmployeeForm addNewEmployeeForm = new AddNewEmployeeForm();
         //System.out.println(new Date(Calendar.getInstance().getTimeInMillis()));
