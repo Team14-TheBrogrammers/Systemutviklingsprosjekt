@@ -5,6 +5,7 @@ import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
 /**
  * Created by Ingunn on 10.03.2016.
+ * Employees that can view information in the database (Manager, cashier, driver, cook)
  */
 public abstract class EmployeeView extends User {
     public EmployeeView(int ID, String lastName, String firstName, int phoneNumber, String eMail, java.sql.Date dateOfEmployment, String username, String password) {

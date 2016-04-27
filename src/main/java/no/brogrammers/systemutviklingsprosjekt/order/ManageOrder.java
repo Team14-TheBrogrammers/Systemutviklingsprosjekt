@@ -5,6 +5,7 @@
 
 package no.brogrammers.systemutviklingsprosjekt.order;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.*;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 
 import java.util.ArrayList;
 
@@ -15,53 +16,40 @@ public class ManageOrder extends OrderConnection implements ViewOrderInterface, 
     }
 
     //Add order for a spesific customer. Not later than three days in advance.
-    public int addOrder(Order order) {
-        //Order order2 = new Order();
-/*
-        if(super.addOrder(order) >= 0) {
-            return super.addOrder(order);
-        }*/
-        return -1;
+    public int addOrder(int customerID, boolean paymentStatus, java.sql.Date orderDate, java.sql.Date deliveryDate, double deliveryTime, String address, int zipCode, boolean takeAway, String otherRequests, ArrayList<Recipe> recipes, int[] quantity) {
+        return super.addOrder(customerID, paymentStatus, orderDate, deliveryDate, deliveryTime, address, zipCode, takeAway, otherRequests, recipes, quantity);
     }
-
-
 
     //View all orders that has not been delivered yet.
     public ArrayList<Order> viewAllActiveOrders() {
-        return null;
+        return super.viewActiveOrders();
     }
 
     //View orders for a spesific customer with customer ID.
     public ArrayList<Order> viewOrder(int customerID) {
-        return null;
-        //sort by date
+        return super.viewOrdersToCustomer(customerID);
     }
 
     public Order viewOrderByOrderID(int orderID) {
-        return null;
+        return super.viewOrderByID(orderID);
     }
 
     public boolean deleteOrder(int orderID) {
-        return false;
+        return deleteOrder(orderID);
     }
 
     //Change order up to 24 hours before delivery.
     public boolean changeOrder(int orderID) {
-        return false;
+        return changeOrder(orderID);
     }
 
-    //List all ingredients missing for the three next days.
-    /*public ArrayList<Ingredient> listMissingIngredients() {
-        return null;
-    }*/
 
     //All deliveries for today
     public ArrayList<Order> deliveriesToday() {
-        return null;
+        return deliveriesToday();
     }
 
-    //Spesific time: 0 = "8to12", 1 = "12to15", 2 = "15to18", 3 = "18to21"
     public ArrayList<Order> deliveriesOnDay(double deliveryTime) {
-        return null;
+        return deliveriesOnDay(deliveryTime);
     }
 }

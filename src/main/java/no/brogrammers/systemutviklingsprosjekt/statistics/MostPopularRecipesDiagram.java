@@ -17,6 +17,11 @@ import java.awt.*;
 public class MostPopularRecipesDiagram {
     StatisticsConnection statisticsConnection = new StatisticsConnection();
 
+
+    /**
+     * Method for making a dataset for most popular recipes
+     * @return DefaultCategoryDataset dataset
+     */
     private CategoryDataset createDataset() {
         String recipe = "Recipe";
         String[][] recipes = statisticsConnection.top10Recipes();

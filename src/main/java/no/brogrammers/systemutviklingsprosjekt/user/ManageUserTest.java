@@ -4,6 +4,7 @@ import no.brogrammers.systemutviklingsprosjekt.miscellaneous.*;
 
 /**
  * Created by Ingunn on 07.04.2016.
+ * Test for testing interfaces
  */
 public class ManageUserTest {
     public static void main(String[] args) {
