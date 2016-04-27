@@ -26,7 +26,7 @@ function initialize() {
     });
 
     var marker=new google.maps.Marker({
-        position: new google.maps.LatLng(63.430297,10.411906),
+        position: new google.maps.LatLng(0, 0),//(63.430297,10.411906),
         icon: "spag6.png",
     });
 

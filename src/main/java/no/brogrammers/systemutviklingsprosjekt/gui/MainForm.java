@@ -145,7 +145,14 @@ public class MainForm extends JFrame{
 
         loadTabMenu();
 
-        checkUserType();
+        //checkUserType();
+        /*String deliveriesColumns1[] = {"Route", "Time", "Show Route", "Drive"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(deliveriesColumns1, 0);
+        deliveriesTodayTable.setModel(defaultTableModel);
+        Object objects[] = {"Route", "asd", "Show Route", "Drive"};//"Route", time, "Show Route", "Drive"};
+        defaultTableModel.addRow(objects);*/
+        loadDriverRouteTab();
+        loadCookTab();
 
         //loadTabs();
         addOrderButton.addActionListener(new ActionListener() {
@@ -507,10 +514,10 @@ public class MainForm extends JFrame{
                         time += " - " + time3;
                     }
 
-                    addressList.add(innerList.get(i).getAddress() + ", " + innerList.get(i).getAddress());
+                    //addressList.add(innerList.get(i).getAddress() + ", " + innerList.get(i).getAddress());
                 }
             }
-/*
+
             deliveriesTodayTable.getColumn("Show Route").setCellRenderer(new ButtonRenderer());//new ButtonRenderer());
             deliveriesTodayTable.getColumn("Show Route").setCellEditor(
                     new ButtonEditor(new JCheckBox()){
@@ -520,13 +527,14 @@ public class MainForm extends JFrame{
                                 //driverConnection = new DriverConnection();
                                 Route route = new Route(addressList);
                                 //route.stopConnection();
-                                loadDriverRouteTab();
-                                button.setEnabled(false);
+                                //loadDriverRouteTab();
+                                System.out.println("HEI");
+                                //button.setEnabled(false);
                             }
                             //setPushed(false);
                             return new String(getLabel());
                         }
-                    });*/
+                    });
             /*
             deliveriesTodayTable.getColumn("Drive").setCellRenderer(new ButtonRenderer());//new ButtonRenderer());
             deliveriesTodayTable.getColumn("Drive").setCellEditor(
@@ -656,6 +664,7 @@ public class MainForm extends JFrame{
                             if (isPushed()) {
                                 cookConnection = new CookConnection();
                                 int make = cookConnection.makeOrder(Integer.parseInt(ordersTodayTable.getValueAt(ordersTodayTable.getSelectedRow(), 0).toString()));
+                                System.out.println(make + "SVAR");
                                 if(make == 1) {
                                     System.out.println("order made");
                                 }

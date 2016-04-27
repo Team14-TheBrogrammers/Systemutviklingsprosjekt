@@ -1,8 +1,7 @@
 var trheim = new Array();
 trheim[0] = "olav tryggvasons gate 24, 7011";
 trheim[1] = "sverdrupsvei 33, 7020";
-trheim[2] = "olav tryggvasons gate 40, 7011";
-trheim[3] = "munkegata 34, 7011";
+
 var i;
 
 var eks2 = [];
