@@ -1,16 +1,13 @@
 package no.brogrammers.systemutviklingsprosjekt.driverroute;
 
-import com.google.maps.*;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-//import com.google.maps.
 
 /**
  * Created by Ingunn on 14.04.2016.
+ * Class for writing javascript code to a javascript file
  */
 public class Route {
     final String endJavascript = "var i;\n" +
@@ -52,7 +49,6 @@ public class Route {
     public Route(ArrayList<String> deliveries) {
         this.deliveries = deliveries;
         generateJs();
-        //System.out.println(getClass().getResource("/login_background.png").getFile());
     }
 
     private void generateJs() {
@@ -68,7 +64,7 @@ public class Route {
 
         output += "\n" + endJavascript;
         try {
-            FileWriter fileWriter = new FileWriter("C:\\SystemutviklingsProsjekt\\Driver map\\DriverRoute.js");//"C:\\Users\\Knut\\Documents\\GitHub\\Systemutviklingsprosjekt\\src\\main\\resources\\Driver map\\DriverRoute.js");
+            FileWriter fileWriter = new FileWriter("C:\\SystemutviklingsProsjekt\\Driver map\\DriverRoute.js");
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(output);
             bufferedWriter.close();

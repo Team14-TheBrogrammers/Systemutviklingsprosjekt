@@ -19,6 +19,10 @@ import java.awt.*;
 public class PopularWeekdayDiagram {
     StatisticsConnection statisticsConnection = new StatisticsConnection();
 
+    /**
+     * Method for making a dataset for the most popular weekdays
+     * @return DefaultCategoryDataset dataset
+     */
     private CategoryDataset createDataset() {
         int[] deliveryDates = statisticsConnection.popularWeekdaysDeliveryDate();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();

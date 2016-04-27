@@ -1,5 +1,6 @@
 /**
  * Created by Ingunn on 01.04.2016.
+ * Class for easier use of interfaces
  */
 
 package no.brogrammers.systemutviklingsprosjekt.user;

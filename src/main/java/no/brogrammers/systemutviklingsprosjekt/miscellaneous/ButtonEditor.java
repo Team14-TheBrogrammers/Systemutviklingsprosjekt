@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 /**
  * From: http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
+ * Class to help making buttons in JTables
  */
 public class ButtonEditor extends DefaultCellEditor {
     protected JButton button;
