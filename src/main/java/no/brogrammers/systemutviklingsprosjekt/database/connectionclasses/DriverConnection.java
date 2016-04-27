@@ -12,28 +12,55 @@ import java.util.ArrayList;
 /**
  * Created by Knut on 20.04.2016.
  */
-public class DriverConnection extends OrderConnection {//TODO: abstract?
+public class DriverConnection extends OrderConnection {
+
+    /**
+     * List orders where the delivery date is today and where take_away is false
+     * @return ArrayList<Order>
+     */
 
     public ArrayList<Order> deliveriesToday() {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND take_away = 0 ORDER BY delivery_time ASC;";// + now + ";";
         return getOrders(sqlCommand);
     }
 
+    /**
+     * List orders where the delivery date is tomorrow and where take_away is false
+     * @return ArrayList<Order>
+     */
+
     public ArrayList<Order> deliveriesTomorrow() {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() + INTERVAL 1 DAY AND take_away = 0;";
         return getOrders(sqlCommand);
     }
 
-    public ArrayList<Order> deliveriesThisWeek() { //TODO: test delivery_date >= curdate()???
+    /**
+     * List orders where the delivery date is this week and where take_away is false
+     * @return ArrayList<Order>
+     */
+
+    public ArrayList<Order> deliveriesThisWeek() {
         String sqlCommand = "SELECT * FROM Orders WHERE WEEK(delivery_date) = WEEK(CURDATE()) AND YEAR(delivery_date) = YEAR(CURDATE()) AND delivery_date >= CURDATE() AND take_away = 0;";
         return getOrders(sqlCommand);
     }
+
+
+    /**
+     * List orders where the delivery date is on a given day and where take_away is false
+     * @param deliveryDate
+     * @return ArrayList<Order>
+     */
 
     public ArrayList<Order> deliveriesOnDay(java.sql.Date deliveryDate) {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = '" + deliveryDate + "' AND take_away = 0;";
         return getOrders(sqlCommand);
     }
 
+    /**
+     * Method that returns an list of addresses from an sqlCommand
+     * @param sqlCommand
+     * @return ArrayList<String>
+     */
 
     public ArrayList<String> getAdresses(String sqlCommand) {
         ArrayList<String> addresses = new ArrayList<String>();
@@ -62,12 +89,21 @@ public class DriverConnection extends OrderConnection {//TODO: abstract?
         return addresses;
     }
 
+    /**
+     * Unfinished method that gets addresses for todays orders.
+     * @return
+     */
 
     public ArrayList<String> getAddressesFromToday() {
         String sqlCommand = "SELECT zip, address FROM Orders WHERE delivery_date = CURDATE() AND take_away = 0;";
 
         return null;
     }
+
+    /**
+     * Method that returns a list of more lists splitted, where each list is a driver route
+     * @return ArrayList<ArrayList<Order>>
+     */
 
     public ArrayList<ArrayList<Order>> splitDeliveriesToday() {
         ArrayList<ArrayList<Order>> allDeliveries = new ArrayList<ArrayList<Order>>();
@@ -104,12 +140,23 @@ public class DriverConnection extends OrderConnection {//TODO: abstract?
         return allDeliveries;
     }
 
+    /**
+     * Unfinished method for setting deliveries that has been driven to delivered = true in the database.
+     * @param orders is an arraylist of orders that has been driven
+     * @return int 1 if the method was successful
+     */
+
     public int setDeliveriesAsDelivered(ArrayList<Order> orders) {
         return 1;
     }
 
 
-    //did this in gui
+    /**
+     * Method for getting addresses from the method splitDeliveriesToday()
+     * Unused because it was done in MainFrame.java
+     * @return ArrayList<ArrayList<String>>
+     */
+
     public ArrayList<ArrayList<String>> splittedAddressesAndTimeToday() {
         ArrayList<ArrayList<Order>> splittedDeliveriesToday = splitDeliveriesToday();
         ArrayList<ArrayList<String>> addresses = new ArrayList<ArrayList<String>>();

@@ -12,9 +12,14 @@ import java.util.ArrayList;
 
 /**
  * Created by Ingunn on 25.04.2016.
+ * CookConnection class for the cook/chef
  */
 public class CookConnection extends IngredientConnection {
 
+    /**
+     * Method that list missing ingredients from tomorrow to two days from tomorrow
+     * @return ArrayList<Ingredients>
+     */
 
     //SELECT Stock.ingredient_name, Order_recipe.order_id, (Stock.quantity - (Recipe_ingredient.quantity*Order_recipe.quantity)) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND delivery_date >= (CURDATE() + INTERVAL 1 DAY) AND delivery_date <= (CURDATE() + INTERVAL 3 DAY) AND Orders.ingredients_purchased = 0 ORDER BY ingredient_name;    //CREATE VIEW stock_view AS (SELECT Stock.quantity, Stock.ingredient_name, Order_recipe.order_id FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name));
     public ArrayList<Ingredient> missingIngredientsTwoDaysFromTomorrow() { // For deliveries
@@ -32,7 +37,6 @@ public class CookConnection extends IngredientConnection {
             while (resultSet.next()) {
                 String ingredientName = resultSet.getString("ingredient_name");
                 double quantity = resultSet.getDouble("sum");
-                System.out.println(ingredientName+quantity);
 
                 if(quantity < 0) {
                     ingredients.add(new Ingredient(ingredientName, quantity));
@@ -49,6 +53,11 @@ public class CookConnection extends IngredientConnection {
         }
         return ingredients;
     }
+
+    /**
+     * Method that buys the ingredients missing two days from tomorrow. It uses the method "changeStock(ArrayList<Ingredients> ingredients)" to change the quantity in the database.
+     * @return int 1 if everything went well
+     */
 
     public int buyIngredientsTwoDaysFromTomorrow() {
         String sqlUpdate = "";
@@ -97,6 +106,10 @@ public class CookConnection extends IngredientConnection {
         return -2;
     }
 
+    /**
+     * Method that buys all take away ingredients for today.
+     * @return int 1 if everything went well
+     */
 
     public int buyAllTakeAwayIngredientsForToday() {
         double quantity = -1;
@@ -105,10 +118,7 @@ public class CookConnection extends IngredientConnection {
         String sqlUpdate = "UPDATE Stock SET quantity = (quantity + ?) WHERE ingredient_name = ?;";
         String sqlUpdate2 = "UPDATE Orders SET ingredients_purchased = 1 WHERE order_id = ?;";
         PreparedStatement selectStatement = null;
-        //PreparedStatement updateStatement = null;
-        //PreparedStatement updateStatement2 = null;
         ResultSet resultSet = null;
-        //ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
         try {
             getConnection().setAutoCommit(false);
@@ -149,14 +159,19 @@ public class CookConnection extends IngredientConnection {
             writeError(e.getMessage());
             getCleaner().doRollback(getConnection());
         } finally {
-            //getCleaner().closePreparedStatement(updateStatement2);
-            //getCleaner().closePreparedStatement(updateStatement);
+
             getCleaner().closePreparedStatement(selectStatement);
             getCleaner().closeResultSet(resultSet);
             getCleaner().setAutoCommit(getConnection());
         }
         return -2;
     }
+
+    /**
+     * Method that returns an arraylist with Order objects with delivery date today. The method uses getOrders(sqlCommand) from the
+     * ManageOrders class.
+     * @return ArrayList<Order>
+     */
 
     public ArrayList<Order> deliveriesToday() {//order_id, delivery_date, delivery_time, take_away, other_request
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND made = 0;";
@@ -166,6 +181,12 @@ public class CookConnection extends IngredientConnection {
         return orders;
     }
 
+    /**
+     * Method that returns an arraylist with Order objects that has delivery date today and is take away.
+     * The method uses getOrders(sqlCommand) from the ManageOrders class.
+     * @return ArrayList<Order>
+     */
+
     public ArrayList<Order> takeAwayToday() {
         String sqlCommand = "SELECT * FROM Orders WHERE delivery_date = CURDATE() AND take_away = 1 AND ingredients_purchased = 0;";
         ManageOrder manageOrder = new ManageOrder();
@@ -173,6 +194,12 @@ public class CookConnection extends IngredientConnection {
         manageOrder.stopConnection();
         return orders;
     }
+
+    /**
+     * Method that uses an sql query to return an arraylist of ingredients.
+     * @param sqlCommand
+     * @return ArrayList<Ingredient>
+     */
 
     public ArrayList<Ingredient> getIngredients(String sqlCommand) {
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -200,6 +227,14 @@ public class CookConnection extends IngredientConnection {
         return ingredients;
     }
 
+    /**
+     * Method that uses an sql select query and an sql update query to add or remove to stock for ingredients.
+     * The method updates the boolean made or ingredients_purchased to 1 in the database (depends on the update command).
+     * @param sqlSelect
+     * @param sqlUpdate
+     * @return int 1 if everything went well.
+     */
+
     public int makeOrderOrPurchaseIngredients(String sqlSelect, String sqlUpdate) {
         PreparedStatement updateStatement = null;
 
@@ -215,6 +250,7 @@ public class CookConnection extends IngredientConnection {
             return 1;
         } catch (SQLException sqle) {
             writeError(sqle.getMessage());
+
         } catch (Exception e) {
             writeError(e.getMessage());
         } finally {
@@ -224,12 +260,24 @@ public class CookConnection extends IngredientConnection {
 
     }
 
+    /**
+     * Method that makes an order, it uses the method makeOrderOrPurchaseIngredients(sqlSelect, sqlUpdate).
+     * @param orderID
+     * @return 1 if everything went well
+     */
+
     public int makeOrder(int orderID) {
         String sqlSelect = "SELECT Stock.ingredient_name, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
         String sqlUpdate = "UPDATE Orders SET made = 1 WHERE order_id = " + orderID + ";";
 
         return makeOrderOrPurchaseIngredients(sqlSelect, sqlUpdate);
     }
+
+    /**
+     * Method that buys ingredients for an take away order, it uses the method makeOrderOrPurchaseIngredients(sqlSelect, sqlUpdate).
+     * @param orderID
+     * @return 1 if everything went well
+     */
 
     public int buyIngredientsTakeAway(int orderID) { // - before sum to work with changeStock method
         String sqlSelect = "SELECT Stock.ingredient_name, -(Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND Orders.order_id = " + orderID + " ORDER BY ingredient_name;";
@@ -239,7 +287,8 @@ public class CookConnection extends IngredientConnection {
     }
 
 
-    /*public int buyBunch() {
+    /*
+    public int buyBunch() {
         String sqlCommandSelect = "SELECT quantity+100 FROM Stock;";
         String sqlCommandUpdate = "UPDATE Stock SET quantity = (quantity+100) WHERE quantity < 100;";
 
