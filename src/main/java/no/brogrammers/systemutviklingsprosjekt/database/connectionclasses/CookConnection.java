@@ -32,6 +32,7 @@ public class CookConnection extends IngredientConnection {
             while (resultSet.next()) {
                 String ingredientName = resultSet.getString("ingredient_name");
                 double quantity = resultSet.getDouble("sum");
+                System.out.println(ingredientName+quantity);
 
                 if(quantity < 0) {
                     ingredients.add(new Ingredient(ingredientName, quantity));
@@ -51,7 +52,7 @@ public class CookConnection extends IngredientConnection {
 
     public int buyIngredientsTwoDaysFromTomorrow() {
         String sqlUpdate = "";
-        String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Stock.quantity - (Recipe_ingredient.quantity*Order_recipe.quantity)) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND delivery_date >= (CURDATE() + INTERVAL 1 DAY) AND delivery_date <= (CURDATE() + INTERVAL 3 DAY) AND Orders.ingredients_purchased = 0 ORDER BY ingredient_name;    //CREATE VIEW stock_view AS (SELECT Stock.quantity, Stock.ingredient_name, Order_recipe.order_id FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name));";
+        String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Stock.quantity - (Recipe_ingredient.quantity*Order_recipe.quantity)) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 0 AND delivery_date >= (CURDATE() + INTERVAL 1 DAY) AND delivery_date <= (CURDATE() + INTERVAL 3 DAY) AND Orders.ingredients_purchased = 0 ORDER BY ingredient_name;";    //CREATE VIEW stock_view AS (SELECT Stock.quantity, Stock.ingredient_name, Order_recipe.order_id FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name));";
 
         PreparedStatement selectStatement = null;
         PreparedStatement updateStatement = null;
@@ -72,8 +73,9 @@ public class CookConnection extends IngredientConnection {
 
             if(changeStock(missingIngredientsTwoDaysFromTomorrow()) == 1) {// && orderID != -1) {
                 for (int i = 0; i < id.size(); i++) {
-                    sqlUpdate = "UPDATE Orders SET ingredients_purchased = " + 1 + " WHERE order_id = " + i + ";";
+                    sqlUpdate = "UPDATE Orders SET ingredients_purchased = 1 WHERE order_id = ?;";
                     updateStatement = getConnection().prepareStatement(sqlUpdate);
+                    updateStatement.setInt(1, i + 1);
 
                     if(!(checkUpdated(sqlUpdate))) {
                         return -1;
@@ -101,7 +103,7 @@ public class CookConnection extends IngredientConnection {
         String ingredientName = "";
         String sqlSelect = "SELECT Stock.ingredient_name, Order_recipe.order_id, (Recipe_ingredient.quantity*Order_recipe.quantity) AS sum FROM Stock JOIN Recipe_ingredient ON (Stock.ingredient_name = Recipe_ingredient.ingredient_name) JOIN Order_recipe ON(Recipe_ingredient.recipe_name = Order_recipe.recipe_name) JOIN Orders ON(Order_recipe.order_id = Orders.order_id) WHERE take_away = 1 AND delivery_date = CURDATE() AND ingredients_purchased = 0 ORDER BY ingredient_name;";
         String sqlUpdate = "UPDATE Stock SET quantity = (quantity + ?) WHERE ingredient_name = ?;";
-        String sqlUpdate2 = "UPDATE Orders SET ingredients_purchased = 1 WHERE order_id = ?";
+        String sqlUpdate2 = "UPDATE Orders SET ingredients_purchased = 1 WHERE order_id = ?;";
         PreparedStatement selectStatement = null;
         //PreparedStatement updateStatement = null;
         //PreparedStatement updateStatement2 = null;
@@ -130,6 +132,7 @@ public class CookConnection extends IngredientConnection {
                         getCleaner().doRollback(getConnection());
                         return -3;
                     }
+                    getConnection().commit();
                     getCleaner().closePreparedStatement(updateStatement2);
                 } else {
                     getCleaner().doRollback(getConnection());
@@ -150,6 +153,7 @@ public class CookConnection extends IngredientConnection {
             //getCleaner().closePreparedStatement(updateStatement);
             getCleaner().closePreparedStatement(selectStatement);
             getCleaner().closeResultSet(resultSet);
+            getCleaner().setAutoCommit(getConnection());
         }
         return -2;
     }

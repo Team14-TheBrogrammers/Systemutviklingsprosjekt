@@ -209,9 +209,9 @@ public class MainForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("TAKE AWAY");
                 cookConnection = new CookConnection();
-                cookConnection.buyAllTakeAwayIngredientsForToday();
+                System.out.println(cookConnection.buyAllTakeAwayIngredientsForToday());
+                //cookConnection.stopConnection();
                 loadCookTab();
-                cookConnection.stopConnection();
             }
         });
         buyIngredientsButton.addActionListener(new ActionListener() {
@@ -554,12 +554,7 @@ public class MainForm extends JFrame{
         ordersTodayTable.setModel(nonEditTableModel);
         ArrayList<Order> orders = cookConnection.deliveriesToday();
 
-        /*ActionListener actionListener123 = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("test");
-            }
-        };*/
+
 
         for(int i = 0; i < orders.size(); i++) {
             int id = orders.get(i).getOrderID();
@@ -595,19 +590,24 @@ public class MainForm extends JFrame{
             String otherRequests = orders.get(i).getOtherRequests();
             Object objects[] = {id, date, time, ta, otherRequests, "Make Order"};
             nonEditTableModel.addRow(objects);
-            cookConnection.stopConnection();
+
         }
+
+
 
         String cookColumns3[] = {"Ingredient Name", "Quantity missing"};
         NonEditTableModel nonEditTableModel3 = new NonEditTableModel(cookColumns3);
         deliveriesIngredientsTable.setModel(nonEditTableModel3);
         ArrayList<Ingredient> ingredients = cookConnection.missingIngredientsTwoDaysFromTomorrow();
         for (int i = 0; i < ingredients.size(); i++) {
+
             String name = ingredients.get(i).getIngredientName();
             double quantity = -(ingredients.get(i).getQuantity());
             Object objects[] = {name, quantity};
             nonEditTableModel3.addRow(objects);
         }
+
+
 
         String cookColumns2[] = {"Order ID", "Delivery Date", "Delivery Time", "Other Requests", "Buy Ingredients"};
         DefaultTableModel nonEditTableModel2 = new DefaultTableModel(cookColumns2, 0);
@@ -640,6 +640,7 @@ public class MainForm extends JFrame{
                     });
             nonEditTableModel2.addRow(objects);
         }
+        cookConnection.stopConnection();
     }
 
 
