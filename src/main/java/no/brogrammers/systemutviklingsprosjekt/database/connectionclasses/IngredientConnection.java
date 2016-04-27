@@ -175,9 +175,46 @@ public class IngredientConnection extends DatabaseConnection {
     }
 
     public int changeQuantity(String ingredientName, double newQuantity) {
-        String sqlCommand = "UPDATE Stock SET quantity = " + newQuantity + " WHERE ingredient_name = '" + ingredientName + "';";
-        if(checkUpdated(sqlCommand)) {
-            return 1;
+        String sqlCommand = "UPDATE Stock SET quantity = ? WHERE ingredient_name = ?;";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setDouble(1, newQuantity);
+            preparedStatement.setString(2, ingredientName);
+            if(preparedStatement.executeUpdate() != 0) {
+                return 1;
+            }
+
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closePreparedStatement(preparedStatement);
+        }
+        return -1;
+    }
+
+    public int changeMeasurement(String ingredientName, String newMeasurement) {
+        String sqlCommand = "UPDATE Stock SET measurement = ? WHERE ingredient_name = ?;";
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = getConnection().prepareStatement(sqlCommand);
+            preparedStatement.setString(1, newMeasurement);
+            preparedStatement.setString(2, ingredientName);
+            if(preparedStatement.executeUpdate() != 0) {
+                return 1;
+            }
+
+        } catch (SQLException sqle) {
+            writeError(sqle.getMessage());
+        } catch (Exception e) {
+            writeError(e.getMessage());
+        } finally {
+            getCleaner().closePreparedStatement(preparedStatement);
         }
         return -1;
     }
