@@ -1,13 +1,17 @@
 package no.brogrammers.systemutviklingsprosjekt;
 
 
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.driverroute.Route;
 import no.brogrammers.systemutviklingsprosjekt.gui.LoginForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.MainForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.customerforms.AddNewCustomerForm;
 import no.brogrammers.systemutviklingsprosjekt.gui.orderforms.AddNewOrderForm;
+import no.brogrammers.systemutviklingsprosjekt.recipe.*;
 
+import javax.naming.InsufficientResourcesException;
 import javax.swing.*;
+import java.util.ArrayList;
 
 
 /**
@@ -22,7 +26,7 @@ public class MainClient {
         //System.out.println(Encryption.encryptPassword("asdsad"));
 
         setJFrameLookAndFeel();
-        //Route route = new Route();
+
         LoginForm loginForm = new LoginForm();
     }
 
