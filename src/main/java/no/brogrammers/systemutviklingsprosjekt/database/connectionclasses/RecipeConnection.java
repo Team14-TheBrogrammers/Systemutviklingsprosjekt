@@ -45,8 +45,8 @@ public class RecipeConnection extends DatabaseConnection {
         String recipeName = recipe.getRecipeName();
         RecipeType recipeType = recipe.getRecipeType();
         DietType dietType = recipe.getDietType();
-        List<Ingredient> ingredients = recipe.getIngredients();
-        List<Instruction> instructions = recipe.getInstructions();
+        ArrayList<Ingredient> ingredients = recipe.getIngredients();
+        ArrayList<Instruction> instructions = recipe.getInstructions();
         double price = recipe.getPrice();
         if (!addRecipe(recipeName, recipeType, dietType, price)) {
             return false;

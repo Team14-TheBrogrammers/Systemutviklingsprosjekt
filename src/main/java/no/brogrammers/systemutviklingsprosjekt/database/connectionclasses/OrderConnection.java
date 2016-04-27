@@ -115,8 +115,10 @@ public abstract class OrderConnection extends DatabaseConnection {
                         //finished = true;
                     } catch (SQLException sqle) {
                         writeError(sqle.getMessage());
+                        getCleaner().doRollback(getConnection());
                     } catch (Exception e) {
                         writeError(e.getMessage());
+                        getCleaner().doRollback(getConnection());
                     } finally {
                         getCleaner().closePreparedStatement(insertStatement);
                         getCleaner().closePreparedStatement(selectStatement);

@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 /**
  * Created by Knut on 05.04.2016.
+ * UserConnection class
  */
 public abstract class UserConnection extends DatabaseConnection {
 
@@ -19,6 +20,18 @@ public abstract class UserConnection extends DatabaseConnection {
         super();
     }
 
+    /**
+     * Method that register a new user in the database.
+     * @param lastName
+     * @param firstName
+     * @param phone
+     * @param mail
+     * @param dateOfEmployment
+     * @param username
+     * @param password
+     * @param employeeType is an int where the type of employee is stored in the database
+     * @return int 1 if the user was registered, -2 if not
+     */
     private int regUser(String lastName, String firstName, int phone, String mail, java.sql.Date dateOfEmployment, String username, String password, int employeeType) {
         int check = checkExistingDetails(username, phone);
         if(check == 1) {
@@ -29,6 +42,12 @@ public abstract class UserConnection extends DatabaseConnection {
             return check;
         }
     }
+
+    /**
+     * Method that checks if something was registered/updated in the database.
+     * @param command is an sql query
+     * @return int 1 if something was updated in the database, -2 if not
+     */
 
     private int checkRegistered(String command) {
         if(checkUpdated(command)) {

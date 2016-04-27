@@ -128,7 +128,6 @@ public class MainForm extends JFrame{
     private ArrayList<Order> orders = new ArrayList<Order>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
     private ArrayList<User> users = new ArrayList<User>();
-    //private ArrayList<> //TODO: driverroute:?
 
     //DefaultListModels for using in tables
     NonEditTableModel acticeOrdersTableModel;
@@ -146,7 +145,7 @@ public class MainForm extends JFrame{
 
         loadTabMenu();
 
-        loadTabs();
+        //loadTabs();
         addOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -196,7 +195,7 @@ public class MainForm extends JFrame{
         addRecipeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewRecipeForm addNewRecipeForm = new AddNewRecipeForm();
+                AddNewRecipeForm addNewRecipeForm = new AddNewRecipeForm(MainForm.this);
             }
         });
         addNewIngredientButton.addActionListener(new ActionListener() {
@@ -228,7 +227,7 @@ public class MainForm extends JFrame{
 
     private void loadTabMenu() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("test123");
+        JMenu menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_ALT);
         menuBar.add(menu);
         //Add subItems etc.
@@ -239,8 +238,26 @@ public class MainForm extends JFrame{
         return user;
     }
 
-    private void checkUserType() { //TODO: // FIXME: 22.04.2016
+    private void checkUserType() {
         if(user instanceof Manager) {
+            loadOrdersTab();
+            tabbedPane1.removeTabAt(2); //2 is the index of subscription tab
+            //subscriptions
+            loadRecipesTab();
+            loadCustomersTab();
+            loadEmployeesTab();
+            loadIngredientsTab();
+            loadCustomersTab();
+            loadCookTab();
+            loadMyProfileTab();
+            loadStatisticsTab();
+            //scrollPane1.setViewportView(customersTable);
+            loadDriverRouteTab();
+        } else if (user instanceof Cashier) {
+
+        } else if (user instanceof Cook) {
+
+        } else if (user instanceof Driver) {
 
         }
     }
@@ -290,7 +307,7 @@ public class MainForm extends JFrame{
     }
 
     NonEditTableModel recipeTableModel;
-    private void loadRecipesTab() {
+    public void loadRecipesTab() {
         //asd
         recipeConnection = new RecipeConnection();
 
@@ -396,7 +413,7 @@ public class MainForm extends JFrame{
         manageCustomer.stopConnection();
     }
 
-    private void loadEmployeesTab() {
+    public void loadEmployeesTab() {
         //Employee (user):
         manageUser = new ManageUser();
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};

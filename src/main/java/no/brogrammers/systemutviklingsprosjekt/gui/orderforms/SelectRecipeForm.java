@@ -1,8 +1,10 @@
 package no.brogrammers.systemutviklingsprosjekt.gui.orderforms;
 
+import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.IngredientConnection;
 import no.brogrammers.systemutviklingsprosjekt.database.connectionclasses.RecipeConnection;
 import no.brogrammers.systemutviklingsprosjekt.miscellaneous.NonEditTableModel;
 import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
+import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
 
@@ -102,5 +104,7 @@ public class SelectRecipeForm extends JFrame {
         String recipeColumns2[] = {"Name", "Recipe Type", "Diet Type", "Quantity", "Price for each", "Total Price"};
         orderTableModel = new DefaultTableModel(recipeColumns2, 0);
         orderRecipesTable.setModel(orderTableModel);
+        //TODO: more code
+
     }
 }

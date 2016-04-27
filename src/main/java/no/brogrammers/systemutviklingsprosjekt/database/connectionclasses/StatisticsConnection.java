@@ -6,16 +6,14 @@ import java.sql.*;
 
 /**
  * Created by Ingunn on 20.04.2016.
- *
+ * StatisticsConnection class
  */
 public class StatisticsConnection extends DatabaseConnection{
-    //what weekday is most popular: orderdate and deliverydate (most popular time?)
-    //most popular recipes
-    //pie chart: what type of customer
-    //income month
-    //customer with most orders/gjennomsnittlig antall ordre pr bruker
-    //what zip is most popular
-    //pie chart: which user
+
+    /**
+     * Method that calculates the percent of private customers.
+     * @return double percent of private customers
+     */
 
     public double percentOfPrivateCustomers() {
         String sqlCommand = "SELECT COUNT(*) AS c FROM Customer;";
@@ -52,9 +50,8 @@ public class StatisticsConnection extends DatabaseConnection{
     }
 
     /**
-     * ArrayList<Integer> popularWeekdaysDeliveryDate()
-     * percent
-     * @return
+     * Method that finds the number of deliveries on each weekday.
+     * @return int[] weekdays with the total number of orders on each weekday
      */
 
     public int[] popularWeekdaysDeliveryDate() {
@@ -71,12 +68,6 @@ public class StatisticsConnection extends DatabaseConnection{
                 weekdays[resultSet.getInt("wday")]++;
             }
 
-            for (int i = 0; i < weekdays.length; i++) {
-                String test = "";
-                test += weekdays[i] + "\n";
-                System.out.println(test);
-            }
-
             return weekdays;
 
         } catch (SQLException sqle) {
@@ -91,9 +82,9 @@ public class StatisticsConnection extends DatabaseConnection{
     }
 
     /**
-     *
+     * The method returns an dobble array of monthly income for the 12 last months.
      * View for the method: CREATE VIEW price_view AS (SELECT order_id, SUM(price*quantity) AS order_price FROM Orders NATURAL JOIN Order_recipe NATURAL JOIN Recipe GROUP BY order_id);
-     * @return
+     * @return double[] of monthly income in the last 12 months
      */
 
     public double[] monthlyIncome() { //last 12 months
@@ -109,13 +100,6 @@ public class StatisticsConnection extends DatabaseConnection{
             while(resultSet.next()) {
                 month[(resultSet.getInt("month"))-1] += resultSet.getDouble("order_price");
             }
-
-            /*for (int i = 0; i < month.length; i++) {
-                String test = "";
-                test += month[i] + "\n";
-                System.out.println(test);
-            }*/
-
             return month;
 
         } catch (SQLException sqle) {
@@ -130,8 +114,9 @@ public class StatisticsConnection extends DatabaseConnection{
     }
 
     /**
-     * By times ordered
-     * @return
+     * Method that finds the ten most ordered recipes. If there is less than ten recipes in the database, the method
+     * will only show the number of recipes in the database.
+     * @return String[][] where it stores recipe name and quantity
      */
 
     public String[][] top10Recipes() {
@@ -151,13 +136,6 @@ public class StatisticsConnection extends DatabaseConnection{
                 recipes[count][1] = String.valueOf(resultSet.getInt("quantity"));
                 count++;
             }
-
-            String test = "";
-            for (int i = 0; i < recipes.length; i++) {
-                test += (recipes[i][0] + recipes[i][1] + "\n");
-
-            }
-            System.out.println(test);
 
             return recipes;
         } catch (SQLException sqle) {
