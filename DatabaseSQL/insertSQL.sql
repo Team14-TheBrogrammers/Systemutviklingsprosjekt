@@ -83,9 +83,9 @@ INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES
 (DEFAULT, 'Østre Rosten', 7075, 'companyno@company.no', 56721243),
 (DEFAULT, 'Strindvegen 40', 7052, 'nicoleee@hotmail.com', 60253154),
 (DEFAULT, 'Strindvegen 20', 7052, 'kkirkhorn@kirkhorn.no', 89523464),
-(DEFAULT, 'Lindemans gate 2', 7052, 'ingunn@sund.no', 75394721);
-(DEFAULT, 'Lokes veg 22', 7033, 'PetterP@hotmail.no', 75394721);
-(DEFAULT, 'Christian Bloms veg 4', 7058, 'SaraOlsen@outlook.no', 75394721);
+(DEFAULT, 'Lindemans gate 2', 7052, 'ingunn@sund.no', 75394720),
+(DEFAULT, 'Lokes veg 22', 7033, 'PetterP@hotmail.no', 75394721),
+(DEFAULT, 'Christian Bloms veg 4', 7058, 'SaraOlsen@outlook.no', 75394722);
 
 INSERT INTO Private_customer(last_name, first_name, customer_id) VALUES
 ('Ole', 'Ola', 3),
@@ -93,8 +93,8 @@ INSERT INTO Private_customer(last_name, first_name, customer_id) VALUES
 ('Hansen', 'Kari', 6),
 ('Uybengkee', 'Nicole', 8),
 ('Kirkhorn', 'Knut', 9),
-('Sund', 'Ingunn', 10);
-('Pettersen', 'Petter', 11);
+('Sund', 'Ingunn', 10),
+('Pettersen', 'Petter', 11),
 ('Olsen', 'Sara', 12);
 
 
@@ -120,5 +120,5 @@ INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, add
 (0, '2016-04-21', '2016-04-28', 9.5, 'Ferjemannsveien 2', 7014, 1, NULL, 0, 0, 0, 10),
 (0, '2016-04-21', '2016-04-30', 11, 'Kong Øysteins veg 43', 7046, 0, NULL, 0, 0, 0, 2),
 (0, '2016-04-21', '2016-04-30', 13.5, 'Gamle Oslovei 70', 7020, 0, 'Local Food', 0, 0, 0, 9),
-(0, '2016-04-21', '2016-04-30', 14, 'Dronningens gate 12', 7011, 0, NULL, 0, 0, 0, 3),
+(0, '2016-04-21', '2016-04-30', 14, 'Dronningens gate 12', 7011, 0, NULL, 0, 0, 0, 3);
 
