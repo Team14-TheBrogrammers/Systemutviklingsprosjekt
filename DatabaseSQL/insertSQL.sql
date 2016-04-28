@@ -87,9 +87,9 @@ INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES
 (DEFAULT, 'Østre Rosten', 7075, 'companyno@company.no', 56721243),
 (DEFAULT, 'Strindvegen 40', 7052, 'nicoleee@hotmail.com', 60253154),
 (DEFAULT, 'Strindvegen 20', 7052, 'kkirkhorn@kirkhorn.no', 89523464),
-(DEFAULT, 'Lindemans gate 2', 7052, 'ingunn@sund.no', 75394721),
+(DEFAULT, 'Lindemans gate 2', 7052, 'ingunn@sund.no', 75394720),
 (DEFAULT, 'Lokes veg 22', 7033, 'PetterP@hotmail.no', 75394721),
-(DEFAULT, 'Christian Bloms veg 4', 7058, 'SaraOlsen@outlook.no', 75394721);
+(DEFAULT, 'Christian Bloms veg 4', 7058, 'SaraOlsen@outlook.no', 75394722);
 
 INSERT INTO Private_customer(last_name, first_name, customer_id) VALUES
 ('Ole', 'Ola', 3),
