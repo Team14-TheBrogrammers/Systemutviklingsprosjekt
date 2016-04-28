@@ -19,6 +19,7 @@ import no.brogrammers.systemutviklingsprosjekt.miscellaneous.*;
 import no.brogrammers.systemutviklingsprosjekt.order.ManageOrder;
 import no.brogrammers.systemutviklingsprosjekt.order.Order;
 import no.brogrammers.systemutviklingsprosjekt.order.Subscription;
+import no.brogrammers.systemutviklingsprosjekt.recipe.DietType;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Ingredient;
 import no.brogrammers.systemutviklingsprosjekt.recipe.Recipe;
 import no.brogrammers.systemutviklingsprosjekt.recipe.RecipeType;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 
 //import static java.awt.event.KeyEvent.VK_ENTER;
 import static javax.swing.JOptionPane.showConfirmDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by Knut on 19.04.16.
@@ -62,7 +64,7 @@ public class MainForm extends JFrame{
     private JButton addCustomerButton;
     private JButton deleteCustomerSButton;
     private JButton addEmployeeButton;
-    private JButton button3;
+    private JButton deleteEmployeeButton;
     private JButton changeMyProfileDataButton;
     private JLabel userIdLabel;
     private JLabel nameLabel;
@@ -83,7 +85,7 @@ public class MainForm extends JFrame{
     private ChartPanel chartPanel3;
     private ChartPanel chartPanel4;
     private JPanel mapPanel;
-    private JTabbedPane tabbedPane5;
+    private JTabbedPane customersTabbedPane;
     private JTable privateCustomersTable;
     private JTable allCompaniesTable;
     private JTabbedPane tabbedPane6;
@@ -173,6 +175,71 @@ public class MainForm extends JFrame{
                 loadDriverRouteTab();
                 browser.loadURL("C:\\SystemutviklingsProsjekt\\Driver map\\Map.html");
                 browser.reload();
+            }
+        });
+
+        deleteCustomerSButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean somethingDeleted = false;
+                switch(customersTabbedPane.getSelectedIndex()) {
+                    case 0:
+                        int[] selectedRows = allCustomersTable.getSelectedRows();
+                        manageCustomer = new ManageCustomer();
+                        for(int i = 0; i < selectedRows.length; i++) {
+                            if(manageCustomer.deleteCustomer(Integer.parseInt(allCustomersTable.getValueAt(selectedRows[i], 0).toString()))) {
+                                somethingDeleted = true;
+                            }
+                        }
+                        manageCustomer.stopConnection();
+                        break;
+
+                    case 1:
+                        int[] selectedRows2 = allCompaniesTable.getSelectedRows();
+                        manageCustomer = new ManageCustomer();
+                        for(int i = 0; i < selectedRows2.length; i++) {
+                            if(manageCustomer.deleteCustomer(Integer.parseInt(allCompaniesTable.getValueAt(selectedRows2[i], 0).toString()))) {
+                                somethingDeleted = true;
+                            }
+                        }
+                        manageCustomer.stopConnection();
+                        break;
+
+                    case 2:
+                        int[] selectedRows3 = privateCustomersTable.getSelectedRows();
+                        manageCustomer = new ManageCustomer();
+                        for(int i = 0; i < selectedRows3.length; i++) {
+                            if(manageCustomer.deleteCustomer(Integer.parseInt(privateCustomersTable.getValueAt(selectedRows3[i], 0).toString()))) {
+                                somethingDeleted = true;
+                            }
+                        }
+                        manageCustomer.stopConnection();
+                        break;
+                }
+                if(somethingDeleted) {
+                    showMessageDialog(null, "Selected Data Was Deleted");
+                    loadCustomersTab();
+                }
+            }
+        });
+        deleteEmployeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(employeesTable.getSelectedRowCount() > 0) {
+                    boolean somethingDeleted = false;
+                    int[] selectedRows = employeesTable.getSelectedRows();
+                    manageUser = new ManageUser();
+                    for(int i = 0; i < selectedRows.length; i++) {
+                        if(manageUser.deleteUserByID(Integer.parseInt(employeesTable.getValueAt(selectedRows[i], 0).toString())).equals("User was deleted")) {
+                            somethingDeleted = true;
+                        }
+                    }
+                    if(somethingDeleted) {
+                        showMessageDialog(null, "Selected Data Was Deleted");
+                        loadEmployeesTab();
+                    }
+                    manageUser.stopConnection();
+                }
             }
         });
     }
@@ -370,15 +437,16 @@ public class MainForm extends JFrame{
         recipeConnection = new RecipeConnection();
 
         //Recipes:
-        String recipeColumns[] = {"Name", "Type", "Price"};
+        String recipeColumns[] = {"Name", "Recipe Type", "Diet Type", "Price"};
         recipeTableModel = new NonEditTableModel(recipeColumns);
         recipeTable.setModel(recipeTableModel);
         ArrayList<Recipe> recipes = recipeConnection.viewAllRecipes();
         for(int i = 0; i < recipes.size(); i++) {
             String name = recipes.get(i).getRecipeName();
             RecipeType recipeType = recipes.get(i).getRecipeType();
+            DietType dietType = recipes.get(i).getDietType();
             double price = recipes.get(i).getPrice();
-            Object objects[] = {name, recipeType, price};
+            Object objects[] = {name, recipeType, dietType, price};
             recipeTableModel.addRow(objects);
         }
         recipeConnection.stopConnection();
@@ -473,11 +541,14 @@ public class MainForm extends JFrame{
         manageCustomer.stopConnection();
     }
 
+
+    private NonEditTableModel employeesTableModel;
+
     public void loadEmployeesTab() {
         //Employee (user):
         manageUser = new ManageUser();
         String employeeColumns[] = {"ID", "Last Name", "First Name", "Phone", "Date of Employment", "Position", "Username", "Password", "Email Address"};
-        DefaultTableModel employeesTableModel = new DefaultTableModel(employeeColumns, 0);
+        employeesTableModel = new NonEditTableModel(employeeColumns);
         employeesTable.setModel(employeesTableModel);
         ArrayList<User> users = manageUser.viewAllUsers();
         for(int i = 0; i < users.size(); i++) {
@@ -486,20 +557,21 @@ public class MainForm extends JFrame{
             String firstName = users.get(i).getFirstName();
             int phone = users.get(i).getPhoneNumber();
             Date dateOfEmployment = users.get(i).getDateOfEmployment();
-            /*if (users.get(i) instanceof Manager) {
-
+            String position = "";
+            if (users.get(i) instanceof Manager) {
+                position = "Manager";
             } else if (users.get(i) instanceof Cashier) {
-
+                position = "Cashier";
             } else if (users.get(i) instanceof Cook) {
-
+                position = "Cook";
             } else if (users.get(i) instanceof Driver) {
+                position = "Driver";
+            }
 
-            }*/
-            int pos = 1;
             String username = users.get(i).getUsername();
             String password = users.get(i).getPassword();
             String emailAddress = users.get(i).getEmail();
-            Object objects[] = {id, lastName, firstName, phone, dateOfEmployment, pos, username, password, emailAddress};
+            Object objects[] = {id, lastName, firstName, phone, dateOfEmployment, position, username, password, emailAddress};
             employeesTableModel.addRow(objects);
         }
         manageUser.stopConnection();
