@@ -1,4 +1,3 @@
-
 INSERT INTO Postal VALUES
 (7010, 'TRONDHEIM'),
 (7011, 'TRONDHEIM'),
@@ -72,6 +71,17 @@ INSERT INTO Postal VALUES
 (7097, 'SAUPSTAD'),
 (7098, 'SAUPSTAD'),
 (7099, 'FLATÅSEN');
+
+INSERT INTO Positions(position_name) VALUES('Manager');
+INSERT INTO Positions(position_name) VALUES('Cashier');
+INSERT INTO Positions(position_name) VALUES('Cook');
+INSERT INTO Positions(position_name) VALUES('Driver');
+
+INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) VALUES
+('Kirkhorn', 'Knut', 12345678, '2016-01-01', 1, 'knut', 'erkul', 'knut@kirkhorn.no'),
+('Sund', 'Ingunn', 32125678, '2016-01-01', 4, 'ingunn', 'ingunn', 'ingunn@sund.no'),
+('Uybengkee', 'Nicole', 54364233, '2016-01-01', 2, 'Nicole', 'Nic', 'nicolee@hotmail.com'),
+('Påsche', 'Anders', 54682390, '2016-04-25', 3, 'Anders', 'anderrrs', 'anderss@hotmail.com');
 
 INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES
 (DEFAULT, 'Ferjemannsveien 10', 7014, 'cateringAS@hotmail.com', 67543976),
