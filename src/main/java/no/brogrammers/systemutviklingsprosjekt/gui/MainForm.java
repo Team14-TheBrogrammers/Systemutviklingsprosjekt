@@ -102,6 +102,7 @@ public class MainForm extends JFrame{
     private JTable table6;
     private JTable subscrptionsTab;
     private JButton signOutButton;
+    private JButton reloadMapButton;
     private BrowserView test12345;
     private BrowserView testassdasd;
     private JPanel incomePanel;
@@ -166,6 +167,14 @@ public class MainForm extends JFrame{
         setVisible(true);
         splashScreenForm.dispose();
 
+        reloadMapButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadDriverRouteTab();
+                browser.loadURL("C:\\SystemutviklingsProsjekt\\Driver map\\Map.html");
+                browser.reload();
+            }
+        });
     }
 
     private void setUpListeners() {
@@ -497,6 +506,8 @@ public class MainForm extends JFrame{
     }
 
     private ArrayList<String> addressList = new ArrayList<String>();
+    private ArrayList<ArrayList<Order>> ordersList = new ArrayList<ArrayList<Order>>();
+    private ArrayList<ArrayList<String>> addresses = new ArrayList<ArrayList<String>>();
     private void loadDriverRouteTab() {
         //Driver tab:
         /*String orderColumns[] = {"Order ID", "Customer ID", "Payment Status", "Order date", "Delivery Date", "Delivery Time", "Address", "Zip"};
@@ -514,12 +525,12 @@ public class MainForm extends JFrame{
         String deliveriesColumns1[] = {"Route", "Time", "Show Route", "Drive"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(deliveriesColumns1, 0);
         deliveriesTodayTable.setModel(defaultTableModel);
-        ArrayList<ArrayList<Order>> orders = driverConnection.splitDeliveriesToday();
+        ordersList = driverConnection.splitDeliveriesToday();
 
-        //ArrayList<ArrayList<String>> addresses = new ArrayList<ArrayList<String>>();
+        addresses = new ArrayList<ArrayList<String>>();
         addressList = new ArrayList<String>();
 
-        for(ArrayList<Order> innerList : orders) {
+        for(ArrayList<Order> innerList : ordersList) {
             String time = "";
             if(innerList.size() > 0 ) {
                 time = String.valueOf(innerList.get(0).getDeliveryTime());
@@ -530,7 +541,7 @@ public class MainForm extends JFrame{
                     time = time.substring(0, time.indexOf("."));
                     time = time + ":00";
                 }
-                addressList.add(innerList.get(0).getAddress() + ", " + innerList.get(0).getAddress());
+                addressList.add(innerList.get(0).getAddress() + ", " + innerList.get(0).getZipCode());
 
                 for (int i = 1; i < innerList.size(); i++) {//(Order order : innerList) {
                     double time2 = innerList.get(i).getDeliveryTime();
@@ -545,9 +556,20 @@ public class MainForm extends JFrame{
                         time += " - " + time3;
                     }
 
-                    //addressList.add(innerList.get(i).getAddress() + ", " + innerList.get(i).getAddress());
+                    addressList.add(innerList.get(i).getAddress() + ", " + innerList.get(i).getZipCode());
+                }
+                addresses.add(addressList);
+                addressList.clear();
+            }
+
+            for (int i = 0; i < addresses.size(); i++) {
+                for (int j = 0; j < addresses.get(i).size(); j++) {
+                    System.out.println("HEI");
+                    System.out.println(addresses.get(i).get(j));
+
                 }
             }
+
 
             deliveriesTodayTable.getColumn("Show Route").setCellRenderer(new ButtonRenderer());//new ButtonRenderer());
             deliveriesTodayTable.getColumn("Show Route").setCellEditor(
@@ -555,14 +577,25 @@ public class MainForm extends JFrame{
                         @Override
                         public Object getCellEditorValue() {
                             if (isPushed()) {
-                                //driverConnection = new DriverConnection();
-                                Route route = new Route(addressList);
-                                //route.stopConnection();
-                                //loadDriverRouteTab();
-                                System.out.println("HEI");
-                                //button.setEnabled(false);
+                                ArrayList<ArrayList<Order>> deliveries = new ArrayList<ArrayList<Order>>();
+                                ArrayList<String> test = new ArrayList<String>();
+                                driverConnection = new DriverConnection();
+                                deliveries = driverConnection.splitDeliveriesToday();
+                                for (int i = 0; i < deliveries.size(); i++) {
+                                    //test = new ArrayList<String>();
+                                    for (int j = 0; j < deliveries.get(i).size(); j++) {
+                                        test.add(deliveries.get(deliveriesTodayTable.getSelectedRow()).get(j).getAddress() + ", " + deliveries.get(deliveriesTodayTable.getSelectedRow()).get(j).getZipCode());
+                                        browser.loadURL("C:\\SystemutviklingsProsjekt\\Driver map\\Map.html");
+                                        browser.reload();
+                                    }
+
+                                    Route route = new Route(test);
+
+                                }
+                                driverConnection.stopConnection();
+
                             }
-                            //setPushed(false);
+                            setPushed(false);
                             return new String(getLabel());
                         }
                     });
@@ -594,16 +627,17 @@ public class MainForm extends JFrame{
         }
     }
 
+    Browser browser;
     private void createUIComponents() {
-        Browser browser = new Browser();
+        browser = new Browser();
         browserView1 = new BrowserView(browser);
-        ArrayList<String> strings = new ArrayList<String>();
+        /*ArrayList<String> strings = new ArrayList<String>();
         strings.add("olav tryggvasons gate 24, 7011");
         strings.add("sverdrupsvei 33, 7020");
         //strings.add("olav tryggvasons gate 40, 7011");
         //strings.add("munkegata 34, 7011");
 
-        Route route = new Route(strings);
+        Route route = new Route(strings);*/
         browser.loadURL("C:\\SystemutviklingsProsjekt\\Driver map\\Map.html");//getClass().getResource("/Driver map/Map.html").toString());//"http://www.google.com");
         //test123.getBrowser().loadURL("google.com");
         //browser.j
@@ -699,8 +733,8 @@ public class MainForm extends JFrame{
                                     System.out.println("order made");
                                 }
                                 cookConnection.stopConnection();
-                                loadCookTab();
-                                button.setEnabled(false);
+                                //loadCookTab();
+                                //button.setEnabled(false);
                             }
                             //setPushed(false);
                             return new String(getLabel());
@@ -751,8 +785,8 @@ public class MainForm extends JFrame{
                                     System.out.println("ingredients purchased");
                                 }
                                 cookConnection.stopConnection();
-                                loadCookTab();
-                                button.setEnabled(false);
+                                //loadCookTab();
+                                //button.setEnabled(false);
                             }
                             setPushed(false);
                             return new String(getLabel());
