@@ -132,3 +132,67 @@ INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, add
 (0, '2016-04-21', '2016-04-30', 13.5, 'Gamle Oslovei 70', 7020, 0, 'Local Food', 0, 0, 0, 9),
 (0, '2016-04-21', '2016-04-30', 14, 'Dronningens gate 12', 7011, 0, NULL, 0, 0, 0, 3);
 
+
+INSERT INTO Ingredient (ingredient_name)
+VALUES
+  ('Egg'),
+  ('Milk'),
+  ('All-purpose flour'),
+  ('Tomatoes'),
+  ('Cheese'),
+  ('Baking powder'),
+  ('Salt'),
+  ('Onion'),
+  ('Vegetable oil'),
+  ('Olive oil'),
+  ('Lettuce'),
+  ('Tomato purée'),
+  ('Beef'),
+  ('White sugar'),
+  ('Brown sugar');
+
+INSERT INTO Stock(ingredient_name, quantity, measurement) VALUES 
+('Egg', 60, 'Pcs'),
+('Milk', 20, 'L'),
+('All-purpose flour', 40, 'Kg'),
+('Tomatoes', 0, 'Kg'),
+('Cheese', 3.5, 'Kg'),
+('Baking powder', 200, 'g'),
+('Salt', 500, 'g'),
+('Onion', 4, 'Kg'),
+('Vegetable oil', 1, 'L'),
+('Olive oil', 1.5, 'L'),
+('Lettuce', 3, 'Kg'),
+('Tomato purée', 2, 'Kg'),
+('Beef', 10, 'Kg'),
+('White sugar', 2, 'Kg'),
+('Brown sugar', 1.1, 'Kg');
+
+INSERT INTO Recipe (recipe_name, recipe_type, price)
+VALUES
+  ('Pancakes', 'VEGETARIAN', 100),
+  ('Tomato Soup', 'VEGETARIAN', 100),
+  ('Spaghetti bolognese', 'MEATLOVER', 100);
+
+INSERT INTO Recipe_ingredient (recipe_name, ingredient_name, quantity)
+VALUES
+  ('Pancakes', 'Egg', '1'),
+  ('Pancakes', 'Milk', '1'),
+  ('Pancakes', 'All-purpose flour', '1'),
+  ('Pancakes', 'Salt', '1'),
+  ('Pancakes', 'White sugar', '2'),
+  ('Pancakes', 'Vegetable oil', '2'),
+  ('Tomato soup', 'Onion', '1 pc'),
+  ('Tomato soup', 'Olive oil', '2'),
+  ('Tomato soup', 'Tomato purée', '2');
+
+INSERT INTO Recipe_instruction (recipe_name, step_number, description)
+VALUES
+  ('Pancakes', 1, 'In a large bowl, mix flour, sugar, baking powder and salt.
+    Make a well in the center, and pour in milk, egg and oil. Mix until smooth.'),
+  ('Pancakes', 2, 'Heat a lightly oiled griddle or frying pan over medium high heat.
+    Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.
+    Brown on both sides and serve hot.'),
+  ('Tomato soup', 1, 'Prepare your vegetables'),
+  ('Tomato soup', 2, 'Spoon 2 tbsp olive oil into a large heavy-based pan and heat it over a low heat.'),
+  ('Tomato soup', 3, 'When the pan is ready, add 2 tsp of tomato purée, then stir it around so it turns the vegetables red.');
