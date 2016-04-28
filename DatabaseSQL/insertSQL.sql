@@ -77,6 +77,12 @@ INSERT INTO Positions(position_name) VALUES('Cashier');
 INSERT INTO Positions(position_name) VALUES('Cook');
 INSERT INTO Positions(position_name) VALUES('Driver');
 
+INSERT INTO Employee(last_name, first_name, phone, date_of_employment, position_id, username, password, email_address) VALUES
+('Kirkhorn', 'Knut', 12345678, '2016-01-01', 1, 'knut', 'erkul', 'knut@kirkhorn.no'),
+('Sund', 'Ingunn', 32125678, '2016-01-01', 4, 'ingunn', 'ingunn', 'ingunn@sund.no'),
+('Uybengkee', 'Nicole', 54364233, '2016-01-01', 2, 'Nicole', 'Nic', 'nicolee@hotmail.com'),
+('Påsche', 'Anders', 54682390, '2016-04-25', 3, 'Anders', 'anderrrs', 'anderss@hotmail.com');
+
 INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES
 (DEFAULT, 'Ferjemannsveien 10', 7014, 'cateringAS@hotmail.com', 67543976),
 (DEFAULT, 'Ferjemannsveien 2', 7014, 'fjeremann@online.no', 45292912),
@@ -125,3 +131,4 @@ INSERT INTO Orders(payment_status, order_date, delivery_date, delivery_time, add
 (0, '2016-04-21', '2016-04-30', 11, 'Kong Øysteins veg 43', 7046, 0, NULL, 0, 0, 0, 2),
 (0, '2016-04-21', '2016-04-30', 13.5, 'Gamle Oslovei 70', 7020, 0, 'Local Food', 0, 0, 0, 9),
 (0, '2016-04-21', '2016-04-30', 14, 'Dronningens gate 12', 7011, 0, NULL, 0, 0, 0, 3);
+
