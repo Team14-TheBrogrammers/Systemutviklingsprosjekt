@@ -72,6 +72,11 @@ INSERT INTO Postal VALUES
 (7098, 'SAUPSTAD'),
 (7099, 'FLATÅSEN');
 
+INSERT INTO Positions(position_name) VALUES('Manager');
+INSERT INTO Positions(position_name) VALUES('Cashier');
+INSERT INTO Positions(position_name) VALUES('Cook');
+INSERT INTO Positions(position_name) VALUES('Driver');
+
 INSERT INTO Customer(customer_id, address, zip, email_address, phone) VALUES
 (DEFAULT, 'Ferjemannsveien 10', 7014, 'cateringAS@hotmail.com', 67543976),
 (DEFAULT, 'Ferjemannsveien 2', 7014, 'fjeremann@online.no', 45292912),
