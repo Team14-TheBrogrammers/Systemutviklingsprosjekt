@@ -96,15 +96,15 @@ public class MainForm extends JFrame{
     private JTextField buyIngredientsForDeliveriesTextField;
     private JTable allCustomersTable;
     private JButton buyIngredientsButton;
-    private JTextField buyAllIngredientsForTextField;
+    private JTextField buyAllMissingIngredientsTextField;
     private BrowserView browserView1;
     private JTable table1;
     private JTable table3;
     private JTable table5;
     private JTable table6;
     private JTable subscrptionsTab;
-    private JButton signOutButton;
     private JButton reloadMapButton;
+    private JButton signOutButton;
     private BrowserView test12345;
     private BrowserView testassdasd;
     private JPanel incomePanel;
@@ -158,14 +158,6 @@ public class MainForm extends JFrame{
         //loadCookTab();
 
         //loadTabs();
-
-        signOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginForm.setVisible(true);
-                dispose();
-            }
-        });
         setVisible(true);
         splashScreenForm.dispose();
 
@@ -240,6 +232,13 @@ public class MainForm extends JFrame{
                     }
                     manageUser.stopConnection();
                 }
+            }
+        });
+        signOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginForm.setVisible(true);
+                dispose();
             }
         });
     }
